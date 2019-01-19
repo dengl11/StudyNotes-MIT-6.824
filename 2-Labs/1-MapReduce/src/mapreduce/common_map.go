@@ -2,8 +2,8 @@ package mapreduce
 
 import (
 	"hash/fnv"
-	"fmt"
 	"os"
+	"log"
     "io/ioutil"
     "encoding/json"
 )
@@ -62,7 +62,7 @@ func doMap(jobName string, // the name of the MapReduce job
         f, _ := os.Create(fileName)
         defer f.Close()
         enc := json.NewEncoder(f)
-        encoders = append(encoders, enc)
+        encoders[i] = enc
     }
     // 2) read the input file content
     dat, err := ioutil.ReadFile(inFile)
@@ -75,7 +75,7 @@ func doMap(jobName string, // the name of the MapReduce job
         bkt := ihash(kv.Key) % nReduce
         err := encoders[bkt].Encode(&kv)
         if err != nil {
-            fmt.Printf("Error in mapper: %v\n", err)
+            log.Fatalf("Error in mapper: %v\n", err)
         }
     }
 }

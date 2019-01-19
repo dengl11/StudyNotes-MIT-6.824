@@ -1,10 +1,9 @@
 package mapreduce
 
 import (
-    "fmt"
+    "log"
     "os"
     "sort"
-    //"io/ioutil"
     "encoding/json"
 )
 
@@ -52,14 +51,13 @@ func doReduce(
 	// }
 	// file.Close()
 	//
-    allKVs := make([]KeyValue, 100)
+    allKVs := make([]KeyValue, 0, 100)
     // 1) prepare intermediate file names that this reducer needs
-    //intermediateNames := make([]string, nMap)
     for i := 0; i < nMap; i++ {
         name := reduceName(jobName, i, reduceTaskNumber)
         file, err := os.Open(name)
         if err != nil {
-            fmt.Printf("Error in reducer: %v\n", err)
+            log.Fatalf("Error in reducer: %v\n", err)
         }
         dec := json.NewDecoder(file)
         var kv KeyValue
@@ -77,9 +75,29 @@ func doReduce(
     })
 
     // 3) Segment them by key
-    // 4) Write them to 
-        //enc := json.NewEncoder(file)
-        //for key := ... {
-            //enc.Encode(KeyValue{key, reduceF(...)})
-        //}
+    data := make([]KeyValue, 0, 100)
+    curr := make([]string, 0, 100)
+    var preKey string
+    for i, kv := range allKVs {
+        if i > 0 && preKey != kv.Key {
+            reduced := reduceF(preKey, curr)
+            data = append(data, KeyValue{preKey, reduced})
+            curr = make([]string, 100)
+        }
+        curr = append(curr, kv.Value)
+        preKey = kv.Key
+    }
+    if len(curr) > 0 {
+        data = append(data, KeyValue{preKey, reduceF(preKey, curr)})
+    }
+    // 4) Write them to outFile
+    f, _ := os.Create(outFile)
+    enc := json.NewEncoder(f)
+    for _, kv := range data {
+        err := enc.Encode(kv)
+        if err != nil {
+            log.Fatalf("Error in reducer encoding: %v\n", err)
+        }
+    }
+    f.Close()
 }

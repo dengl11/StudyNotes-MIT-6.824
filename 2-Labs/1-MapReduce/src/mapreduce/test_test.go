@@ -14,7 +14,7 @@ import (
 )
 
 const (
-	nNumber = 100000
+	nNumber = 1000
 	nMap    = 100
 	nReduce = 50
 )
@@ -24,9 +24,7 @@ const (
 
 // Split in words
 func MapFunc(file string, value string) (res []KeyValue) {
-	debug("Map %v\n", value)
 	words := strings.Fields(value)
-	debug("	words %v\n",	words)
 	for _, w := range words {
 		kv := KeyValue{w, ""}
 		res = append(res, kv)
@@ -145,19 +143,19 @@ func cleanup(mr *Master) {
 }
 
 func TestSequentialSingle(t *testing.T) {
-	mr := Sequential("test", makeInputs(1), 1, MapFunc, ReduceFunc)
-	mr.Wait()
-	check(t, mr.files)
-	checkWorker(t, mr.stats)
-	cleanup(mr)
+    mr := Sequential("test", makeInputs(1), 1, MapFunc, ReduceFunc)
+    mr.Wait()
+    check(t, mr.files)
+    checkWorker(t, mr.stats)
+    cleanup(mr)
 }
 
 func TestSequentialMany(t *testing.T) {
-	mr := Sequential("test", makeInputs(5), 3, MapFunc, ReduceFunc)
-	mr.Wait()
-	check(t, mr.files)
-	checkWorker(t, mr.stats)
-	cleanup(mr)
+    mr := Sequential("test", makeInputs(5), 3, MapFunc, ReduceFunc)
+    mr.Wait()
+    check(t, mr.files)
+    checkWorker(t, mr.stats)
+    cleanup(mr)
 }
 
 func TestBasic(t *testing.T) {
