@@ -26,6 +26,7 @@ const (
 func MapFunc(file string, value string) (res []KeyValue) {
 	debug("Map %v\n", value)
 	words := strings.Fields(value)
+	debug("	words %v\n",	words)
 	for _, w := range words {
 		kv := KeyValue{w, ""}
 		res = append(res, kv)
@@ -50,7 +51,7 @@ func check(t *testing.T, files []string) {
 	}
 	defer output.Close()
 
-	var lines []string
+	var lines []string // input lines
 	for _, f := range files {
 		input, err := os.Open(f)
 		if err != nil {
@@ -63,7 +64,7 @@ func check(t *testing.T, files []string) {
 		}
 	}
 
-	sort.Strings(lines)
+	sort.Strings(lines) // Sort and then compare
 
 	outputScanner := bufio.NewScanner(output)
 	i := 0

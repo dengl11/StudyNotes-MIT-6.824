@@ -6,7 +6,8 @@ import (
 )
 
 // Debugging enabled?
-const debugEnabled = false
+const debugEnabled = true
+//const debugEnabled = false
 
 // debug() will only print if debugEnabled is true
 func debug(format string, a ...interface{}) (n int, err error) {

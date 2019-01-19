@@ -2,18 +2,20 @@ package mapreduce
 
 import (
 	"hash/fnv"
+	"fmt"
+	"os"
+    "io/ioutil"
+    "encoding/json"
 )
 
 // doMap manages one map task: it reads one of the input files
 // (inFile), calls the user-defined map function (mapF) for that file's
 // contents, and partitions the output into nReduce intermediate files.
-func doMap(
-	jobName string, // the name of the MapReduce job
-	mapTaskNumber int, // which map task this is
-	inFile string,
-	nReduce int, // the number of reduce task that will be run ("R" in the paper)
-	mapF func(file string, contents string) []KeyValue,
-) {
+func doMap(jobName string, // the name of the MapReduce job
+	       mapTaskNumber int, // which map task this is
+	       inFile string,
+	       nReduce int, // the number of reduce task that will be run ("R" in the paper)
+	       mapF func(file string, contents string) []KeyValue,) {
 	//
 	// You will need to write this function.
 	//
@@ -53,6 +55,29 @@ func doMap(
 	//
 	// Remember to close the file after you have written all the values!
 	//
+    // 1) prepare encoder for each file
+    encoders := make([]*json.Encoder, nReduce)
+    for i := 0; i < nReduce; i++ {
+        fileName := reduceName(jobName, mapTaskNumber, i)
+        f, _ := os.Create(fileName)
+        defer f.Close()
+        enc := json.NewEncoder(f)
+        encoders = append(encoders, enc)
+    }
+    // 2) read the input file content
+    dat, err := ioutil.ReadFile(inFile)
+    if err != nil {
+        return
+    }
+    mapResults := mapF(inFile, string(dat))
+    // 3) Call user-defined mapper to get results, and put into the right bucket
+    for _, kv := range mapResults {
+        bkt := ihash(kv.Key) % nReduce
+        err := encoders[bkt].Encode(&kv)
+        if err != nil {
+            fmt.Printf("Error in mapper: %v\n", err)
+        }
+    }
 }
 
 func ihash(s string) int {
