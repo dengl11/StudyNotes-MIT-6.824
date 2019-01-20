@@ -92,7 +92,6 @@ func doReduce(
     if len(curr) > 0 {
         data = append(data, KeyValue{preKey, reduceF(preKey, curr)})
     }
-    log.Printf("Reducer data: %v\n", len(data))
     // 4) Write them to outFile
     f, _ := os.Create(outFile)
     enc := json.NewEncoder(f)

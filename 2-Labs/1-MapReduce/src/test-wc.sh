@@ -1,6 +1,6 @@
 #!/bin/bash
 dataDir="../../starter_code/src/main"
-go run wc.go master sequential $dataDir/pg-*.txt
+go run wc/wc.go master sequential $dataDir/pg-*.txt
 sort -n -k2 mrtmp.wcseq | tail -10 | diff - $dataDir/mr-testout.txt > diff.out
 if [ -s diff.out ]
 then
