@@ -72,6 +72,9 @@ func doMap(jobName string, // the name of the MapReduce job
     mapResults := mapF(inFile, string(dat))
     // 3) Call user-defined mapper to get results, and put into the right bucket
     for _, kv := range mapResults {
+        if kv.Value == "" {
+            log.Fatalf("Error in mapper: empty\n")
+        }
         bkt := ihash(kv.Key) % nReduce
         err := encoders[bkt].Encode(&kv)
         if err != nil {

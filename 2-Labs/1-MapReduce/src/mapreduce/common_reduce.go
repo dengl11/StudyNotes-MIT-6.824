@@ -55,6 +55,7 @@ func doReduce(
     // 1) prepare intermediate file names that this reducer needs
     for i := 0; i < nMap; i++ {
         name := reduceName(jobName, i, reduceTaskNumber)
+        //log.Printf("reducer open file: %v\v", name)
         file, err := os.Open(name)
         if err != nil {
             log.Fatalf("Error in reducer: %v\n", err)
@@ -65,6 +66,7 @@ func doReduce(
             if err := dec.Decode(&kv); err == nil {
                 allKVs = append(allKVs, kv)
             } else {
+                //log.Printf("reducer decode error: %v\v", err)
                 break
             }
         }
@@ -82,7 +84,7 @@ func doReduce(
         if i > 0 && preKey != kv.Key {
             reduced := reduceF(preKey, curr)
             data = append(data, KeyValue{preKey, reduced})
-            curr = make([]string, 100)
+            curr = make([]string, 0, 100)
         }
         curr = append(curr, kv.Value)
         preKey = kv.Key
@@ -90,6 +92,7 @@ func doReduce(
     if len(curr) > 0 {
         data = append(data, KeyValue{preKey, reduceF(preKey, curr)})
     }
+    log.Printf("Reducer data: %v\n", len(data))
     // 4) Write them to outFile
     f, _ := os.Create(outFile)
     enc := json.NewEncoder(f)

@@ -40,7 +40,7 @@ func (mr *Master) merge() {
 
 	file, err := os.Create("mrtmp." + mr.jobName)
 	if err != nil {
-		log.Fatal("Merge: create ", err)
+		log.Fatal("Merge: create fatal error ", err)
 	}
 	w := bufio.NewWriter(file)
 	for _, k := range keys {
@@ -48,6 +48,7 @@ func (mr *Master) merge() {
 	}
 	w.Flush()
 	file.Close()
+    log.Println("Merger done!")
 }
 
 // removeFile is a simple wrapper around os.Remove that logs errors.
