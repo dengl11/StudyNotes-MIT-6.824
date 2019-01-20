@@ -26,8 +26,8 @@ type Worker struct {
 	l          net.Listener
 }
 
-// DoTask is called by the master when a new task is being scheduled on this
-// worker.
+// RPC Call: 
+// DoTask is called by the master when a new task is being scheduled on this worker.
 func (wk *Worker) DoTask(arg *DoTaskArgs, _ *struct{}) error {
 	fmt.Printf("%s: given %v task #%d on file %s (nios: %d)\n",
 		wk.name, arg.Phase, arg.TaskNumber, arg.File, arg.NumOtherPhase)
@@ -82,11 +82,11 @@ func (wk *Worker) register(master string) {
 
 // RunWorker sets up a connection with the master, registers its address, and
 // waits for tasks to be scheduled.
-func RunWorker(MasterAddress string, me string,
-	MapFunc func(string, string) []KeyValue,
-	ReduceFunc func(string, []string) string,
-	nRPC int,
-) {
+func RunWorker(MasterAddress string,
+               me string,
+               MapFunc func(string, string) []KeyValue,
+               ReduceFunc func(string, []string) string,
+               nRPC int,) {
 	debug("RunWorker %s\n", me)
 	wk := new(Worker)
 	wk.name = me
@@ -101,10 +101,10 @@ func RunWorker(MasterAddress string, me string,
 		log.Fatal("RunWorker: worker ", me, " error: ", e)
 	}
 	wk.l = l
-	wk.register(MasterAddress)
+	wk.register(MasterAddress) // RPC call to register this work in master
 
 	// DON'T MODIFY CODE BELOW
-	for {
+	for { // Keep work running
 		wk.Lock()
 		if wk.nRPC == 0 {
 			wk.Unlock()

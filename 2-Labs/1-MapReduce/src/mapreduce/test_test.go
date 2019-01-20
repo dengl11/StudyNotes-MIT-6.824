@@ -15,7 +15,7 @@ import (
 
 const (
 	nNumber = 1000
-	nMap    = 100
+	nMap    = 10
 	nReduce = 50
 )
 
@@ -143,26 +143,27 @@ func cleanup(mr *Master) {
 }
 
 func TestSequentialSingle(t *testing.T) {
-    mr := Sequential("test", makeInputs(1), 1, MapFunc, ReduceFunc)
-    mr.Wait()
-    check(t, mr.files)
-    checkWorker(t, mr.stats)
-    cleanup(mr)
+	mr := Sequential("test", makeInputs(1), 1, MapFunc, ReduceFunc)
+	mr.Wait()
+	check(t, mr.files)
+	checkWorker(t, mr.stats)
+	cleanup(mr)
 }
 
 func TestSequentialMany(t *testing.T) {
-    mr := Sequential("test", makeInputs(5), 3, MapFunc, ReduceFunc)
-    mr.Wait()
-    check(t, mr.files)
-    checkWorker(t, mr.stats)
-    cleanup(mr)
+	mr := Sequential("test", makeInputs(5), 3, MapFunc, ReduceFunc)
+	mr.Wait()
+	check(t, mr.files)
+	checkWorker(t, mr.stats)
+	cleanup(mr)
 }
 
 func TestBasic(t *testing.T) {
-	mr := setup()
+	mr := setup() // Start the master process
+    log.Println("testing stared")
 	for i := 0; i < 2; i++ {
 		go RunWorker(mr.address, port("worker"+strconv.Itoa(i)),
-			MapFunc, ReduceFunc, -1)
+			MapFunc, ReduceFunc, -1) // Run the workers
 	}
 	mr.Wait()
 	check(t, mr.files)

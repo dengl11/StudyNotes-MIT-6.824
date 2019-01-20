@@ -56,6 +56,7 @@ func doMap(jobName string, // the name of the MapReduce job
 	// Remember to close the file after you have written all the values!
 	//
     // 1) prepare encoder for each file
+    //log.Printf("mapper %v started\n", mapTaskNumber)
     encoders := make([]*json.Encoder, nReduce)
     for i := 0; i < nReduce; i++ {
         fileName := reduceName(jobName, mapTaskNumber, i)
@@ -72,9 +73,9 @@ func doMap(jobName string, // the name of the MapReduce job
     mapResults := mapF(inFile, string(dat))
     // 3) Call user-defined mapper to get results, and put into the right bucket
     for _, kv := range mapResults {
-        if kv.Value == "" {
-            log.Fatalf("Error in mapper: empty\n")
-        }
+        //if kv.Value == "" {
+            //log.Fatalf("Error in mapper: empty\n")
+        //}
         bkt := ihash(kv.Key) % nReduce
         err := encoders[bkt].Encode(&kv)
         if err != nil {

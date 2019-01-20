@@ -2,14 +2,14 @@
 export GOPATH="$PWD/.."
 
 echo ""
-echo "==> Part I"
-go test -run Sequential mapreduce/...
+#echo "==> Part I"
+#go test -run Sequential mapreduce/...
 echo ""
 #echo "==> Part II"
 #(cd "$here" && sh ./test-wc.sh > /dev/null)
 #echo ""
-#echo "==> Part III"
-#go test -run TestBasic mapreduce/...
+echo "==> Part III"
+go test -run TestBasic mapreduce/...
 #echo ""
 #echo "==> Part IV"
 #go test -run Failure mapreduce/...

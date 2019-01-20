@@ -20,6 +20,12 @@ func (mr *Master) Shutdown(_, _ *struct{}) error {
 // calls (Register in particular) for as long as the worker is alive.
 func (mr *Master) startRPCServer() {
 	rpcs := rpc.NewServer()
+	// func (server *Server) Register(rcvr interface{}) error
+	// Register publishes in the server the set of methods of the receiver value that satisfy the following conditions:
+	//     - exported method of exported type
+	//     - two arguments, both of exported type
+	//     - the second argument is a pointer
+	//     - one return value, of type error
 	rpcs.Register(mr)
 	os.Remove(mr.address) // only needed for "unix"
 	l, e := net.Listen("unix", mr.address)

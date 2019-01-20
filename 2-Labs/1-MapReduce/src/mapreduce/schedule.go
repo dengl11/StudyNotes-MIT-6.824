@@ -1,7 +1,10 @@
 package mapreduce
 
-import "fmt"
-
+import (
+    "fmt"
+    "sync"
+    "log"
+)
 //
 // schedule() starts and waits for all tasks in the given phase (Map
 // or Reduce). the mapFiles argument holds the names of the files that
@@ -11,16 +14,20 @@ import "fmt"
 // suitable for passing to call(). registerChan will yield all
 // existing registered workers (if any) and new ones as they register.
 //
-func schedule(jobName string, mapFiles []string, nReduce int, phase jobPhase, registerChan chan string) {
+func schedule(jobName string,
+              mapFiles []string,
+              nReduce int,
+              phase jobPhase,
+              registerChan chan string) {
 	var ntasks int
 	var n_other int // number of inputs (for reduce) or outputs (for map)
-	switch phase {
-	case mapPhase:
-		ntasks = len(mapFiles)
-		n_other = nReduce
-	case reducePhase:
-		ntasks = nReduce
-		n_other = len(mapFiles)
+    switch phase {
+    case mapPhase:
+        ntasks = len(mapFiles)
+        n_other = nReduce
+    case reducePhase:
+        ntasks = nReduce
+        n_other = len(mapFiles)
 	}
 
 	fmt.Printf("Schedule: %v %v tasks (%d I/Os)\n", ntasks, phase, n_other)
@@ -30,7 +37,28 @@ func schedule(jobName string, mapFiles []string, nReduce int, phase jobPhase, re
 	// Remember that workers may fail, and that any given worker may finish
 	// multiple tasks.
 	//
-	// TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO
-	//
-	fmt.Printf("Schedule: %v phase done\n", phase)
+    // TODO
+    //
+    var done sync.WaitGroup
+    for i := 0; i < ntasks; i++ {
+        //log.Printf("Scheduler waiting for worker\n")
+        workerAddr := <-registerChan // get an available worker
+        //log.Printf("Scheduler get a new worker: %v\n", workerAddr)
+        done.Add(1)
+        var file string
+        if phase == mapPhase {
+            file = mapFiles[i]
+        }
+        args := DoTaskArgs{jobName, file, phase, i, n_other}
+        go func() {
+            success := call(workerAddr, "Worker.DoTask", args, nil)
+            if !success {
+                log.Printf("RPC failed on worker: %v\n", workerAddr)
+            }
+            done.Done()
+            registerChan <- workerAddr // Re-use the worker who has just completed its job
+        }()
+    }
+    done.Wait()
+    fmt.Printf("Schedule: %v phase done\n", phase)
 }

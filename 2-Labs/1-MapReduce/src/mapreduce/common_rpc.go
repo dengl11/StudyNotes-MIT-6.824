@@ -33,7 +33,7 @@ type RegisterArgs struct {
 	Worker string // the worker's UNIX-domain socket name, i.e. its RPC address
 }
 
-// call() sends an RPC to the rpcname handler on server srv
+// call() sends an RPC to the rpcname handler on server [srv]
 // with arguments args, waits for the reply, and leaves the
 // reply in reply. the reply argument should be the address
 // of a reply structure.
@@ -48,14 +48,17 @@ type RegisterArgs struct {
 // please use call() to send all RPCs, in master.go, mapreduce.go,
 // and worker.go.  please don't change this function.
 //
-func call(srv string, rpcname string,
-	args interface{}, reply interface{}) bool {
-	c, errx := rpc.Dial("unix", srv)
+func call(srv string,
+          rpcname string,
+          args interface{},
+          reply interface{}) bool {
+	c, errx := rpc.Dial("unix", srv) // Dial(network, address)
 	if errx != nil {
 		return false
 	}
 	defer c.Close()
 
+    // Call invokes the named function, waits for it to complete, and returns its error status.
 	err := c.Call(rpcname, args, reply)
 	if err == nil {
 		return true
