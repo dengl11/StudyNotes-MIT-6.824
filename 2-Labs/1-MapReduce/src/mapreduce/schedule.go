@@ -2,7 +2,6 @@ package mapreduce
 
 import (
     "fmt"
-    "sync"
     "log"
 )
 //
@@ -39,26 +38,42 @@ func schedule(jobName string,
 	//
     // TODO
     //
-    var done sync.WaitGroup
+    todo := make([]int, ntasks) // an array to keep track of jobs to do
     for i := 0; i < ntasks; i++ {
-        //log.Printf("Scheduler waiting for worker\n")
+       todo[i] = i
+    }
+    nDone := 0
+    for ; ; {
+        if nDone >= ntasks {
+            break
+        }
+        // First wait for an available worker
+        log.Printf("Scheduler waiting for worker\n")
         workerAddr := <-registerChan // get an available worker
-        //log.Printf("Scheduler get a new worker: %v\n", workerAddr)
-        done.Add(1)
+        log.Printf("Scheduler get a new worker: %v\n", workerAddr)
+
+        // If all jobs are being done, continue to the next loop for an available worker
+        if len(todo) == 0 {
+            continue
+        }
+        var job int
+        job, todo = todo[0], todo[1:]
+        //log.Printf("Scheduler running job: %v\n", job)
         var file string
         if phase == mapPhase {
-            file = mapFiles[i]
+            file = mapFiles[job]
         }
-        args := DoTaskArgs{jobName, file, phase, i, n_other}
-        go func() {
+        args := DoTaskArgs{jobName, file, phase, job, n_other}
+        go func(i int) {
             success := call(workerAddr, "Worker.DoTask", args, nil)
             if !success {
                 log.Printf("RPC failed on worker: %v\n", workerAddr)
+                todo = append(todo, i) // Add back the failed job
+            } else {
+                nDone += 1
+                registerChan <- workerAddr // Re-use the worker who has just completed its job
             }
-            done.Done()
-            registerChan <- workerAddr // Re-use the worker who has just completed its job
-        }()
+        }(job)
     }
-    done.Wait()
     fmt.Printf("Schedule: %v phase done\n", phase)
 }

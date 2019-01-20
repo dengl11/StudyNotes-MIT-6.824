@@ -3,8 +3,7 @@ package mapreduce
 import (
 	"fmt"
 	"testing"
-	"time"
-
+    "time"
 	"bufio"
 	"log"
 	"os"
@@ -15,7 +14,7 @@ import (
 
 const (
 	nNumber = 1000
-	nMap    = 10
+	nMap    = 100
 	nReduce = 50
 )
 
@@ -185,24 +184,24 @@ func TestOneFailure(t *testing.T) {
 }
 
 func TestManyFailures(t *testing.T) {
-	mr := setup()
-	i := 0
-	done := false
-	for !done {
-		select {
-		case done = <-mr.doneChannel:
-			check(t, mr.files)
-			cleanup(mr)
-			break
-		default:
-			// Start 2 workers each sec. The workers fail after 10 tasks
-			w := port("worker" + strconv.Itoa(i))
-			go RunWorker(mr.address, w, MapFunc, ReduceFunc, 10)
-			i++
-			w = port("worker" + strconv.Itoa(i))
-			go RunWorker(mr.address, w, MapFunc, ReduceFunc, 10)
-			i++
-			time.Sleep(1 * time.Second)
-		}
-	}
+    mr := setup()
+    i := 0
+    done := false
+    for !done {
+        select {
+        case done = <-mr.doneChannel:
+            check(t, mr.files)
+            cleanup(mr)
+            break
+        default:
+            // Start 2 workers each sec. The workers fail after 10 tasks
+            w := port("worker" + strconv.Itoa(i))
+            go RunWorker(mr.address, w, MapFunc, ReduceFunc, 10)
+            i++
+            w = port("worker" + strconv.Itoa(i))
+            go RunWorker(mr.address, w, MapFunc, ReduceFunc, 10)
+            i++
+            time.Sleep(1 * time.Second)
+        }
+    }
 }

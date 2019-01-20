@@ -104,7 +104,7 @@ func RunWorker(MasterAddress string,
 	wk.register(MasterAddress) // RPC call to register this work in master
 
 	// DON'T MODIFY CODE BELOW
-	for { // Keep work running
+	for { // Keep worker running
 		wk.Lock()
 		if wk.nRPC == 0 {
 			wk.Unlock()
