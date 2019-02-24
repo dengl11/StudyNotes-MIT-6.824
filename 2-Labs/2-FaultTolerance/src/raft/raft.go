@@ -39,7 +39,7 @@ type ApplyMsg struct {
 
 type AppendEntriesArgs struct {
 	Leader   int // Leader index
-	Term     int // Leader index
+	Term     int // Leader Term
 	LogIndex int
 }
 
@@ -78,28 +78,71 @@ type Raft struct {
 // believes it is the leader.
 func (rf *Raft) GetState() (int, bool) {
 	// Your code here (2A).
+	DPrintf("Loking on getting state for server %d", rf.me)
+	rf.mu.Lock()
+	DPrintf("Acquired lock on getting state for server %d", rf.me)
+	defer rf.mu.Unlock()
 	return rf.currentTerm, rf.isLeader
 }
 
+// Check isLeader in thread-safe way
+func (rf *Raft) getIsLeader() bool {
+	DPrintf("Loking on get isLeader")
+	rf.mu.Lock()
+	defer rf.mu.Unlock()
+	return rf.isLeader
+}
+
+// Check isLeader in thread-safe way
+func (rf *Raft) setLeader(isLeader bool) {
+	DPrintf("Loking on set isLeader")
+	rf.mu.Lock()
+	defer rf.mu.Unlock()
+	rf.isLeader = isLeader
+	if isLeader {
+		DPrintf("\n NEW LEADER: %d", rf.me)
+	}
+}
+
+// Leader send heartbeats
 func (rf *Raft) sendAppendEntries() {
+	rf.mu.Lock()
 	var appendEntriesArgs AppendEntriesArgs
 	appendEntriesArgs.Leader = rf.me
 	appendEntriesArgs.Term = rf.currentTerm
 	appendEntriesArgs.LogIndex = rf.lastApplied
+	rf.mu.Unlock()
+
+	var wg sync.WaitGroup
 	for i := 0; i < len(rf.peers); i++ {
+		wg.Add(1)
 		DPrintf("Server %d send heartbeat to server %d", rf.me, i)
-		rf.peers[i].Call("Raft.AppendEntries", &appendEntriesArgs, nil)
+		go func(idx int) {
+			rf.peers[idx].Call("Raft.AppendEntries", &appendEntriesArgs, nil)
+			wg.Done()
+		}(i)
 	}
+	wg.Wait()
 }
 
+// Heartbeat handler
 func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply) {
-	DPrintf("Server %d gets heartbeat from leader %d", rf.me, args.Leader)
-	rf.isLeader = (args.Leader == rf.me)
+	DPrintf("Server %d get heartbeat from leader %d", rf.me, args.Leader)
 	DPrintf("args.Term: %v, my term: %d", args.Term, rf.currentTerm)
-	if args.Term >= rf.currentTerm {
-		rf.currentTerm = args.Term
-		rf.votedFor = -1
+
+	rf.mu.Lock()
+	DPrintf("Acquired lock for getting heartbeat on server %d", rf.me)
+	defer rf.mu.Unlock()
+
+	if args.Term < rf.currentTerm {
+		DPrintf("Rejects heartbeat ... ")
+		return
 	}
+	rf.isLeader = (args.Leader == rf.me)
+
+	rf.currentTerm = args.Term
+	rf.votedFor = -1
+
 	rf.heartbeat <- true
 }
 
@@ -156,6 +199,7 @@ type RequestVoteReply struct {
 	VoteGranted bool // True if the candidate received vote
 }
 
+// Debug helper
 func (rf *Raft) reportState() {
 	DPrintf("Index: %v, Term: %v, votedFor: %v", rf.me, rf.currentTerm, rf.votedFor)
 }
@@ -169,18 +213,28 @@ func (rf *Raft) RequestVote(args *RequestVoteArgs, reply *RequestVoteReply) {
 	rf.reportState()
 
 	if args.MyTerm > rf.currentTerm {
+		DPrintf("Loking on updating when args.MyTerm > rf.currentTerm")
+		rf.mu.Lock()
+
 		rf.votedFor = -1
 		rf.isLeader = false
 		rf.currentTerm = args.MyTerm
+
+		rf.mu.Unlock()
 	}
 	if args.MyTerm >= rf.currentTerm {
 		if rf.votedFor < 0 || rf.votedFor == args.MyId {
 			if args.LastLogIndex >= rf.lastApplied {
+				DPrintf("Loking on updating when args.LastLogIndex >= rf.lastApplied")
+				rf.mu.Lock()
+
 				reply.VoteGranted = true
 				reply.CurrentTerm = rf.currentTerm
 				rf.currentTerm = args.MyTerm
 				rf.votedFor = args.MyId
 				DPrintf("Server %d granted vote for server %d", rf.me, args.MyId)
+
+				rf.mu.Unlock()
 				return
 			}
 		}
@@ -218,7 +272,7 @@ func (rf *Raft) RequestVote(args *RequestVoteArgs, reply *RequestVoteReply) {
 // the struct itself.
 //
 func (rf *Raft) sendRequestVote(server int, args *RequestVoteArgs, reply *RequestVoteReply) bool {
-	//DPrintf("Server %d request vote from server %d", rf.me, server)
+	// DPrintf("Server %d request vote from server %d", rf.me, server)
 	ok := rf.peers[server].Call("Raft.RequestVote", args, reply)
 	if ok {
 		DPrintf("Reply: %v", reply)
@@ -303,9 +357,6 @@ func periodicallyElect(rf *Raft) {
 	// random seed
 	s := rand.NewSource(int64(rf.me))
 	r := rand.New(s)
-	var requestArgs RequestVoteArgs
-
-	requestArgs.MyId = rf.me
 	for {
 		nSleep := time.Duration(400 + r.Intn(500))
 		DPrintf("Server %d sleeps %d", rf.me, nSleep)
@@ -314,48 +365,65 @@ func periodicallyElect(rf *Raft) {
 			DPrintf("server %d get heartbeat, continue", rf.me)
 			continue // Reset the timeout
 		case <-time.After(nSleep * time.Millisecond): // Random timeout between 500 and 1000 ms
-			rf.isLeader = false
-			DPrintf("Server %d becomes a candidate", rf.me)
-			// convert to candidate
-			rf.currentTerm++
-			requestArgs.MyTerm = rf.currentTerm
-			DPrintf("Server %d becomes a candidate current Term: %d", rf.me, rf.currentTerm)
-			rf.votedFor = rf.me
-			votes := 1 // number of votes granted so far
-			var wg sync.WaitGroup
-			for i := 0; i < len(rf.peers); i++ {
-				if i == rf.me {
-					continue
-				}
-				wg.Add(1)
-				go func(i int) {
-					defer wg.Done()
-					var requestReply RequestVoteReply
-					ok := rf.sendRequestVote(i, &requestArgs, &requestReply)
-					if ok && requestReply.VoteGranted {
-						votes++
-					}
-				}(i)
-			}
-			wg.Wait()
-			DPrintf("votes: %v, %v", votes, len(rf.peers)/2)
-			if votes > len(rf.peers)/2 { // Wins the majority
-				rf.isLeader = true
-				go func() {
-					periodicallySendAppendEntries(rf)
-				}()
-			}
+			go func() {
+				convertToCandidate(rf)
+			}()
 		}
 	}
 }
 
+func convertToCandidate(rf *Raft) {
+	var requestArgs RequestVoteArgs
+	requestArgs.MyId = rf.me
+	DPrintf("Loking on converting to candidate")
+	rf.mu.Lock()
+	rf.isLeader = false
+	DPrintf("Server %d becomes a candidate", rf.me)
+	// convert to candidate
+	rf.currentTerm++
+	rf.heartbeat <- true // reset election timer
+	requestArgs.MyTerm = rf.currentTerm
+	DPrintf("Server %d becomes a candidate current Term: %d", rf.me, rf.currentTerm)
+	rf.votedFor = rf.me
+	rf.mu.Unlock()
+
+	votes := 1 // number of votes granted so far
+	var wg sync.WaitGroup
+	for i := 0; i < len(rf.peers); i++ {
+		if i == rf.me {
+			continue
+		}
+		wg.Add(1)
+		go func(i int) {
+			defer wg.Done()
+			var requestReply RequestVoteReply
+			ok := rf.sendRequestVote(i, &requestArgs, &requestReply)
+			if ok && requestReply.VoteGranted {
+				votes++
+			}
+		}(i)
+	}
+	wg.Wait()
+	DPrintf("Server %d get votes: %v, %v", rf.me, votes, len(rf.peers)/2)
+	if votes > len(rf.peers)/2 { // Wins the majority
+
+		rf.setLeader(true)
+
+		go func() {
+			periodicallySendAppendEntries(rf)
+		}()
+	}
+}
+
+// Leader sent heartbeats periodically
 func periodicallySendAppendEntries(rf *Raft) {
 	DPrintf("Leader %d start sending heartbeats", rf.me)
 	for {
 		time.Sleep(time.Duration(100) * time.Millisecond) // Send heartbeat every 100ms
-		if !rf.isLeader {
+		if !rf.getIsLeader() {
 			return
 		}
+
 		rf.sendAppendEntries()
 	}
 }
