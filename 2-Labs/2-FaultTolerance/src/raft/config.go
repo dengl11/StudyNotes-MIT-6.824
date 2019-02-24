@@ -206,7 +206,7 @@ func (cfg *config) cleanup() {
 
 // attach server i to the net.
 func (cfg *config) connect(i int) {
-	// fmt.Printf("connect(%d)\n", i)
+	fmt.Printf("connect(%d)\n", i)
 
 	cfg.connected[i] = true
 
@@ -300,10 +300,11 @@ func (cfg *config) checkTerms() int {
 	for i := 0; i < cfg.n; i++ {
 		if cfg.connected[i] {
 			xterm, _ := cfg.rafts[i].GetState()
+			fmt.Printf("server %d term %d", i, xterm)
 			if term == -1 {
 				term = xterm
 			} else if term != xterm {
-				cfg.t.Fatalf("servers disagree on term")
+				cfg.t.Fatalf("servers disagree on term: %d != %d", term, xterm)
 			}
 		}
 	}
