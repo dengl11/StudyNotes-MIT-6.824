@@ -9,3 +9,7 @@ clean:
 
 2A2:
 	go test -run ReElection2A
+
+
+2B1:
+	go test -run TestFailAgree2B
