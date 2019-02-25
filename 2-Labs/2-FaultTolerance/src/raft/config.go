@@ -403,7 +403,7 @@ func (cfg *config) one(cmd int, expectedServers int) int {
 			cfg.mu.Unlock()
 			if rf != nil {
 				index1, _, ok := rf.Start(cmd)
-				if ok {
+				if ok { // Found the server
 					index = index1
 					break
 				}

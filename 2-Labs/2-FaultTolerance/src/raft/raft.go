@@ -21,7 +21,6 @@ import "sync"
 import "labrpc"
 import "time"
 import "math/rand"
-import "math"
 
 // import "bytes"
 // import "encoding/gob"
@@ -80,6 +79,7 @@ type Raft struct {
 	// Volatile states
 	commitIndex int // Index of highest log entry known to be committed
 	lastApplied int // Index of highest log entry applied to state machine
+
 	// Leader states
 	nextIndexes  []int // Next log index to send for each server
 	matchIndexes []int // Highest log index replicated on each server
@@ -105,6 +105,13 @@ func (rf *Raft) getIsLeader() bool {
 }
 
 // Check isLeader in thread-safe way
+func (rf *Raft) getCurrentTerm() int {
+	rf.mu.Lock()
+	defer rf.mu.Unlock()
+	return rf.currentTerm
+}
+
+// Check isLeader in thread-safe way
 func (rf *Raft) setLeader(isLeader bool) {
 	DPrintf("Loking on set isLeader")
 	rf.mu.Lock()
@@ -115,16 +122,45 @@ func (rf *Raft) setLeader(isLeader bool) {
 	}
 }
 
+// Return RPC-ok, reply-success
+func (rf *Raft) sendAppendEntriesToServer(server int) (bool, bool) {
+	var appendEntriesArgs AppendEntriesArgs
+	var appendEntriesReply AppendEntriesReply
+	appendEntriesArgs.Leader = rf.me
+	appendEntriesArgs.Term = rf.getCurrentTerm()
+	prevIndex := rf.nextIndexes[server] - 1
+	appendEntriesArgs.PrevLogIndex = prevIndex
+	DPrintf("prevIndex =  %d", prevIndex)
+	if prevIndex >= 0 {
+		appendEntriesArgs.PrevLogTerm = rf.logs[prevIndex].Term
+	}
+	appendEntriesArgs.Entries = rf.logs[prevIndex+1:]
+	appendEntriesArgs.LeaderCommitIdx = rf.commitIndex
+
+	callSuccess := rf.peers[server].Call("Raft.AppendEntries", &appendEntriesArgs, &appendEntriesReply)
+	return callSuccess, appendEntriesReply.Success
+}
+
+func (rf *Raft) keepSendAppendEntriesToServer(idx int) bool {
+	for { // Keep sendAppendEntriesToServer until accepted or lost connection
+		ok, accepted := rf.sendAppendEntriesToServer(idx)
+		if !ok {
+			return false
+		}
+		if accepted {
+			return true
+		}
+		// rejection
+		rf.nextIndexes[idx]--
+	}
+}
+
 // Leader send heartbeats
 // return true if get success from majority
 func (rf *Raft) sendAppendEntries(empty bool) bool {
 
 	var wg sync.WaitGroup
 	nSuccess := 1 // number of successes for AppendEntries
-
-	rf.mu.Lock()
-	currentTerm := rf.currentTerm
-	rf.mu.Unlock()
 
 	for i := 0; i < len(rf.peers); i++ {
 		if !empty && i == rf.me {
@@ -133,21 +169,7 @@ func (rf *Raft) sendAppendEntries(empty bool) bool {
 		wg.Add(1)
 		DPrintf("Server %d send heartbeat to server %d", rf.me, i)
 		go func(idx int) {
-			var appendEntriesArgs AppendEntriesArgs
-			var appendEntriesReply AppendEntriesReply
-			appendEntriesArgs.Leader = rf.me
-			appendEntriesArgs.Term = currentTerm
-			prevIndex := rf.nextIndexes[idx] - 1
-			appendEntriesArgs.PrevLogIndex = prevIndex
-			DPrintf("prevIndex =  %d", prevIndex)
-			if prevIndex >= 0 {
-				appendEntriesArgs.PrevLogTerm = rf.logs[prevIndex].Term
-			}
-			appendEntriesArgs.Entries = rf.logs[prevIndex+1:]
-			appendEntriesArgs.LeaderCommitIdx = rf.commitIndex
-
-			callSuccess := rf.peers[idx].Call("Raft.AppendEntries", &appendEntriesArgs, &appendEntriesReply)
-			if callSuccess && appendEntriesReply.Success {
+			if rf.keepSendAppendEntriesToServer(idx) {
 				nSuccess++
 			}
 			wg.Done()
@@ -192,7 +214,8 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 	rf.logs = append(rf.logs, args.Entries...)
 
 	if args.LeaderCommitIdx > rf.commitIndex {
-		rf.commitIndex = int(math.Min(float64(args.LeaderCommitIdx), float64(len(rf.logs)-1)))
+		rf.commitIndex = min(args.LeaderCommitIdx, len(rf.logs)-1)
+		DPrintf("💤🌕🌕Set server %v commitIndex as %v", rf.me, rf.commitIndex)
 	}
 
 	rf.isLeader = (args.Leader == rf.me)
@@ -359,11 +382,12 @@ func (rf *Raft) Start(command interface{}) (int, int, bool) {
 	if !rf.isLeader {
 		return 0, 0, false
 	}
+	DPrintf("------ Leader %v Start Command  %v  😡😡😡 --------", rf.me, command)
 	go func() {
 		rf.tryCommitNewCommand(command)
 	}()
 
-	return rf.commitIndex + 1, rf.currentTerm, rf.isLeader
+	return rf.commitIndex, rf.currentTerm, true
 }
 
 func (rf *Raft) tryCommitNewCommand(command interface{}) {
@@ -377,6 +401,8 @@ func (rf *Raft) tryCommitNewCommand(command interface{}) {
 	// 2) send AppendEntries to all other servers in parallel
 	majoritySuccess := rf.sendAppendEntries(false)
 	if majoritySuccess { // the entry has been safely replicated on a majority of the servers
+		// Commit!
+		rf.commitIndex = len(rf.logs) - 1
 		applyMsg := ApplyMsg{rf.me, rf.logs[rf.commitIndex].Command, true, nil}
 		rf.applyCh <- applyMsg
 	}
@@ -418,8 +444,8 @@ func Make(peers []*labrpc.ClientEnd,
 	rf.currentTerm = 0
 	rf.votedFor = -1
 	rf.logs = make([]LogEntry, 0, 10)
-	rf.commitIndex = 0
-	rf.lastApplied = 0
+	rf.commitIndex = -1
+	rf.lastApplied = -1
 	rf.heartbeat = make(chan bool)
 	rf.nextIndexes = make([]int, len(rf.peers))
 	rf.matchIndexes = make([]int, len(rf.peers))
@@ -528,4 +554,11 @@ func (rf *Raft) periodicallySendHeartbeats() {
 
 		rf.sendAppendEntries(true)
 	}
+}
+
+func min(x int, y int) int {
+	if x < y {
+		return x
+	}
+	return y
 }
