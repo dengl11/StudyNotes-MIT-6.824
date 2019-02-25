@@ -29,6 +29,7 @@ func TestInitialElection2A(t *testing.T) {
 
 	// is a leader elected?
 	cfg.checkOneLeader()
+	fmt.Printf("🉐Check one Leader pass \n")
 
 	// does the leader+term stay the same if there is no network failure?
 	term1 := cfg.checkTerms()

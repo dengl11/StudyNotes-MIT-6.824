@@ -116,10 +116,16 @@ func (rf *Raft) setLeader(isLeader bool) {
 }
 
 // Leader send heartbeats
-func (rf *Raft) sendAppendEntries(empty bool) {
+// return true if get success from majority
+func (rf *Raft) sendAppendEntries(empty bool) bool {
 
 	var wg sync.WaitGroup
 	nSuccess := 1 // number of successes for AppendEntries
+
+	rf.mu.Lock()
+	currentTerm := rf.currentTerm
+	rf.mu.Unlock()
+
 	for i := 0; i < len(rf.peers); i++ {
 		if !empty && i == rf.me {
 			continue // if not heartbeat, skip leader itself
@@ -127,19 +133,19 @@ func (rf *Raft) sendAppendEntries(empty bool) {
 		wg.Add(1)
 		DPrintf("Server %d send heartbeat to server %d", rf.me, i)
 		go func(idx int) {
-			rf.mu.Lock()
-
 			var appendEntriesArgs AppendEntriesArgs
 			var appendEntriesReply AppendEntriesReply
 			appendEntriesArgs.Leader = rf.me
-			appendEntriesArgs.Term = rf.currentTerm
+			appendEntriesArgs.Term = currentTerm
 			prevIndex := rf.nextIndexes[idx] - 1
 			appendEntriesArgs.PrevLogIndex = prevIndex
-			appendEntriesArgs.PrevLogTerm = rf.logs[prevIndex].Term
+			DPrintf("prevIndex =  %d", prevIndex)
+			if prevIndex >= 0 {
+				appendEntriesArgs.PrevLogTerm = rf.logs[prevIndex].Term
+			}
 			appendEntriesArgs.Entries = rf.logs[prevIndex+1:]
 			appendEntriesArgs.LeaderCommitIdx = rf.commitIndex
 
-			rf.mu.Unlock()
 			callSuccess := rf.peers[idx].Call("Raft.AppendEntries", &appendEntriesArgs, &appendEntriesReply)
 			if callSuccess && appendEntriesReply.Success {
 				nSuccess++
@@ -148,13 +154,11 @@ func (rf *Raft) sendAppendEntries(empty bool) {
 		}(i)
 	}
 	wg.Wait()
+	DPrintf("send AppendEntries: 🧡Success = %v", nSuccess)
 	if empty {
-		return
+		return true
 	}
-	if nSuccess > len(rf.peers)/2 { // the entry has been safely replicated on a majority of the servers
-		applyMsg := ApplyMsg{rf.me, rf.logs[rf.commitIndex].Command, true, nil}
-		rf.applyCh <- applyMsg
-	}
+	return nSuccess > len(rf.peers)/2
 }
 
 // AppendEntries handler
@@ -175,15 +179,15 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 	// Check the term at PrevLogIndex
 	prevIndex := args.PrevLogIndex
 	prevTerm := args.PrevLogTerm
-	if len(rf.logs) < prevIndex || rf.logs[prevIndex].Term != prevTerm {
+	if prevIndex >= 0 && len(rf.logs) < prevIndex {
 		DPrintf("Rejects mismatch  ")
 		return
 	}
 
 	reply.Success = true
 
-	if rf.logs[prevIndex].Term != prevTerm {
-		rf.logs = rf.logs[prevIndex:]
+	if prevIndex >= 0 && rf.logs[prevIndex].Term != prevTerm {
+		rf.logs = rf.logs[:prevIndex]
 	}
 	rf.logs = append(rf.logs, args.Entries...)
 
@@ -266,6 +270,7 @@ func (rf *Raft) RequestVote(args *RequestVoteArgs, reply *RequestVoteReply) {
 	rf.reportState()
 
 	rf.mu.Lock()
+	defer rf.mu.Unlock()
 	if args.MyTerm > rf.currentTerm {
 		DPrintf("Loking on updating when args.MyTerm > rf.currentTerm")
 
@@ -275,6 +280,7 @@ func (rf *Raft) RequestVote(args *RequestVoteArgs, reply *RequestVoteReply) {
 
 	}
 	candidateUpdated := !rf.hasMoreRecentLogsThan(args.LastLogIndex, args.LastLogTerm) && args.MyTerm >= rf.currentTerm
+	DPrintf("candidateUpdated = %v", candidateUpdated)
 	if candidateUpdated {
 		if rf.votedFor < 0 || rf.votedFor == args.MyId {
 			if args.LastLogIndex >= rf.lastApplied {
@@ -291,7 +297,6 @@ func (rf *Raft) RequestVote(args *RequestVoteArgs, reply *RequestVoteReply) {
 		}
 	}
 	reply.VoteGranted = false
-	rf.mu.Unlock()
 }
 
 //
@@ -370,9 +375,11 @@ func (rf *Raft) tryCommitNewCommand(command interface{}) {
 	rf.logs = append(rf.logs, logEntry)
 
 	// 2) send AppendEntries to all other servers in parallel
-	go func() {
-		rf.sendAppendEntries(false)
-	}()
+	majoritySuccess := rf.sendAppendEntries(false)
+	if majoritySuccess { // the entry has been safely replicated on a majority of the servers
+		applyMsg := ApplyMsg{rf.me, rf.logs[rf.commitIndex].Command, true, nil}
+		rf.applyCh <- applyMsg
+	}
 
 }
 
@@ -410,7 +417,7 @@ func Make(peers []*labrpc.ClientEnd,
 	// Your initialization code here (2A, 2B, 2C).
 	rf.currentTerm = 0
 	rf.votedFor = -1
-	rf.logs = make([]LogEntry, 10)
+	rf.logs = make([]LogEntry, 0, 10)
 	rf.commitIndex = 0
 	rf.lastApplied = 0
 	rf.heartbeat = make(chan bool)
@@ -485,6 +492,7 @@ func convertToCandidate(rf *Raft) {
 }
 
 func (rf *Raft) hasMoreRecentLogsThan(lastLogIndex int, lastLogTerm int) bool {
+	DPrintf("server %v checking hasMoreRecentLogsThan: myLogs = %v", rf.me, rf.logs)
 	if len(rf.logs) == 0 {
 		return false
 	}
@@ -506,13 +514,11 @@ func (rf *Raft) becomeALeader() {
 		rf.matchIndexes[i] = 0
 	}
 
-	go func() {
-		periodicallySendAppendEntries(rf)
-	}()
+	rf.periodicallySendHeartbeats()
 }
 
 // Leader sent heartbeats periodically
-func periodicallySendAppendEntries(rf *Raft) {
+func (rf *Raft) periodicallySendHeartbeats() {
 	DPrintf("Leader %d start sending heartbeats", rf.me)
 	for {
 		time.Sleep(time.Duration(100) * time.Millisecond) // Send heartbeat every 100ms
