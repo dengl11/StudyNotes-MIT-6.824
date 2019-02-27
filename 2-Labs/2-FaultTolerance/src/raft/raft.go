@@ -137,7 +137,7 @@ func (rf *Raft) sendAppendEntriesToServer(server int, empty bool) (bool, bool) {
 
 	rf.mu.Lock()
 	appendEntriesArgs.Leader = rf.me
-	appendEntriesArgs.Term = rf.getCurrentTerm()
+	appendEntriesArgs.Term = rf.currentTerm
 	prevIndex := rf.nextIndexes[server] - 1
 	appendEntriesArgs.PrevLogIndex = prevIndex
 	//DPrintf("prevIndex =  %d", prevIndex)
