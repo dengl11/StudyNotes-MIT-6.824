@@ -103,7 +103,9 @@ func TestBasicAgree2B(t *testing.T) {
 
 	iters := 3
 	for index := 1; index < iters+1; index++ {
+		fmt.Printf("----- iter = %v -----\n", index)
 		nd, _ := cfg.nCommitted(index)
+		fmt.Printf("----- nCommitted = %v -----\n", nd)
 		if nd > 0 {
 			t.Fatalf("some have committed before Start()")
 		}

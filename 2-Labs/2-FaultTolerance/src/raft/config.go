@@ -409,6 +409,7 @@ func (cfg *config) one(cmd int, expectedServers int) int {
 				}
 			}
 		}
+		fmt.Printf("Index = %v\n", index)
 
 		if index != -1 {
 			// somebody claimed to be the leader and to have

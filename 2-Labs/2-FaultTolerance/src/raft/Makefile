@@ -12,4 +12,4 @@ clean:
 
 
 2B1:
-	go test -run TestFailAgree2B
+	go test -run TestBasicAgree2B
