@@ -164,6 +164,7 @@ func (cfg *config) start1(i int) {
 					}
 				}
 				_, prevok := cfg.logs[i][m.Index-1]
+				fmt.Printf(" 🥇 CONFIG set cfg.logs[%v][%v] = %v\n", i, m.Index, v)
 				cfg.logs[i][m.Index] = v
 				cfg.mu.Unlock()
 
@@ -175,7 +176,7 @@ func (cfg *config) start1(i int) {
 			}
 
 			if err_msg != "" {
-				log.Fatalf("apply error: %v\n", err_msg)
+				log.Fatalf(" 📌📌📌 apply error: %v\n", err_msg)
 				cfg.applyErr[i] = err_msg
 				// keep reading after error so that Raft doesn't block
 				// holding locks...
@@ -409,14 +410,15 @@ func (cfg *config) one(cmd int, expectedServers int) int {
 				}
 			}
 		}
-		fmt.Printf("Index = %v\n", index)
 
 		if index != -1 {
+			fmt.Printf("Index = %v\n", index)
 			// somebody claimed to be the leader and to have
 			// submitted our command; wait a while for agreement.
 			t1 := time.Now()
 			for time.Since(t1).Seconds() < 2 {
 				nd, cmd1 := cfg.nCommitted(index)
+				fmt.Printf("nd = %v, expectedServers = %v\n", nd, expectedServers)
 				if nd > 0 && nd >= expectedServers {
 					// committed
 					if cmd2, ok := cmd1.(int); ok && cmd2 == cmd {
