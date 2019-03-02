@@ -101,7 +101,7 @@ func TestBasicAgree2B(t *testing.T) {
 
 	fmt.Printf("Test (2B): basic agreement ...\n")
 
-	iters := 1
+	iters := 3
 	for index := 1; index < iters+1; index++ {
 		fmt.Printf("----- iter = %v -----\n", index)
 		nd, _ := cfg.nCommitted(index)
@@ -132,6 +132,7 @@ func TestFailAgree2B(t *testing.T) {
 	leader := cfg.checkOneLeader()
 	cfg.disconnect((leader + 1) % servers)
 
+	fmt.Printf("⛽️⛽️⛽️Disconnect %v\n", (leader+1)%servers)
 	// agree despite one disconnected server?
 	cfg.one(102, servers-1)
 	cfg.one(103, servers-1)

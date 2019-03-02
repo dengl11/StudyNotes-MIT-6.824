@@ -1,0 +1,307 @@
+go test -run TestFailAgree2B
+2019/03/02 14:24:11 Server 0 😀
+2019/03/02 14:24:11 Server 1 😀
+2019/03/02 14:24:11 Server 2 😀
+connect(0)
+connect(1)
+connect(2)
+Test (2B): agreement despite follower disconnection ...
+2019/03/02 14:24:11 
+ ----- NEW LEADER: 1 -----
+2019/03/02 14:24:11 ------ Leader 1 Start Command  101  😡😡😡 --------
+One : Commit Index = 1
+Checking commit index = 1, nd = 0, expectedServers = 3
+2019/03/02 14:24:11 sendAppendEntriesToServer: leader 1 send data to server 2, empty: false |
+2019/03/02 14:24:11 sendAppendEntriesToServer: leader 1 send data to server 0, empty: false |
+2019/03/02 14:24:11 Server 0 get AppendEntries from leader 1
+2019/03/02 14:24:11 OnAppendEntriesData
+2019/03/02 14:24:11 Server 0 reply AppendEntries from leader 1: accepted = true
+2019/03/02 14:24:11 Server 2 get AppendEntries from leader 1
+2019/03/02 14:24:11 OnAppendEntriesData
+2019/03/02 14:24:11 Server 2 reply AppendEntries from leader 1: accepted = true
+2019/03/02 14:24:11 LeaderCommitIdx = 0, server commit = 0 | Now server logs = 1
+2019/03/02 14:24:11 LeaderCommitIdx = 0, server commit = 0 | Now server logs = 1
+2019/03/02 14:24:11 sendAppendEntriesToServer: leader 1 send data to server 0, empty: false | accepted = true
+2019/03/02 14:24:11 sendAppendEntriesToServer: leader 1 send data to server 2, empty: false | accepted = true
+2019/03/02 14:24:11 send AppendEntries: 🧡Success = 3
+2019/03/02 14:24:11 --- Commit ----
+2019/03/02 14:24:11 --- Commit: 1 ----
+2019/03/02 14:24:11 Server 1 update commitIndex: 0 -> 1
+2019/03/02 14:24:11 --- tryCommitNewCommand done 1 ----
+2019/03/02 14:24:11 
+ Done: Server 1 sendApplyCh: 1 ----
+
+ 🥇 CONFIG set cfg.logs[1][1] = 101
+Checking commit index = 1, nd = 1, expectedServers = 3
+Checking commit index = 1, nd = 1, expectedServers = 3
+2019/03/02 14:24:11 Leader 1 sending heartbeats to serverv
+2019/03/02 14:24:11 sendAppendEntriesToServer: leader 1 send data to server 2, empty: true |
+2019/03/02 14:24:11 sendAppendEntriesToServer: leader 1 send data to server 0, empty: true |
+2019/03/02 14:24:11 sendAppendEntriesToServer: leader 1 send data to server 1, empty: true |
+2019/03/02 14:24:11 leader 1 send data to server 2
+2019/03/02 14:24:11 leader 1 send data to server 0
+2019/03/02 14:24:11 Server 2 get AppendEntries from leader 1
+2019/03/02 14:24:11 Server 1 get AppendEntries from leader 1
+2019/03/02 14:24:11 🧡
+2019/03/02 14:24:11 Server 1 reply AppendEntries from leader 1: accepted = true
+2019/03/02 14:24:11 LeaderCommitIdx = 1, server commit = 1 | Now server logs = 1
+2019/03/02 14:24:11 🧡
+2019/03/02 14:24:11 Server 2 reply AppendEntries from leader 1: accepted = true
+2019/03/02 14:24:11 LeaderCommitIdx = 1, server commit = 0 | Now server logs = 1
+2019/03/02 14:24:11 Server 2 update commitIndex: 0 -> 1
+2019/03/02 14:24:11 💤🌕🌕Set server 2 commitIndex as 1
+2019/03/02 14:24:11 sendAppendEntriesToServer: leader 1 send data to server 1, empty: true | accepted = true
+ 🥇 CONFIG set cfg.logs[2][1] = 101
+2019/03/02 14:24:11 Server 0 get AppendEntries from leader 1
+2019/03/02 14:24:11 🧡
+2019/03/02 14:24:11 Server 0 reply AppendEntries from leader 1: accepted = true
+2019/03/02 14:24:11 LeaderCommitIdx = 1, server commit = 0 | Now server logs = 1
+2019/03/02 14:24:11 Server 0 update commitIndex: 0 -> 1
+2019/03/02 14:24:11 💤🌕🌕Set server 0 commitIndex as 1
+2019/03/02 14:24:11 
+ Done: Server 2 sendApplyCh: 1 ----
+
+ 🥇 CONFIG set cfg.logs[0][1] = 101
+2019/03/02 14:24:11 
+ Done: Server 0 sendApplyCh: 1 ----
+
+2019/03/02 14:24:11 sendAppendEntriesToServer: leader 1 send data to server 2, empty: true | accepted = true
+2019/03/02 14:24:11 sendAppendEntriesToServer: leader 1 send data to server 0, empty: true | accepted = true
+2019/03/02 14:24:11 send AppendEntries: 🧡Success = 4
+Checking commit index = 1, nd = 3, expectedServers = 3
+2019/03/02 14:24:11 Leader 1 sending heartbeats to serverv
+2019/03/02 14:24:11 sendAppendEntriesToServer: leader 1 send data to server 2, empty: true |
+2019/03/02 14:24:11 leader 1 send data to server 2
+2019/03/02 14:24:11 sendAppendEntriesToServer: leader 1 send data to server 0, empty: true |
+2019/03/02 14:24:11 leader 1 send data to server 0
+2019/03/02 14:24:11 sendAppendEntriesToServer: leader 1 send data to server 1, empty: true |
+2019/03/02 14:24:11 Server 2 get AppendEntries from leader 1
+2019/03/02 14:24:11 🧡
+2019/03/02 14:24:11 Server 2 reply AppendEntries from leader 1: accepted = true
+2019/03/02 14:24:11 LeaderCommitIdx = 1, server commit = 1 | Now server logs = 1
+2019/03/02 14:24:11 Server 0 get AppendEntries from leader 1
+2019/03/02 14:24:11 🧡
+2019/03/02 14:24:11 Server 0 reply AppendEntries from leader 1: accepted = true
+2019/03/02 14:24:11 LeaderCommitIdx = 1, server commit = 1 | Now server logs = 1
+2019/03/02 14:24:11 sendAppendEntriesToServer: leader 1 send data to server 2, empty: true | accepted = true
+2019/03/02 14:24:11 Server 1 get AppendEntries from leader 1
+2019/03/02 14:24:11 🧡
+2019/03/02 14:24:11 Server 1 reply AppendEntries from leader 1: accepted = true
+2019/03/02 14:24:11 LeaderCommitIdx = 1, server commit = 1 | Now server logs = 1
+2019/03/02 14:24:11 sendAppendEntriesToServer: leader 1 send data to server 0, empty: true | accepted = true
+2019/03/02 14:24:11 sendAppendEntriesToServer: leader 1 send data to server 1, empty: true | accepted = true
+2019/03/02 14:24:11 send AppendEntries: 🧡Success = 4
+2019/03/02 14:24:11 Leader 1 sending heartbeats to serverv
+2019/03/02 14:24:11 sendAppendEntriesToServer: leader 1 send data to server 2, empty: true |
+2019/03/02 14:24:11 leader 1 send data to server 2
+2019/03/02 14:24:11 sendAppendEntriesToServer: leader 1 send data to server 0, empty: true |
+2019/03/02 14:24:11 leader 1 send data to server 0
+2019/03/02 14:24:11 sendAppendEntriesToServer: leader 1 send data to server 1, empty: true |
+2019/03/02 14:24:11 Server 2 get AppendEntries from leader 1
+2019/03/02 14:24:11 🧡
+2019/03/02 14:24:11 Server 2 reply AppendEntries from leader 1: accepted = true
+2019/03/02 14:24:11 LeaderCommitIdx = 1, server commit = 1 | Now server logs = 1
+2019/03/02 14:24:11 Server 0 get AppendEntries from leader 1
+2019/03/02 14:24:11 🧡
+2019/03/02 14:24:11 Server 0 reply AppendEntries from leader 1: accepted = true
+2019/03/02 14:24:11 LeaderCommitIdx = 1, server commit = 1 | Now server logs = 1
+2019/03/02 14:24:11 Server 1 get AppendEntries from leader 1
+2019/03/02 14:24:11 🧡
+2019/03/02 14:24:11 Server 1 reply AppendEntries from leader 1: accepted = true
+2019/03/02 14:24:11 LeaderCommitIdx = 1, server commit = 1 | Now server logs = 1
+2019/03/02 14:24:11 sendAppendEntriesToServer: leader 1 send data to server 2, empty: true | accepted = true
+2019/03/02 14:24:11 sendAppendEntriesToServer: leader 1 send data to server 0, empty: true | accepted = true
+2019/03/02 14:24:11 sendAppendEntriesToServer: leader 1 send data to server 1, empty: true | accepted = true
+2019/03/02 14:24:11 send AppendEntries: 🧡Success = 4
+2019/03/02 14:24:11 Leader 1 sending heartbeats to serverv
+2019/03/02 14:24:11 sendAppendEntriesToServer: leader 1 send data to server 2, empty: true |
+2019/03/02 14:24:11 sendAppendEntriesToServer: leader 1 send data to server 0, empty: true |
+2019/03/02 14:24:11 sendAppendEntriesToServer: leader 1 send data to server 1, empty: true |
+2019/03/02 14:24:11 leader 1 send data to server 2
+2019/03/02 14:24:11 leader 1 send data to server 0
+2019/03/02 14:24:11 Server 2 get AppendEntries from leader 1
+2019/03/02 14:24:11 🧡
+2019/03/02 14:24:11 Server 2 reply AppendEntries from leader 1: accepted = true
+2019/03/02 14:24:11 LeaderCommitIdx = 1, server commit = 1 | Now server logs = 1
+2019/03/02 14:24:11 Server 0 get AppendEntries from leader 1
+2019/03/02 14:24:11 🧡
+2019/03/02 14:24:11 Server 0 reply AppendEntries from leader 1: accepted = true
+2019/03/02 14:24:11 LeaderCommitIdx = 1, server commit = 1 | Now server logs = 1
+2019/03/02 14:24:11 sendAppendEntriesToServer: leader 1 send data to server 2, empty: true | accepted = true
+2019/03/02 14:24:11 Server 1 get AppendEntries from leader 1
+2019/03/02 14:24:11 🧡
+2019/03/02 14:24:11 Server 1 reply AppendEntries from leader 1: accepted = true
+2019/03/02 14:24:11 LeaderCommitIdx = 1, server commit = 1 | Now server logs = 1
+2019/03/02 14:24:11 sendAppendEntriesToServer: leader 1 send data to server 0, empty: true | accepted = true
+2019/03/02 14:24:11 sendAppendEntriesToServer: leader 1 send data to server 1, empty: true | accepted = true
+2019/03/02 14:24:11 send AppendEntries: 🧡Success = 4
+2019/03/02 14:24:12 Leader 1 sending heartbeats to serverv
+2019/03/02 14:24:12 sendAppendEntriesToServer: leader 1 send data to server 0, empty: true |
+2019/03/02 14:24:12 sendAppendEntriesToServer: leader 1 send data to server 2, empty: true |
+2019/03/02 14:24:12 leader 1 send data to server 0
+2019/03/02 14:24:12 sendAppendEntriesToServer: leader 1 send data to server 1, empty: true |
+2019/03/02 14:24:12 leader 1 send data to server 2
+2019/03/02 14:24:12 Server 1 get AppendEntries from leader 1
+2019/03/02 14:24:12 🧡
+2019/03/02 14:24:12 Server 0 get AppendEntries from leader 1
+2019/03/02 14:24:12 🧡
+2019/03/02 14:24:12 Server 0 reply AppendEntries from leader 1: accepted = true
+2019/03/02 14:24:12 Server 1 reply AppendEntries from leader 1: accepted = true
+2019/03/02 14:24:12 LeaderCommitIdx = 1, server commit = 1 | Now server logs = 1
+2019/03/02 14:24:12 LeaderCommitIdx = 1, server commit = 1 | Now server logs = 1
+2019/03/02 14:24:12 Server 2 get AppendEntries from leader 1
+2019/03/02 14:24:12 🧡
+2019/03/02 14:24:12 Server 2 reply AppendEntries from leader 1: accepted = true
+2019/03/02 14:24:12 sendAppendEntriesToServer: leader 1 send data to server 1, empty: true | accepted = true
+2019/03/02 14:24:12 LeaderCommitIdx = 1, server commit = 1 | Now server logs = 1
+2019/03/02 14:24:12 sendAppendEntriesToServer: leader 1 send data to server 0, empty: true | accepted = true
+2019/03/02 14:24:12 sendAppendEntriesToServer: leader 1 send data to server 2, empty: true | accepted = true
+2019/03/02 14:24:12 send AppendEntries: 🧡Success = 4
+2019/03/02 14:24:12 Leader 1 sending heartbeats to serverv
+2019/03/02 14:24:12 sendAppendEntriesToServer: leader 1 send data to server 2, empty: true |
+2019/03/02 14:24:12 leader 1 send data to server 2
+2019/03/02 14:24:12 sendAppendEntriesToServer: leader 1 send data to server 1, empty: true |
+2019/03/02 14:24:12 sendAppendEntriesToServer: leader 1 send data to server 0, empty: true |
+2019/03/02 14:24:12 leader 1 send data to server 0
+2019/03/02 14:24:12 Server 1 get AppendEntries from leader 1
+2019/03/02 14:24:12 🧡
+2019/03/02 14:24:12 Server 1 reply AppendEntries from leader 1: accepted = true
+2019/03/02 14:24:12 LeaderCommitIdx = 1, server commit = 1 | Now server logs = 1
+2019/03/02 14:24:12 Server 2 get AppendEntries from leader 1
+2019/03/02 14:24:12 🧡
+2019/03/02 14:24:12 sendAppendEntriesToServer: leader 1 send data to server 1, empty: true | accepted = true
+2019/03/02 14:24:12 Server 0 get AppendEntries from leader 1
+2019/03/02 14:24:12 🧡
+2019/03/02 14:24:12 Server 0 reply AppendEntries from leader 1: accepted = true
+2019/03/02 14:24:12 Server 2 reply AppendEntries from leader 1: accepted = true
+2019/03/02 14:24:12 LeaderCommitIdx = 1, server commit = 1 | Now server logs = 1
+2019/03/02 14:24:12 LeaderCommitIdx = 1, server commit = 1 | Now server logs = 1
+2019/03/02 14:24:12 sendAppendEntriesToServer: leader 1 send data to server 0, empty: true | accepted = true
+2019/03/02 14:24:12 sendAppendEntriesToServer: leader 1 send data to server 2, empty: true | accepted = true
+2019/03/02 14:24:12 send AppendEntries: 🧡Success = 4
+⛽️⛽️⛽️Disconnect 2
+2019/03/02 14:24:12 ------ Leader 1 Start Command  102  😡😡😡 --------
+One : Commit Index = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+2019/03/02 14:24:12 sendAppendEntriesToServer: leader 1 send data to server 2, empty: false |
+2019/03/02 14:24:12 leader 1 send data to server 2
+2019/03/02 14:24:12 sendAppendEntriesToServer: leader 1 send data to server 0, empty: false |
+2019/03/02 14:24:12 leader 1 send data to server 0
+2019/03/02 14:24:12 Server 0 get AppendEntries from leader 1
+2019/03/02 14:24:12 OnAppendEntriesData
+2019/03/02 14:24:12 Server 0 reply AppendEntries from leader 1: accepted = true
+2019/03/02 14:24:12 LeaderCommitIdx = 1, server commit = 1 | Now server logs = 2
+2019/03/02 14:24:12 sendAppendEntriesToServer: leader 1 send data to server 0, empty: false | accepted = true
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+2019/03/02 14:24:12 Leader 1 sending heartbeats to serverv
+2019/03/02 14:24:12 sendAppendEntriesToServer: leader 1 send data to server 2, empty: true |
+2019/03/02 14:24:12 sendAppendEntriesToServer: leader 1 send data to server 0, empty: true |
+2019/03/02 14:24:12 leader 1 send data to server 2
+2019/03/02 14:24:12 sendAppendEntriesToServer: leader 1 send data to server 1, empty: true |
+2019/03/02 14:24:12 leader 1 send data to server 0
+2019/03/02 14:24:12 Server 1 get AppendEntries from leader 1
+2019/03/02 14:24:12 Server 0 get AppendEntries from leader 1
+2019/03/02 14:24:12 🧡
+2019/03/02 14:24:12 Server 0 reply AppendEntries from leader 1: accepted = true
+2019/03/02 14:24:12 LeaderCommitIdx = 1, server commit = 1 | Now server logs = 2
+2019/03/02 14:24:12 🧡
+2019/03/02 14:24:12 Server 1 reply AppendEntries from leader 1: accepted = true
+2019/03/02 14:24:12 LeaderCommitIdx = 1, server commit = 1 | Now server logs = 2
+2019/03/02 14:24:12 sendAppendEntriesToServer: leader 1 send data to server 0, empty: true | accepted = true
+2019/03/02 14:24:12 sendAppendEntriesToServer: leader 1 send data to server 1, empty: true | accepted = true
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+2019/03/02 14:24:13 sendAppendEntriesToServer: leader 1 send data to server 2, empty: true | accepted = false
+2019/03/02 14:24:13 send AppendEntries: 🧡Success = 3
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+Checking commit index = 2, nd = 0, expectedServers = 2
+2019/03/02 14:24:18 sendAppendEntriesToServer: leader 1 send data to server 2, empty: false | accepted = false
+2019/03/02 14:24:18 send AppendEntries: 🧡Success = 2
+2019/03/02 14:24:18 --- Commit ----
+2019/03/02 14:24:18 --- Commit: -1 ----
+2019/03/02 14:24:18 --- tryCommitNewCommand done -1 ----
+--- FAIL: TestFailAgree2B (11.11s)
+    config.go:437: one(102) failed to reach agreement
+FAIL
+exit status 1
+FAIL	raft	11.117s
