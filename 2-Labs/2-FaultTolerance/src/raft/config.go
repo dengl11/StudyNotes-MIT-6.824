@@ -344,6 +344,8 @@ func (cfg *config) nCommitted(index int) (int, interface{}) {
 			}
 			count += 1
 			cmd = cmd1
+		} else {
+			fmt.Printf("NOT FOUND: server = %v, commit index = %v\n\n", i, index)
 		}
 	}
 	return count, cmd
@@ -404,7 +406,7 @@ func (cfg *config) one(cmd int, expectedServers int) int {
 			cfg.mu.Unlock()
 			if rf != nil {
 				index1, _, ok := rf.Start(cmd)
-				if ok { // Found the server
+				if ok { // Found the server, index is the commit index
 					index = index1
 					break
 				}

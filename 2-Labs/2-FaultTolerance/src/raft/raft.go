@@ -138,6 +138,11 @@ func (rf *Raft) sendEmptyAppendEntriesToServer(server int) (bool, bool) {
 	rf.mu.Lock()
 	appendEntriesArgs.Leader = rf.me
 	appendEntriesArgs.Term = rf.currentTerm
+	prevLogIdx := rf.nextIndexes[server] - 1
+	appendEntriesArgs.PrevLogIndex = prevLogIdx
+	if prevLogIdx >= 0 {
+		appendEntriesArgs.PrevLogTerm = rf.logs[prevLogIdx].Term
+	}
 	rf.mu.Unlock()
 
 	callSuccess := rf.peers[server].Call("Raft.AppendEntries", &appendEntriesArgs, &appendEntriesReply)
@@ -245,6 +250,9 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 	//DPrintf("args.Term: %v, my term: %d", args.Term, rf.currentTerm)
 
 	commitIndexUpdated := false
+	prevIndex := args.PrevLogIndex
+	prevTerm := args.PrevLogTerm
+
 	rf.mu.Lock()
 	//DPrintf("Acquired lock for getting heartbeat on server %d", rf.me)
 	reply.Term = rf.currentTerm
@@ -256,6 +264,10 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 		goto done
 	}
 
+	if prevIndex >= 0 && (len(rf.logs) <= prevIndex || rf.logs[prevIndex].Term != prevTerm) {
+		DPrintf("Rejects mismatch  ")
+		goto done
+	}
 	if args.Entries == nil { // heartbeat
 		DPrintf("🧡")
 		accepted = true
@@ -285,13 +297,8 @@ done:
 func (rf *Raft) OnAppendEntriesData(args *AppendEntriesArgs, reply *AppendEntriesReply) (bool, bool) {
 	DPrintf("OnAppendEntriesData")
 	// Check the term at PrevLogIndex
-	prevIndex := args.PrevLogIndex
-	prevTerm := args.PrevLogTerm
-	if prevIndex >= 0 && (len(rf.logs) < prevIndex || rf.logs[prevIndex].Term != prevTerm) {
-		//DPrintf("Rejects mismatch  ")
-		return false, false
-	}
 
+	prevIndex := args.PrevLogIndex
 	if prevIndex >= 0 {
 		rf.logs = rf.logs[:prevIndex+1]
 	}
@@ -300,7 +307,7 @@ func (rf *Raft) OnAppendEntriesData(args *AppendEntriesArgs, reply *AppendEntrie
 	DPrintf("LeaderCommitIdx = %v, server commit = %v | Now server logs = %v", args.LeaderCommitIdx, rf.commitIndex, len(rf.logs))
 	commitIndexUpdated := false
 	if args.LeaderCommitIdx > rf.commitIndex {
-		commitIndexUpdated = rf.updateCommitIndex(min(args.LeaderCommitIdx, len(rf.logs)-1))
+		commitIndexUpdated = rf.updateCommitIndex(min(args.LeaderCommitIdx, len(rf.logs)))
 		DPrintf("💤🌕🌕Set server %v commitIndex as %v", rf.me, rf.commitIndex)
 	}
 	return true, commitIndexUpdated
@@ -471,20 +478,20 @@ func (rf *Raft) Start(command interface{}) (int, int, bool) {
 		return 0, 0, false
 	}
 	DPrintf("------ Leader %v Start Command  %v  😡😡😡 --------", rf.me, command)
+
+	logEntry := LogEntry{command, rf.currentTerm}
+
+	// Append the command to logs
+	rf.logs = append(rf.logs, logEntry)
+
 	go func() {
 		rf.tryCommitNewCommand(command)
 	}()
 
-	return rf.commitIndex, rf.currentTerm, true
+	return len(rf.logs), rf.currentTerm, true
 }
 
 func (rf *Raft) tryCommitNewCommand(command interface{}) {
-	logEntry := LogEntry{command, rf.currentTerm}
-
-	rf.mu.Lock()
-	// 1) Append the command to logs
-	rf.logs = append(rf.logs, logEntry)
-	rf.mu.Unlock()
 
 	// 2) send AppendEntries to all other servers in parallel
 	majoritySuccess := rf.sendAppendEntries(false)
@@ -502,7 +509,7 @@ func (rf *Raft) tryCommitNewCommand(command interface{}) {
 				}
 			}
 			if committedServer >= len(rf.matchIndexes)/2 {
-				newCommit = i
+				newCommit = i + 1
 				break
 			}
 		}
@@ -522,13 +529,13 @@ func (rf *Raft) tryCommitNewCommand(command interface{}) {
 }
 
 func (rf *Raft) sendApplyCh() {
-	DPrintf("\n Start: Server %v sendApplyCh: %v ----", rf.me, rf.commitIndex)
+	//DPrintf("\n Start: Server %v sendApplyCh: %v ----", rf.me, rf.commitIndex)
 
 	rf.mu.Lock()
-	applyMsg := ApplyMsg{rf.me, rf.logs[rf.commitIndex].Command, false, nil}
+	applyMsg := ApplyMsg{rf.commitIndex, rf.logs[rf.commitIndex-1].Command, false, nil}
 	rf.mu.Unlock()
 
-	DPrintf("\n Waiting on applyCh Server %v sendApplyCh: %v ----\n\n", rf.me, rf.commitIndex)
+	//DPrintf("\n Waiting on applyCh Server %v sendApplyCh: %v ----\n\n", rf.me, rf.commitIndex)
 	rf.applyCh <- applyMsg
 	DPrintf("\n Done: Server %v sendApplyCh: %v ----\n\n", rf.me, rf.commitIndex)
 }
