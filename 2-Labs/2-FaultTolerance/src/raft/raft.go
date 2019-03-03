@@ -210,23 +210,25 @@ func (rf *Raft) keepSendAppendEntriesToServer(idx int, empty bool) bool {
 // return true if get success from majority
 func (rf *Raft) sendAppendEntries(empty bool) bool {
 
-	var wg sync.WaitGroup
+	waitForMajoritySuccess := make(chan bool)
 	nSuccess := 1 // number of successes for AppendEntries
 
 	for i := 0; i < len(rf.peers); i++ {
 		if !empty && i == rf.getMe() {
 			continue // if not heartbeat, skip leader itself
 		}
-		wg.Add(1)
 		//DPrintf("Server %d send heartbeat to server %d", rf.me, i)
 		go func(idx int) {
 			if rf.keepSendAppendEntriesToServer(idx, empty) {
 				nSuccess++
 			}
-			wg.Done()
+			if nSuccess > len(rf.peers)/2 {
+				waitForMajoritySuccess <- true
+			}
 		}(i)
 	}
-	wg.Wait()
+	<-waitForMajoritySuccess
+
 	DPrintf("send AppendEntries: 🧡Success = %v", nSuccess)
 	if empty {
 		return true
