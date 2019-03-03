@@ -180,10 +180,11 @@ func (rf *Raft) updateWithAppendEntriesReply(idx int, appendEntriesReply *Append
 	if appendEntriesReply.Success {
 		rf.nextIndexes[idx] = len(rf.logs)
 		rf.matchIndexes[idx] = len(rf.logs) - 1
-		DPrintf("Updated Leader %v matchIndexes: %v", rf.me, rf.matchIndexes)
+		DPrintf("Updated Leader %v matchIndexes: %v, nextIndexes = %v", rf.me, rf.matchIndexes, rf.nextIndexes)
 	} else {
 		if rf.nextIndexes[idx] > 0 {
 			rf.nextIndexes[idx]--
+            DPrintf("Updated Leader %v matchIndexes: %v, nextIndexes = %v", rf.me, rf.matchIndexes, rf.nextIndexes)
 		}
 	}
 }
@@ -308,6 +309,7 @@ func (rf *Raft) OnAppendEntriesData(args *AppendEntriesArgs, reply *AppendEntrie
 		rf.logs = rf.logs[:prevIndex+1]
 	}
 	rf.logs = append(rf.logs, args.Entries...)
+    DPrintf("Update server %v logs = %v", rf.me, rf.logs)
 
 	return true
 }
@@ -508,7 +510,7 @@ func (rf *Raft) tryCommitNewCommand(command interface{}) {
 		DPrintf("--- Commit: matchIndexes = %v , commitIndex = %v ----", rf.matchIndexes, rf.commitIndex)
 		for i := len(rf.logs) - 1; i >= 0; i-- {
 			committedServer := 0
-			for k := range rf.matchIndexes {
+			for _, k := range rf.matchIndexes {
 				if k >= i {
 					committedServer++
 				}
@@ -536,14 +538,25 @@ func (rf *Raft) tryCommitNewCommand(command interface{}) {
 }
 
 func (rf *Raft) sendApplyCh() {
+    for ; rf.lastApplied < rf.commitIndex; {
+       rf.sendApplyChWithCommmitIndex(rf.lastApplied + 1)
+    }
+}
+
+func (rf *Raft) sendApplyChWithCommmitIndex(idx int) {
 	//DPrintf("\n Start: Server %v sendApplyCh: %v ----", rf.me, rf.commitIndex)
 
 	rf.mu.Lock()
-	applyMsg := ApplyMsg{rf.commitIndex, rf.logs[rf.commitIndex-1].Command, false, nil}
+	applyMsg := ApplyMsg{idx, rf.logs[rf.commitIndex-1].Command, false, nil}
 	rf.mu.Unlock()
 
 	//DPrintf("\n Waiting on applyCh Server %v sendApplyCh: %v ----\n\n", rf.me, rf.commitIndex)
 	rf.applyCh <- applyMsg
+
+	rf.mu.Lock()
+    rf.lastApplied ++
+	rf.mu.Unlock()
+
 	DPrintf("\n Done: Server %v sendApplyCh: %v ----\n\n", rf.me, rf.commitIndex)
 }
 
@@ -684,7 +697,7 @@ func (rf *Raft) becomeALeader() {
 		rf.nextIndexes[i] = nextIdx
 	}
 	for i := range rf.matchIndexes {
-		rf.matchIndexes[i] = 0
+		rf.matchIndexes[i] = -1
 	}
 
 	rf.periodicallySendHeartbeats()
