@@ -156,6 +156,7 @@ func (cfg *config) start1(i int) {
 				// ignore the snapshot
 			} else if v, ok := (m.Command).(int); ok {
 				cfg.mu.Lock()
+                fmt.Printf("Validating v = %v", v)
 				for j := 0; j < len(cfg.logs); j++ {
 					if old, oldok := cfg.logs[j][m.Index]; oldok && old != v {
 						// some server has already committed a different value for this entry!

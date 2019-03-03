@@ -20,3 +20,19 @@ clean:
 2B2:
 	go test -run TestFailAgree2B
 
+2B3:
+	go test -run TestNoAgree2B
+
+2B4:
+	go test -run TestConcurrentStarts2B
+
+2B5:
+	go test -run TestRejoin2B
+
+2B6:
+	go test -run TestBackup2B
+
+2B7:
+	go test -run TestCount2B
+
+

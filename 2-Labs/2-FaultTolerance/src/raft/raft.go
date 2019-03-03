@@ -180,11 +180,11 @@ func (rf *Raft) updateWithAppendEntriesReply(idx int, appendEntriesReply *Append
 	if appendEntriesReply.Success {
 		rf.nextIndexes[idx] = len(rf.logs)
 		rf.matchIndexes[idx] = len(rf.logs) - 1
-		DPrintf("Updated Leader %v matchIndexes: %v, nextIndexes = %v", rf.me, rf.matchIndexes, rf.nextIndexes)
+        DPrintf("Success: Updated Leader %v matchIndexes: %v, nextIndexes = %v", rf.me, rf.matchIndexes, rf.nextIndexes)
 	} else {
-		if rf.nextIndexes[idx] > 0 {
+		if rf.nextIndexes[idx] > rf.matchIndexes[idx] + 1 {
 			rf.nextIndexes[idx]--
-            DPrintf("Updated Leader %v matchIndexes: %v, nextIndexes = %v", rf.me, rf.matchIndexes, rf.nextIndexes)
+            DPrintf("Fail: Updated Leader %v matchIndexes: %v, nextIndexes = %v", rf.me, rf.matchIndexes, rf.nextIndexes)
 		}
 	}
 }
@@ -538,24 +538,26 @@ func (rf *Raft) tryCommitNewCommand(command interface{}) {
 }
 
 func (rf *Raft) sendApplyCh() {
-    for ; rf.lastApplied < rf.commitIndex; {
+	rf.mu.Lock()
+    for ; rf.lastApplied < rf.commitIndex - 1; {
        rf.sendApplyChWithCommmitIndex(rf.lastApplied + 1)
     }
+    rf.mu.Unlock()
 }
 
 func (rf *Raft) sendApplyChWithCommmitIndex(idx int) {
-	//DPrintf("\n Start: Server %v sendApplyCh: %v ----", rf.me, rf.commitIndex)
+    DPrintf("\n Start: Server %v (C = %v) sendApplyCh: %v : logs = %v----", rf.me, rf.commitIndex, idx, rf.logs)
 
-	rf.mu.Lock()
-	applyMsg := ApplyMsg{idx, rf.logs[rf.commitIndex-1].Command, false, nil}
-	rf.mu.Unlock()
+	//rf.mu.Lock()
+	applyMsg := ApplyMsg{idx + 1, rf.logs[idx].Command, false, nil}
+	//rf.mu.Unlock()
 
 	//DPrintf("\n Waiting on applyCh Server %v sendApplyCh: %v ----\n\n", rf.me, rf.commitIndex)
 	rf.applyCh <- applyMsg
 
-	rf.mu.Lock()
+	//rf.mu.Lock()
     rf.lastApplied ++
-	rf.mu.Unlock()
+	//rf.mu.Unlock()
 
 	DPrintf("\n Done: Server %v sendApplyCh: %v ----\n\n", rf.me, rf.commitIndex)
 }
