@@ -130,7 +130,6 @@ func (rf *Raft) setLeader(isLeader bool) {
 	}
 }
 
-// Check isLeader in thread-safe way
 func (rf *Raft) setCurrentTerm(term int) {
 	if term != rf.currentTerm {
 		DPrintf("Set server %v currentTerm: %v -> %v", rf.me, rf.currentTerm, term)
@@ -498,43 +497,43 @@ func (rf *Raft) Start(command interface{}) (int, int, bool) {
 func (rf *Raft) tryCommitNewCommand(command interface{}) {
 
 	// 2) send AppendEntries to all other servers in parallel
-	majoritySuccess := rf.sendAppendEntries(false)
-	if !majoritySuccess {
-		DPrintf("😂Leader %v did not get majoritySuccess", rf.me)
-	}
-	if majoritySuccess { // the entry has been safely replicated on a majority of the servers
-		rf.mu.Lock()
+    majoritySuccess := rf.sendAppendEntries(false)
+    if !majoritySuccess {
+        DPrintf("😂Leader %v did not get majoritySuccess", rf.me)
+        return
+    }
+    // the entry has been safely replicated on a majority of the servers
+    rf.mu.Lock()
 
-		// Commit!
-		newCommit := -1
-		DPrintf("--- Commit: matchIndexes = %v , commitIndex = %v ----", rf.matchIndexes, rf.commitIndex)
-		for i := len(rf.logs) - 1; i >= 0; i-- {
-			committedServer := 0
-			for _, k := range rf.matchIndexes {
-				if k >= i {
-					committedServer++
-				}
-			}
-			DPrintf("committedServer = %v >? %v", committedServer, len(rf.matchIndexes)/2)
-			DPrintf("rf.logs[i].Term = %v, rf.currentTerm = %v", rf.logs[i].Term, rf.currentTerm)
-			if committedServer > len(rf.matchIndexes)/2 && rf.logs[i].Term == rf.currentTerm {
-				newCommit = i + 1
-				break
-			}
-		}
+    // Commit!
+    newCommit := -1
+    DPrintf("--- Commit: matchIndexes = %v , commitIndex = %v ----", rf.matchIndexes, rf.commitIndex)
+    for i := len(rf.logs) - 1; i >= 0; i-- {
+        committedServer := 0
+        for _, k := range rf.matchIndexes {
+            if k >= i {
+                committedServer++
+            }
+        }
+        DPrintf("committedServer = %v >? %v", committedServer, len(rf.matchIndexes)/2)
+        DPrintf("rf.logs[i].Term = %v, rf.currentTerm = %v", rf.logs[i].Term, rf.currentTerm)
+        if committedServer > len(rf.matchIndexes)/2 && rf.logs[i].Term == rf.currentTerm {
+            newCommit = i + 1
+            break
+        }
+    }
 
-		commitIndexUpdated := false
-		if newCommit >= 0 {
-			DPrintf("--- Commit: %v ----", newCommit)
-			commitIndexUpdated = rf.updateCommitIndex(newCommit)
-		}
+    commitIndexUpdated := false
+    if newCommit >= 0 {
+        DPrintf("--- Commit: %v ----", newCommit)
+        commitIndexUpdated = rf.updateCommitIndex(newCommit)
+    }
 
-		rf.mu.Unlock()
-		if commitIndexUpdated {
-			DPrintf("--- tryCommitNewCommand done %v ----", newCommit)
-			rf.sendApplyCh()
-		}
-	}
+    rf.mu.Unlock()
+    if commitIndexUpdated {
+        DPrintf("--- tryCommitNewCommand done %v ----", newCommit)
+        rf.sendApplyCh()
+    }
 }
 
 func (rf *Raft) sendApplyCh() {
@@ -693,6 +692,8 @@ func (rf *Raft) hasMoreRecentLogsThan(lastLogIndex int, lastLogTerm int) bool {
 
 func (rf *Raft) becomeALeader() {
 	rf.setLeader(true)
+
+    rf.mu.Lock()
 	// Re-initialize the nextIndexes and matchIndexes
 	nextIdx := len(rf.logs)
 	for i := range rf.nextIndexes {
@@ -701,6 +702,7 @@ func (rf *Raft) becomeALeader() {
 	for i := range rf.matchIndexes {
 		rf.matchIndexes[i] = -1
 	}
+    rf.mu.Unlock()
 
 	rf.periodicallySendHeartbeats()
 }
