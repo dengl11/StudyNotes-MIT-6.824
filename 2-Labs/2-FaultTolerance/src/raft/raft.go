@@ -150,7 +150,7 @@ func (rf *Raft) sendAppendEntriesToServer(server int, empty bool) (bool, bool) {
 	prevIndex := rf.nextIndexes[server] - 1
 	appendEntriesArgs.PrevLogIndex = prevIndex
 	nLogs := len(rf.logs)
-	//DPrintf("prevIndex =  %d", prevIndex)
+	DPrintf("prevIndex =  %d", prevIndex)
 	if prevIndex >= 0 {
 		appendEntriesArgs.PrevLogTerm = rf.logs[prevIndex].Term
 		DPrintf("leader %v send data to server %v", rf.me, server)
@@ -180,8 +180,11 @@ func (rf *Raft) updateWithAppendEntriesReply(idx int, appendEntriesReply *Append
 	if appendEntriesReply.Success {
 		rf.nextIndexes[idx] = len(rf.logs)
 		rf.matchIndexes[idx] = len(rf.logs) - 1
+		DPrintf("Updated Leader %v matchIndexes: %v", rf.me, rf.matchIndexes)
 	} else {
-		rf.nextIndexes[idx]--
+		if rf.nextIndexes[idx] > 0 {
+			rf.nextIndexes[idx]--
+		}
 	}
 }
 
@@ -209,12 +212,14 @@ func (rf *Raft) keepSendAppendEntriesToServer(idx int, empty bool) bool {
 // Leader send heartbeats
 // return true if get success from majority
 func (rf *Raft) sendAppendEntries(empty bool) bool {
+	DPrintf("nextIndexes: %v", rf.nextIndexes)
 
 	waitForMajoritySuccess := make(chan bool)
-	nSuccess := 1 // number of successes for AppendEntries
+	nSuccess := 0 // number of successes for AppendEntries
 
 	for i := 0; i < len(rf.peers); i++ {
 		if !empty && i == rf.getMe() {
+			nSuccess++
 			continue // if not heartbeat, skip leader itself
 		}
 		//DPrintf("Server %d send heartbeat to server %d", rf.me, i)
@@ -478,6 +483,8 @@ func (rf *Raft) Start(command interface{}) (int, int, bool) {
 
 	// Append the command to logs
 	rf.logs = append(rf.logs, logEntry)
+	rf.matchIndexes[rf.me] = len(rf.logs) - 1
+	rf.nextIndexes[rf.me] = len(rf.logs)
 
 	go func() {
 		rf.tryCommitNewCommand(command)
@@ -498,7 +505,7 @@ func (rf *Raft) tryCommitNewCommand(command interface{}) {
 
 		// Commit!
 		newCommit := -1
-		DPrintf("--- Commit ----")
+		DPrintf("--- Commit: matchIndexes = %v , commitIndex = %v ----", rf.matchIndexes, rf.commitIndex)
 		for i := len(rf.logs) - 1; i >= 0; i-- {
 			committedServer := 0
 			for k := range rf.matchIndexes {
@@ -514,15 +521,15 @@ func (rf *Raft) tryCommitNewCommand(command interface{}) {
 			}
 		}
 
-		DPrintf("--- Commit: %v ----", newCommit)
 		commitIndexUpdated := false
 		if newCommit >= 0 {
+			DPrintf("--- Commit: %v ----", newCommit)
 			commitIndexUpdated = rf.updateCommitIndex(newCommit)
 		}
 
 		rf.mu.Unlock()
-		DPrintf("--- tryCommitNewCommand done %v ----", newCommit)
 		if commitIndexUpdated {
+			DPrintf("--- tryCommitNewCommand done %v ----", newCommit)
 			rf.sendApplyCh()
 		}
 	}
