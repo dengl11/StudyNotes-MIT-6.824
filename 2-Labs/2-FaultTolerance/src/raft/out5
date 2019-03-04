@@ -1,0 +1,63 @@
+go test -run TestConcurrentStarts2B
+connect(0)
+connect(1)
+connect(2)
+Test (2B): concurrent Start()s ...
+try = 0
+Timeout: Server 1
+
+2019/03/03 19:56:39 >>>>>> Server 1 becomes a candidate, new term: 1 <<<<<<<<
+2019/03/03 19:56:39 2 > 1 : candidateUpdated = true
+2019/03/03 19:56:39 0 > 1 : candidateUpdated = true
+2019/03/03 19:56:39 
+ ----- NEW LEADER: 1 - Term: 1 (C = 0, logs = []) -----
+2019/03/03 19:56:39 ------ Leader 1 Start Command  1  😡😡😡: New Logs = [{1 1}] --------
+2019/03/03 19:56:39 ------ Leader 1 Start Command  104  😡😡😡: New Logs = [{1 1} {104 1}] --------
+2019/03/03 19:56:39 ------ Leader 1 Start Command  101  😡😡😡: New Logs = [{1 1} {104 1} {101 1}] --------
+2019/03/03 19:56:39 ------ Leader 1 Start Command  100  😡😡😡: New Logs = [{1 1} {104 1} {101 1} {100 1}] --------
+2019/03/03 19:56:39 ------ Leader 1 Start Command  103  😡😡😡: New Logs = [{1 1} {104 1} {101 1} {100 1} {103 1}] --------
+2019/03/03 19:56:39 ------ Leader 1 Start Command  102  😡😡😡: New Logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1}] --------
+2019/03/03 19:56:39 Update server 2 logs = [{1 1} {104 1} {101 1}]
+2019/03/03 19:56:39 Update server 0 logs = [{1 1} {104 1} {101 1}]
+2019/03/03 19:56:39 Update server 2 logs = [{1 1} {104 1} {101 1}]
+2019/03/03 19:56:39 
+ Start: Server 1 (C = 3) sendApplyCh: 1 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1}]----
+2019/03/03 19:56:39 
+ Start: Server 1 (C = 3) sendApplyCh: 2 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1}]----
+2019/03/03 19:56:39 
+ Start: Server 1 (C = 3) sendApplyCh: 3 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1}]----
+2019/03/03 19:56:39 Update server 2 logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1}]
+2019/03/03 19:56:39 Update server 0 logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1}]
+2019/03/03 19:56:39 
+ Start: Server 1 (C = 6) sendApplyCh: 4 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1}]----
+2019/03/03 19:56:39 
+ Start: Server 1 (C = 6) sendApplyCh: 5 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1}]----
+2019/03/03 19:56:39 
+ Start: Server 1 (C = 6) sendApplyCh: 6 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1}]----
+2019/03/03 19:56:39 Update server 2 logs = [{1 1} {104 1} {101 1}]
+2019/03/03 19:56:39 Update server 0 logs = [{1 1} {104 1} {101 1}]
+2019/03/03 19:56:39 Update server 0 logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1}]
+2019/03/03 19:56:39 
+ Start: Server 0 (C = 6) sendApplyCh: 1 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1}]----
+2019/03/03 19:56:39 
+ Start: Server 0 (C = 6) sendApplyCh: 2 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1}]----
+2019/03/03 19:56:39 
+ Start: Server 0 (C = 6) sendApplyCh: 3 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1}]----
+2019/03/03 19:56:39 
+ Start: Server 0 (C = 6) sendApplyCh: 4 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1}]----
+2019/03/03 19:56:39 
+ Start: Server 0 (C = 6) sendApplyCh: 5 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1}]----
+2019/03/03 19:56:39 
+ Start: Server 0 (C = 6) sendApplyCh: 6 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1}]----
+2019/03/03 19:56:39 Update server 0 logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1}]
+2019/03/03 19:56:39 
+ Start: Server 2 (C = 3) sendApplyCh: 1 : logs = [{1 1} {104 1} {101 1}]----
+2019/03/03 19:56:39 
+ Start: Server 2 (C = 3) sendApplyCh: 2 : logs = [{1 1} {104 1} {101 1}]----
+2019/03/03 19:56:39 
+ Start: Server 2 (C = 3) sendApplyCh: 3 : logs = [{1 1} {104 1} {101 1}]----
+--- FAIL: TestConcurrentStarts2B (31.95s)
+    config.go:380: only 2 decided for index 4; wanted 3
+FAIL
+exit status 1
+FAIL	raft	31.953s

@@ -141,7 +141,7 @@ func TestFailAgree2B(t *testing.T) {
 	cfg.one(105, servers-1)
 
 	// re-connect
-	fmt.Printf("⛽️⛽️⛽️Reconnect %v\n", (leader + 1) % servers)
+	fmt.Printf("⛽️⛽️⛽️Reconnect %v\n", (leader+1)%servers)
 	cfg.connect((leader + 1) % servers)
 
 	// agree with full set of servers?
@@ -214,6 +214,7 @@ func TestConcurrentStarts2B(t *testing.T) {
 	var success bool
 loop:
 	for try := 0; try < 5; try++ {
+		fmt.Printf("try = %v\n", try)
 		if try > 0 {
 			// give solution some time to settle
 			time.Sleep(3 * time.Second)

@@ -1,0 +1,13 @@
+go test -run TestConcurrentStarts2B
+connect(0)
+connect(1)
+connect(2)
+Test (2B): concurrent Start()s ...
+try = 0
+Timeout: Server 1
+
+--- FAIL: TestConcurrentStarts2B (31.97s)
+    config.go:380: only 2 decided for index 6; wanted 3
+FAIL
+exit status 1
+FAIL	raft	31.977s

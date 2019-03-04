@@ -156,7 +156,7 @@ func (cfg *config) start1(i int) {
 				// ignore the snapshot
 			} else if v, ok := (m.Command).(int); ok {
 				cfg.mu.Lock()
-                fmt.Printf("Validating v = %v", v)
+				//fmt.Printf("Validating v = %v", v)
 				for j := 0; j < len(cfg.logs); j++ {
 					if old, oldok := cfg.logs[j][m.Index]; oldok && old != v {
 						// some server has already committed a different value for this entry!
@@ -165,7 +165,7 @@ func (cfg *config) start1(i int) {
 					}
 				}
 				_, prevok := cfg.logs[i][m.Index-1]
-				fmt.Printf(" 🥇 CONFIG set cfg.logs[%v][%v] = %v\n", i, m.Index, v)
+				//fmt.Printf(" 🥇 CONFIG set cfg.logs[%v][%v] = %v\n", i, m.Index, v)
 				cfg.logs[i][m.Index] = v
 				cfg.mu.Unlock()
 
@@ -421,7 +421,7 @@ func (cfg *config) one(cmd int, expectedServers int) int {
 			t1 := time.Now()
 			for time.Since(t1).Seconds() < 2 {
 				nd, cmd1 := cfg.nCommitted(index)
-				fmt.Printf("Checking commit index = %d, nd = %v, expectedServers = %v\n", index, nd, expectedServers)
+				//fmt.Printf("Checking commit index = %d, nd = %v, expectedServers = %v\n", index, nd, expectedServers)
 				if nd > 0 && nd >= expectedServers {
 					// committed
 					if cmd2, ok := cmd1.(int); ok && cmd2 == cmd {

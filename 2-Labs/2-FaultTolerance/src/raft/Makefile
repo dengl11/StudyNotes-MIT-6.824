@@ -21,7 +21,7 @@ clean:
 	go test -run TestFailAgree2B
 
 2B3:
-	go test -run TestNoAgree2B
+	go test -run TestFailNoAgree2B
 
 2B4:
 	go test -run TestConcurrentStarts2B

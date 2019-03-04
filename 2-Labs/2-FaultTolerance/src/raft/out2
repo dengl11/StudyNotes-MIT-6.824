@@ -1,0 +1,901 @@
+go test -run TestConcurrentStarts2B
+connect(0)
+connect(1)
+connect(2)
+Test (2B): concurrent Start()s ...
+2019/03/03 09:27:47 >>>>>> Server 1 becomes a candidate, new term: 1 <<<<<<<<
+2019/03/03 09:27:47 
+ ----- NEW LEADER: 1 - Term: 1 (C = 0, logs = []) -----
+2019/03/03 09:27:47 Leader 1 sending heartbeats to serverv
+2019/03/03 09:27:47 LeaderCommitIdx = 0, server commit = 0 | Now server logs = 0
+2019/03/03 09:27:47 LeaderCommitIdx = 0, server commit = 0 | Now server logs = 0
+2019/03/03 09:27:47 LeaderCommitIdx = 0, server commit = 0 | Now server logs = 0
+2019/03/03 09:27:47 Leader 1 sending heartbeats to serverv
+2019/03/03 09:27:47 LeaderCommitIdx = 0, server commit = 0 | Now server logs = 0
+2019/03/03 09:27:47 LeaderCommitIdx = 0, server commit = 0 | Now server logs = 0
+2019/03/03 09:27:47 LeaderCommitIdx = 0, server commit = 0 | Now server logs = 0
+2019/03/03 09:27:47 Leader 1 sending heartbeats to serverv
+2019/03/03 09:27:47 LeaderCommitIdx = 0, server commit = 0 | Now server logs = 0
+2019/03/03 09:27:47 LeaderCommitIdx = 0, server commit = 0 | Now server logs = 0
+2019/03/03 09:27:47 LeaderCommitIdx = 0, server commit = 0 | Now server logs = 0
+2019/03/03 09:27:47 Leader 1 sending heartbeats to serverv
+2019/03/03 09:27:47 LeaderCommitIdx = 0, server commit = 0 | Now server logs = 0
+2019/03/03 09:27:47 LeaderCommitIdx = 0, server commit = 0 | Now server logs = 0
+2019/03/03 09:27:47 LeaderCommitIdx = 0, server commit = 0 | Now server logs = 0
+2019/03/03 09:27:47 leader 1 send data to server 2 , prevIndex = -1, entries = [{1 1} {104 1}]
+2019/03/03 09:27:47 leader 1 send data to server 2 , prevIndex = -1, entries = [{1 1} {104 1} {101 1}]
+2019/03/03 09:27:47 leader 1 send data to server 0 , prevIndex = -1, entries = [{1 1} {104 1} {101 1}]
+2019/03/03 09:27:47 leader 1 send data to server 2 , prevIndex = -1, entries = [{1 1} {104 1} {101 1} {100 1}]
+2019/03/03 09:27:47 Update server 2 logs = [{1 1} {104 1}]
+2019/03/03 09:27:47 LeaderCommitIdx = 0, server commit = 0 | Now server logs = 2
+2019/03/03 09:27:47 Update server 0 logs = [{1 1} {104 1} {101 1}]
+2019/03/03 09:27:47 LeaderCommitIdx = 0, server commit = 0 | Now server logs = 3
+2019/03/03 09:27:47 Success: Updated Leader 1 matchIndexes: [-1 3 3], nextIndexes = [0 4 4]
+2019/03/03 09:27:47 Update server 2 logs = [{1 1} {104 1} {101 1}]
+2019/03/03 09:27:47 LeaderCommitIdx = 0, server commit = 0 | Now server logs = 3
+2019/03/03 09:27:47 
+ Start: Server 1 (C = 4) sendApplyCh: 1 : logs = [{1 1} {104 1} {101 1} {100 1}]----
+2019/03/03 09:27:47 Update server 2 logs = [{1 1} {104 1} {101 1} {100 1}]
+Validating v = 1 🥇 CONFIG set cfg.logs[1][1] = 1
+2019/03/03 09:27:47 LeaderCommitIdx = 0, server commit = 0 | Now server logs = 4
+2019/03/03 09:27:47 
+ Start: Server 1 (C = 4) sendApplyCh: 2 : logs = [{1 1} {104 1} {101 1} {100 1}]----
+2019/03/03 09:27:47 
+ Start: Server 1 (C = 4) sendApplyCh: 3 : logs = [{1 1} {104 1} {101 1} {100 1}]----
+Validating v = 104 🥇 CONFIG set cfg.logs[1][2] = 104
+Validating v = 101 🥇 CONFIG set cfg.logs[1][3] = 101
+2019/03/03 09:27:47 
+ Start: Server 1 (C = 4) sendApplyCh: 4 : logs = [{1 1} {104 1} {101 1} {100 1}]----
+2019/03/03 09:27:47 leader 1 send data to server 2 , prevIndex = 3, entries = []
+Validating v = 100 🥇 CONFIG set cfg.logs[1][4] = 100
+2019/03/03 09:27:47 leader 1 send data to server 0 , prevIndex = -1, entries = [{1 1} {104 1} {101 1} {100 1}]
+2019/03/03 09:27:47 leader 1 send data to server 0 , prevIndex = -1, entries = [{1 1} {104 1} {101 1} {100 1} {103 1}]
+2019/03/03 09:27:47 leader 1 send data to server 0 , prevIndex = -1, entries = [{1 1} {104 1} {101 1} {100 1} {103 1}]
+2019/03/03 09:27:47 Update server 0 logs = [{1 1} {104 1} {101 1} {100 1}]
+2019/03/03 09:27:47 LeaderCommitIdx = 4, server commit = 0 | Now server logs = 4
+2019/03/03 09:27:47 
+ Start: Server 0 (C = 4) sendApplyCh: 1 : logs = [{1 1} {104 1} {101 1} {100 1}]----
+2019/03/03 09:27:47 leader 1 send data to server 2 , prevIndex = 3, entries = [{103 1} {102 1}]
+Validating v = 1 🥇 CONFIG set cfg.logs[0][1] = 1
+2019/03/03 09:27:47 Success: Updated Leader 1 matchIndexes: [5 5 3], nextIndexes = [6 6 4]
+2019/03/03 09:27:47 
+ Start: Server 0 (C = 4) sendApplyCh: 2 : logs = [{1 1} {104 1} {101 1} {100 1}]----
+2019/03/03 09:27:47 
+ Start: Server 1 (C = 6) sendApplyCh: 5 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1}]----
+Validating v = 1042019/03/03 09:27:47 
+ Start: Server 1 (C = 6) sendApplyCh: 6 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1}]----
+2019/03/03 09:27:47 
+ Start: Server 0 (C = 4) sendApplyCh: 3 : logs = [{1 1} {104 1} {101 1} {100 1}]----
+ 🥇 CONFIG set cfg.logs[0][2] = 104
+Validating v = 1012019/03/03 09:27:47 Update server 2 logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1}]
+2019/03/03 09:27:47 
+ Start: Server 0 (C = 4) sendApplyCh: 4 : logs = [{1 1} {104 1} {101 1} {100 1}]----
+ 🥇 CONFIG set cfg.logs[0][3] = 101
+2019/03/03 09:27:47 LeaderCommitIdx = 4, server commit = 0 | Now server logs = 6
+Validating v = 100 🥇 CONFIG set cfg.logs[0][4] = 100
+Validating v = 103 🥇 CONFIG set cfg.logs[1][5] = 103
+2019/03/03 09:27:47 
+ Start: Server 2 (C = 4) sendApplyCh: 1 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1}]----
+2019/03/03 09:27:47 Success: Updated Leader 1 matchIndexes: [5 5 5], nextIndexes = [6 6 6]
+Validating v = 1022019/03/03 09:27:47 Success: Updated Leader 1 matchIndexes: [5 5 5], nextIndexes = [6 6 6]
+ 🥇 CONFIG set cfg.logs[1][6] = 102
+2019/03/03 09:27:47 
+ Start: Server 2 (C = 4) sendApplyCh: 2 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1}]----
+Validating v = 1 🥇 CONFIG set cfg.logs[2][1] = 1
+2019/03/03 09:27:47 Update server 0 logs = [{1 1} {104 1} {101 1} {100 1} {103 1}]
+Validating v = 104 🥇 CONFIG set cfg.logs[2][2] = 104
+2019/03/03 09:27:47 LeaderCommitIdx = 4, server commit = 4 | Now server logs = 5
+2019/03/03 09:27:47 leader 1 send data to server 2 , prevIndex = 5, entries = []
+2019/03/03 09:27:47 
+ Start: Server 2 (C = 4) sendApplyCh: 3 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1}]----
+2019/03/03 09:27:47 Update server 0 logs = [{1 1} {104 1} {101 1} {100 1} {103 1}]
+2019/03/03 09:27:47 LeaderCommitIdx = 4, server commit = 4 | Now server logs = 5
+2019/03/03 09:27:47 
+ Start: Server 2 (C = 4) sendApplyCh: 4 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1}]----
+2019/03/03 09:27:47 leader 1 send data to server 0 , prevIndex = 5, entries = []
+2019/03/03 09:27:47 Success: Updated Leader 1 matchIndexes: [5 5 5], nextIndexes = [6 6 6]
+Validating v = 1012019/03/03 09:27:47 leader 1 send data to server 0 , prevIndex = 5, entries = []
+ 🥇 CONFIG set cfg.logs[2][3] = 101
+2019/03/03 09:27:47 Success: Updated Leader 1 matchIndexes: [5 5 5], nextIndexes = [6 6 6]
+Validating v = 100 🥇 CONFIG set cfg.logs[2][4] = 100
+2019/03/03 09:27:47 Success: Updated Leader 1 matchIndexes: [5 5 5], nextIndexes = [6 6 6]
+2019/03/03 09:27:47 Success: Updated Leader 1 matchIndexes: [5 5 5], nextIndexes = [6 6 6]
+2019/03/03 09:27:47 Leader 1 sending heartbeats to serverv
+2019/03/03 09:27:47 LeaderCommitIdx = 6, server commit = 4 | Now server logs = 6
+2019/03/03 09:27:47 
+ Start: Server 2 (C = 6) sendApplyCh: 5 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1}]----
+2019/03/03 09:27:47 
+ Start: Server 2 (C = 6) sendApplyCh: 6 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1}]----
+2019/03/03 09:27:47 LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
+Validating v = 103 🥇 CONFIG set cfg.logs[2][5] = 103
+Validating v = 102 🥇 CONFIG set cfg.logs[2][6] = 102
+2019/03/03 09:27:47 Leader 1 sending heartbeats to serverv
+2019/03/03 09:27:47 LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
+2019/03/03 09:27:47 LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
+2019/03/03 09:27:48 Leader 1 sending heartbeats to serverv
+2019/03/03 09:27:48 LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
+2019/03/03 09:27:48 LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
+2019/03/03 09:27:48 Leader 1 sending heartbeats to serverv
+2019/03/03 09:27:48 LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
+2019/03/03 09:27:48 LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
+2019/03/03 09:27:48 Leader 1 sending heartbeats to serverv
+2019/03/03 09:27:48 LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
+2019/03/03 09:27:48 LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
+2019/03/03 09:27:48 Leader 1 sending heartbeats to serverv
+2019/03/03 09:27:48 LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
+2019/03/03 09:27:48 LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
+2019/03/03 09:27:48 Leader 1 sending heartbeats to serverv
+2019/03/03 09:27:48 LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
+2019/03/03 09:27:48 LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
+2019/03/03 09:27:48 >>>>>> Server 0 becomes a candidate, new term: 2 <<<<<<<<
+2019/03/03 09:27:48 server 2 checking hasMoreRecentLogsThan: myLast.Term = 1, lastLogTerm = 1
+2019/03/03 09:27:48 server 1 checking hasMoreRecentLogsThan: myLast.Term = 1, lastLogTerm = 1
+2019/03/03 09:27:49 >>>>>> Server 1 becomes a candidate, new term: 3 <<<<<<<<
+2019/03/03 09:27:49 server 0 checking hasMoreRecentLogsThan: myLast.Term = 1, lastLogTerm = 1
+2019/03/03 09:27:49 server 2 checking hasMoreRecentLogsThan: myLast.Term = 1, lastLogTerm = 1
+2019/03/03 09:27:49 
+ ----- NEW LEADER: 1 - Term: 3 (C = 6, logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1}]) -----
+2019/03/03 09:27:49 Leader 1 sending heartbeats to serverv
+2019/03/03 09:27:49 LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
+2019/03/03 09:27:49 LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
+2019/03/03 09:27:49 Leader 1 sending heartbeats to serverv
+2019/03/03 09:27:49 LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
+2019/03/03 09:27:49 LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
+2019/03/03 09:27:49 Leader 1 sending heartbeats to serverv
+2019/03/03 09:27:49 LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
+2019/03/03 09:27:49 LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
+2019/03/03 09:27:49 Leader 1 sending heartbeats to serverv
+2019/03/03 09:27:49 LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
+2019/03/03 09:27:49 LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
+2019/03/03 09:27:49 >>>>>> Server 0 becomes a candidate, new term: 4 <<<<<<<<
+2019/03/03 09:27:49 server 2 checking hasMoreRecentLogsThan: myLast.Term = 1, lastLogTerm = 1
+2019/03/03 09:27:49 server 1 checking hasMoreRecentLogsThan: myLast.Term = 1, lastLogTerm = 1
+2019/03/03 09:27:50 >>>>>> Server 1 becomes a candidate, new term: 5 <<<<<<<<
+2019/03/03 09:27:50 server 0 checking hasMoreRecentLogsThan: myLast.Term = 1, lastLogTerm = 1
+2019/03/03 09:27:50 server 2 checking hasMoreRecentLogsThan: myLast.Term = 1, lastLogTerm = 1
+2019/03/03 09:27:50 
+ ----- NEW LEADER: 1 - Term: 5 (C = 6, logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1}]) -----
+2019/03/03 09:27:50 >>>>>> Server 2 becomes a candidate, new term: 6 <<<<<<<<
+2019/03/03 09:27:50 server 1 checking hasMoreRecentLogsThan: myLast.Term = 1, lastLogTerm = 1
+2019/03/03 09:27:50 server 0 checking hasMoreRecentLogsThan: myLast.Term = 1, lastLogTerm = 1
+2019/03/03 09:27:50 
+ ----- NEW LEADER: 2 - Term: 6 (C = 6, logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1}]) -----
+2019/03/03 09:27:50 Leader 2 sending heartbeats to serverv
+2019/03/03 09:27:50 LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
+2019/03/03 09:27:50 LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
+2019/03/03 09:27:50 >>>>>> Server 0 becomes a candidate, new term: 7 <<<<<<<<
+2019/03/03 09:27:50 server 2 checking hasMoreRecentLogsThan: myLast.Term = 1, lastLogTerm = 1
+2019/03/03 09:27:50 server 1 checking hasMoreRecentLogsThan: myLast.Term = 1, lastLogTerm = 1
+2019/03/03 09:27:50 >>>>>> Server 1 becomes a candidate, new term: 8 <<<<<<<<
+2019/03/03 09:27:50 server 0 checking hasMoreRecentLogsThan: myLast.Term = 1, lastLogTerm = 1
+2019/03/03 09:27:50 server 2 checking hasMoreRecentLogsThan: myLast.Term = 1, lastLogTerm = 1
+2019/03/03 09:27:50 
+ ----- NEW LEADER: 1 - Term: 8 (C = 6, logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1}]) -----
+2019/03/03 09:27:50 Leader 1 sending heartbeats to serverv
+2019/03/03 09:27:50 LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
+2019/03/03 09:27:50 LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
+2019/03/03 09:27:50 Leader 1 sending heartbeats to serverv
+2019/03/03 09:27:50 LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
+2019/03/03 09:27:50 LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
+2019/03/03 09:27:51 >>>>>> Server 0 becomes a candidate, new term: 9 <<<<<<<<
+2019/03/03 09:27:51 server 1 checking hasMoreRecentLogsThan: myLast.Term = 1, lastLogTerm = 1
+2019/03/03 09:27:51 server 2 checking hasMoreRecentLogsThan: myLast.Term = 1, lastLogTerm = 1
+2019/03/03 09:27:51 >>>>>> Server 1 becomes a candidate, new term: 10 <<<<<<<<
+2019/03/03 09:27:51 server 2 checking hasMoreRecentLogsThan: myLast.Term = 1, lastLogTerm = 1
+2019/03/03 09:27:51 server 0 checking hasMoreRecentLogsThan: myLast.Term = 1, lastLogTerm = 1
+2019/03/03 09:27:51 
+ ----- NEW LEADER: 1 - Term: 10 (C = 6, logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1}]) -----
+2019/03/03 09:27:51 Leader 1 sending heartbeats to serverv
+2019/03/03 09:27:51 LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
+2019/03/03 09:27:51 LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
+2019/03/03 09:27:51 >>>>>> Server 0 becomes a candidate, new term: 11 <<<<<<<<
+2019/03/03 09:27:51 server 2 checking hasMoreRecentLogsThan: myLast.Term = 1, lastLogTerm = 1
+2019/03/03 09:27:51 server 1 checking hasMoreRecentLogsThan: myLast.Term = 1, lastLogTerm = 1
+2019/03/03 09:27:52 >>>>>> Server 1 becomes a candidate, new term: 12 <<<<<<<<
+2019/03/03 09:27:52 server 2 checking hasMoreRecentLogsThan: myLast.Term = 1, lastLogTerm = 1
+2019/03/03 09:27:52 server 0 checking hasMoreRecentLogsThan: myLast.Term = 1, lastLogTerm = 1
+2019/03/03 09:27:52 
+ ----- NEW LEADER: 1 - Term: 12 (C = 6, logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1}]) -----
+2019/03/03 09:27:52 Leader 1 sending heartbeats to serverv
+2019/03/03 09:27:52 LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
+2019/03/03 09:27:52 LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
+2019/03/03 09:27:52 leader 1 send data to server 2 , prevIndex = 5, entries = [{1 12} {104 12}]
+2019/03/03 09:27:52 leader 1 send data to server 2 , prevIndex = 5, entries = [{1 12} {104 12} {101 12}]
+2019/03/03 09:27:52 Update server 2 logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12}]
+2019/03/03 09:27:52 LeaderCommitIdx = 6, server commit = 6 | Now server logs = 8
+2019/03/03 09:27:52 leader 1 send data to server 2 , prevIndex = 5, entries = [{1 12} {104 12} {101 12}]
+2019/03/03 09:27:52 Success: Updated Leader 1 matchIndexes: [-1 8 8], nextIndexes = [6 9 9]
+2019/03/03 09:27:52 
+ Start: Server 1 (C = 9) sendApplyCh: 7 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12}]----
+2019/03/03 09:27:52 
+ Start: Server 1 (C = 9) sendApplyCh: 8 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12}]----
+Validating v = 1 🥇 CONFIG set cfg.logs[1][7] = 1
+2019/03/03 09:27:52 Update server 2 logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12}]
+Validating v = 104 🥇 CONFIG set cfg.logs[1][8] = 104
+2019/03/03 09:27:52 
+ Start: Server 1 (C = 9) sendApplyCh: 9 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12}]----
+2019/03/03 09:27:52 leader 1 send data to server 0 , prevIndex = 5, entries = [{1 12} {104 12} {101 12} {103 12} {102 12}]
+Validating v = 1012019/03/03 09:27:52 LeaderCommitIdx = 6, server commit = 6 | Now server logs = 9
+ 🥇 CONFIG set cfg.logs[1][9] = 101
+2019/03/03 09:27:52 leader 1 send data to server 2 , prevIndex = 8, entries = [{103 12} {102 12}]
+2019/03/03 09:27:52 Update server 2 logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12}]
+2019/03/03 09:27:52 LeaderCommitIdx = 6, server commit = 6 | Now server logs = 9
+2019/03/03 09:27:52 Success: Updated Leader 1 matchIndexes: [-1 10 10], nextIndexes = [6 11 11]
+2019/03/03 09:27:52 Update server 2 logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12}]
+2019/03/03 09:27:52 
+ Start: Server 1 (C = 11) sendApplyCh: 10 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12}]----
+2019/03/03 09:27:52 
+ Start: Server 1 (C = 11) sendApplyCh: 11 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12}]----
+Validating v = 103 🥇 CONFIG set cfg.logs[1][10] = 103
+2019/03/03 09:27:52 LeaderCommitIdx = 9, server commit = 6 | Now server logs = 11
+2019/03/03 09:27:52 Success: Updated Leader 1 matchIndexes: [-1 11 11], nextIndexes = [6 12 12]
+Validating v = 1022019/03/03 09:27:52 
+ Start: Server 2 (C = 9) sendApplyCh: 7 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12}]----
+ 🥇 CONFIG set cfg.logs[1][11] = 102
+2019/03/03 09:27:52 
+ Start: Server 2 (C = 9) sendApplyCh: 8 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12}]----
+Validating v = 1 🥇 CONFIG set cfg.logs[2][7] = 1
+2019/03/03 09:27:52 
+ Start: Server 1 (C = 12) sendApplyCh: 12 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12}]----
+Validating v = 104 🥇 CONFIG set cfg.logs[2][8] = 104
+2019/03/03 09:27:52 
+ Start: Server 2 (C = 9) sendApplyCh: 9 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12}]----
+Validating v = 100 🥇 CONFIG set cfg.logs[1][12] = 100
+Validating v = 101 🥇 CONFIG set cfg.logs[2][9] = 101
+2019/03/03 09:27:52 leader 1 send data to server 2 , prevIndex = 11, entries = []
+2019/03/03 09:27:52 leader 1 send data to server 0 , prevIndex = 5, entries = [{1 12} {104 12} {101 12} {103 12} {102 12} {100 12}]
+2019/03/03 09:27:52 leader 1 send data to server 0 , prevIndex = 5, entries = [{1 12} {104 12} {101 12} {103 12} {102 12} {100 12}]
+2019/03/03 09:27:52 leader 1 send data to server 0 , prevIndex = 5, entries = [{1 12} {104 12} {101 12} {103 12} {102 12} {100 12}]
+2019/03/03 09:27:52 leader 1 send data to server 2 , prevIndex = 11, entries = []
+2019/03/03 09:27:52 leader 1 send data to server 0 , prevIndex = 4, entries = [{102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12}]
+2019/03/03 09:27:52 leader 1 send data to server 0 , prevIndex = 3, entries = [{103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12}]
+2019/03/03 09:27:52 leader 1 send data to server 0 , prevIndex = 3, entries = [{103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12}]
+2019/03/03 09:27:52 leader 1 send data to server 0 , prevIndex = 2, entries = [{100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12}]
+2019/03/03 09:27:52 Update server 0 logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12}]
+2019/03/03 09:27:52 LeaderCommitIdx = 12, server commit = 4 | Now server logs = 12
+2019/03/03 09:27:52 
+ Start: Server 0 (C = 12) sendApplyCh: 5 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12}]----
+2019/03/03 09:27:52 
+ Start: Server 0 (C = 12) sendApplyCh: 6 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12}]----
+Validating v = 103 🥇 CONFIG set cfg.logs[0][5] = 103
+Validating v = 102 🥇 CONFIG set cfg.logs[0][6] = 102
+2019/03/03 09:27:52 
+ Start: Server 0 (C = 12) sendApplyCh: 7 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12}]----
+2019/03/03 09:27:52 
+ Start: Server 0 (C = 12) sendApplyCh: 8 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12}]----
+Validating v = 1 🥇 CONFIG set cfg.logs[0][7] = 1
+Validating v = 104 🥇 CONFIG set cfg.logs[0][8] = 104
+2019/03/03 09:27:52 leader 1 send data to server 0 , prevIndex = 2, entries = [{100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12}]
+2019/03/03 09:27:52 
+ Start: Server 0 (C = 12) sendApplyCh: 9 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12}]----
+2019/03/03 09:27:52 
+ Start: Server 0 (C = 12) sendApplyCh: 10 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12}]----
+Validating v = 101 🥇 CONFIG set cfg.logs[0][9] = 101
+2019/03/03 09:27:52 leader 1 send data to server 0 , prevIndex = 1, entries = [{101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12}]
+Validating v = 103 🥇 CONFIG set cfg.logs[0][10] = 103
+2019/03/03 09:27:52 Success: Updated Leader 1 matchIndexes: [-1 11 11], nextIndexes = [2 12 12]
+2019/03/03 09:27:52 
+ Start: Server 0 (C = 12) sendApplyCh: 11 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12}]----
+2019/03/03 09:27:52 
+ Start: Server 0 (C = 12) sendApplyCh: 12 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12}]----
+Validating v = 102 🥇 CONFIG set cfg.logs[0][11] = 102
+Validating v = 100 🥇 CONFIG set cfg.logs[0][12] = 100
+2019/03/03 09:27:52 Update server 0 logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12}]
+2019/03/03 09:27:52 LeaderCommitIdx = 12, server commit = 12 | Now server logs = 12
+2019/03/03 09:27:52 Success: Updated Leader 1 matchIndexes: [11 11 11], nextIndexes = [12 12 12]
+2019/03/03 09:27:52 Update server 0 logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12}]
+2019/03/03 09:27:52 LeaderCommitIdx = 12, server commit = 12 | Now server logs = 12
+2019/03/03 09:27:52 Success: Updated Leader 1 matchIndexes: [11 11 11], nextIndexes = [12 12 12]
+2019/03/03 09:27:52 Update server 0 logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12}]
+2019/03/03 09:27:52 LeaderCommitIdx = 12, server commit = 12 | Now server logs = 12
+2019/03/03 09:27:52 Success: Updated Leader 1 matchIndexes: [11 11 11], nextIndexes = [12 12 12]
+2019/03/03 09:27:52 Update server 0 logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12}]
+2019/03/03 09:27:52 LeaderCommitIdx = 12, server commit = 12 | Now server logs = 12
+2019/03/03 09:27:52 Success: Updated Leader 1 matchIndexes: [11 11 11], nextIndexes = [12 12 12]
+2019/03/03 09:27:52 Update server 0 logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12}]
+2019/03/03 09:27:52 LeaderCommitIdx = 12, server commit = 12 | Now server logs = 12
+2019/03/03 09:27:52 Success: Updated Leader 1 matchIndexes: [11 11 11], nextIndexes = [12 12 12]
+2019/03/03 09:27:52 Success: Updated Leader 1 matchIndexes: [11 11 11], nextIndexes = [12 12 12]
+2019/03/03 09:27:52 Leader 1 sending heartbeats to serverv
+2019/03/03 09:27:52 LeaderCommitIdx = 12, server commit = 12 | Now server logs = 12
+2019/03/03 09:27:52 LeaderCommitIdx = 12, server commit = 12 | Now server logs = 12
+2019/03/03 09:27:52 Leader 1 sending heartbeats to serverv
+2019/03/03 09:27:52 LeaderCommitIdx = 12, server commit = 12 | Now server logs = 12
+2019/03/03 09:27:52 LeaderCommitIdx = 12, server commit = 12 | Now server logs = 12
+2019/03/03 09:27:52 Leader 1 sending heartbeats to serverv
+2019/03/03 09:27:52 LeaderCommitIdx = 12, server commit = 12 | Now server logs = 12
+2019/03/03 09:27:52 LeaderCommitIdx = 12, server commit = 12 | Now server logs = 12
+2019/03/03 09:27:52 Leader 1 sending heartbeats to serverv
+2019/03/03 09:27:52 LeaderCommitIdx = 12, server commit = 12 | Now server logs = 12
+2019/03/03 09:27:52 LeaderCommitIdx = 12, server commit = 12 | Now server logs = 12
+2019/03/03 09:27:53 Leader 1 sending heartbeats to serverv
+2019/03/03 09:27:53 LeaderCommitIdx = 12, server commit = 12 | Now server logs = 12
+2019/03/03 09:27:53 LeaderCommitIdx = 12, server commit = 12 | Now server logs = 12
+2019/03/03 09:27:53 Leader 1 sending heartbeats to serverv
+2019/03/03 09:27:53 LeaderCommitIdx = 12, server commit = 12 | Now server logs = 12
+2019/03/03 09:27:53 LeaderCommitIdx = 12, server commit = 12 | Now server logs = 12
+2019/03/03 09:27:53 >>>>>> Server 2 becomes a candidate, new term: 13 <<<<<<<<
+2019/03/03 09:27:53 server 1 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 12
+2019/03/03 09:27:53 server 0 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 12
+2019/03/03 09:27:53 >>>>>> Server 0 becomes a candidate, new term: 14 <<<<<<<<
+2019/03/03 09:27:53 server 2 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 12
+2019/03/03 09:27:53 server 1 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 12
+2019/03/03 09:27:53 
+ ----- NEW LEADER: 0 - Term: 14 (C = 12, logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12}]) -----
+2019/03/03 09:27:53 >>>>>> Server 2 becomes a candidate, new term: 15 <<<<<<<<
+2019/03/03 09:27:53 server 1 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 12
+2019/03/03 09:27:53 server 0 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 12
+2019/03/03 09:27:54 >>>>>> Server 1 becomes a candidate, new term: 16 <<<<<<<<
+2019/03/03 09:27:54 server 2 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 12
+2019/03/03 09:27:54 server 0 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 12
+2019/03/03 09:27:54 
+ ----- NEW LEADER: 1 - Term: 16 (C = 12, logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12}]) -----
+2019/03/03 09:27:54 Leader 1 sending heartbeats to serverv
+2019/03/03 09:27:54 LeaderCommitIdx = 12, server commit = 12 | Now server logs = 12
+2019/03/03 09:27:54 LeaderCommitIdx = 12, server commit = 12 | Now server logs = 12
+2019/03/03 09:27:54 >>>>>> Server 2 becomes a candidate, new term: 17 <<<<<<<<
+2019/03/03 09:27:54 server 1 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 12
+2019/03/03 09:27:54 server 0 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 12
+2019/03/03 09:27:54 >>>>>> Server 1 becomes a candidate, new term: 18 <<<<<<<<
+2019/03/03 09:27:54 server 2 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 12
+2019/03/03 09:27:54 server 0 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 12
+2019/03/03 09:27:54 
+ ----- NEW LEADER: 1 - Term: 18 (C = 12, logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12}]) -----
+2019/03/03 09:27:54 Leader 1 sending heartbeats to serverv
+2019/03/03 09:27:54 LeaderCommitIdx = 12, server commit = 12 | Now server logs = 12
+2019/03/03 09:27:54 LeaderCommitIdx = 12, server commit = 12 | Now server logs = 12
+2019/03/03 09:27:55 Leader 1 sending heartbeats to serverv
+2019/03/03 09:27:55 LeaderCommitIdx = 12, server commit = 12 | Now server logs = 12
+2019/03/03 09:27:55 LeaderCommitIdx = 12, server commit = 12 | Now server logs = 12
+2019/03/03 09:27:55 Leader 1 sending heartbeats to serverv
+2019/03/03 09:27:55 LeaderCommitIdx = 12, server commit = 12 | Now server logs = 12
+2019/03/03 09:27:55 LeaderCommitIdx = 12, server commit = 12 | Now server logs = 12
+2019/03/03 09:27:55 >>>>>> Server 2 becomes a candidate, new term: 19 <<<<<<<<
+2019/03/03 09:27:55 server 1 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 12
+2019/03/03 09:27:55 server 0 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 12
+2019/03/03 09:27:55 >>>>>> Server 2 becomes a candidate, new term: 20 <<<<<<<<
+2019/03/03 09:27:55 server 1 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 12
+2019/03/03 09:27:55 server 0 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 12
+2019/03/03 09:27:55 >>>>>> Server 1 becomes a candidate, new term: 21 <<<<<<<<
+2019/03/03 09:27:55 server 0 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 12
+2019/03/03 09:27:55 server 2 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 12
+2019/03/03 09:27:55 
+ ----- NEW LEADER: 1 - Term: 21 (C = 12, logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12}]) -----
+2019/03/03 09:27:55 Leader 1 sending heartbeats to serverv
+2019/03/03 09:27:55 LeaderCommitIdx = 12, server commit = 12 | Now server logs = 12
+2019/03/03 09:27:55 LeaderCommitIdx = 12, server commit = 12 | Now server logs = 12
+2019/03/03 09:27:55 Leader 1 sending heartbeats to serverv
+2019/03/03 09:27:55 LeaderCommitIdx = 12, server commit = 12 | Now server logs = 12
+2019/03/03 09:27:55 LeaderCommitIdx = 12, server commit = 12 | Now server logs = 12
+2019/03/03 09:27:56 Leader 1 sending heartbeats to serverv
+2019/03/03 09:27:56 LeaderCommitIdx = 12, server commit = 12 | Now server logs = 12
+2019/03/03 09:27:56 LeaderCommitIdx = 12, server commit = 12 | Now server logs = 12
+2019/03/03 09:27:56 Leader 1 sending heartbeats to serverv
+2019/03/03 09:27:56 LeaderCommitIdx = 12, server commit = 12 | Now server logs = 12
+2019/03/03 09:27:56 LeaderCommitIdx = 12, server commit = 12 | Now server logs = 12
+2019/03/03 09:27:56 Leader 1 sending heartbeats to serverv
+2019/03/03 09:27:56 LeaderCommitIdx = 12, server commit = 12 | Now server logs = 12
+2019/03/03 09:27:56 LeaderCommitIdx = 12, server commit = 12 | Now server logs = 12
+2019/03/03 09:27:56 Leader 1 sending heartbeats to serverv
+2019/03/03 09:27:56 LeaderCommitIdx = 12, server commit = 12 | Now server logs = 12
+2019/03/03 09:27:56 LeaderCommitIdx = 12, server commit = 12 | Now server logs = 12
+2019/03/03 09:27:56 Leader 1 sending heartbeats to serverv
+2019/03/03 09:27:56 LeaderCommitIdx = 12, server commit = 12 | Now server logs = 12
+2019/03/03 09:27:56 LeaderCommitIdx = 12, server commit = 12 | Now server logs = 12
+2019/03/03 09:27:56 >>>>>> Server 2 becomes a candidate, new term: 22 <<<<<<<<
+2019/03/03 09:27:56 server 0 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 12
+2019/03/03 09:27:56 server 1 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 12
+2019/03/03 09:27:57 >>>>>> Server 2 becomes a candidate, new term: 23 <<<<<<<<
+2019/03/03 09:27:57 server 1 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 12
+2019/03/03 09:27:57 server 0 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 12
+2019/03/03 09:27:57 >>>>>> Server 1 becomes a candidate, new term: 24 <<<<<<<<
+2019/03/03 09:27:57 server 2 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 12
+2019/03/03 09:27:57 server 0 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 12
+2019/03/03 09:27:57 
+ ----- NEW LEADER: 1 - Term: 24 (C = 12, logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12}]) -----
+2019/03/03 09:27:57 Leader 1 sending heartbeats to serverv
+2019/03/03 09:27:57 LeaderCommitIdx = 12, server commit = 12 | Now server logs = 12
+2019/03/03 09:27:57 LeaderCommitIdx = 12, server commit = 12 | Now server logs = 12
+2019/03/03 09:27:57 leader 1 send data to server 2 , prevIndex = 11, entries = [{1 24} {104 24}]
+2019/03/03 09:27:57 leader 1 send data to server 2 , prevIndex = 11, entries = [{1 24} {104 24} {101 24}]
+2019/03/03 09:27:57 leader 1 send data to server 2 , prevIndex = 11, entries = [{1 24} {104 24} {101 24}]
+2019/03/03 09:27:57 leader 1 send data to server 2 , prevIndex = 10, entries = [{100 12} {1 24} {104 24} {101 24}]
+2019/03/03 09:27:57 leader 1 send data to server 0 , prevIndex = 11, entries = [{1 24} {104 24} {101 24} {103 24}]
+2019/03/03 09:27:57 leader 1 send data to server 2 , prevIndex = 9, entries = [{102 12} {100 12} {1 24} {104 24} {101 24} {103 24}]
+2019/03/03 09:27:57 Update server 2 logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24}]
+2019/03/03 09:27:57 LeaderCommitIdx = 12, server commit = 9 | Now server logs = 15
+2019/03/03 09:27:57 leader 1 send data to server 2 , prevIndex = 9, entries = [{102 12} {100 12} {1 24} {104 24} {101 24} {103 24}]
+2019/03/03 09:27:57 leader 1 send data to server 0 , prevIndex = 11, entries = [{1 24} {104 24} {101 24} {103 24}]
+2019/03/03 09:27:57 Update server 0 logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24}]
+2019/03/03 09:27:57 
+ Start: Server 2 (C = 12) sendApplyCh: 10 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24}]----
+2019/03/03 09:27:57 leader 1 send data to server 0 , prevIndex = 11, entries = [{1 24} {104 24} {101 24} {103 24} {102 24}]
+Validating v = 103 🥇 CONFIG set cfg.logs[2][10] = 103
+2019/03/03 09:27:57 LeaderCommitIdx = 12, server commit = 12 | Now server logs = 16
+2019/03/03 09:27:57 leader 1 send data to server 2 , prevIndex = 9, entries = [{102 12} {100 12} {1 24} {104 24} {101 24} {103 24} {102 24} {100 24}]
+2019/03/03 09:27:57 Update server 0 logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24}]
+2019/03/03 09:27:57 LeaderCommitIdx = 12, server commit = 12 | Now server logs = 16
+2019/03/03 09:27:57 
+ Start: Server 2 (C = 12) sendApplyCh: 11 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24}]----
+2019/03/03 09:27:57 Update server 0 logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24} {102 24}]
+Validating v = 102 🥇 CONFIG set cfg.logs[2][11] = 102
+2019/03/03 09:27:57 LeaderCommitIdx = 12, server commit = 12 | Now server logs = 17
+2019/03/03 09:27:57 leader 1 send data to server 2 , prevIndex = 9, entries = [{102 12} {100 12} {1 24} {104 24} {101 24} {103 24} {102 24} {100 24}]
+2019/03/03 09:27:57 Success: Updated Leader 1 matchIndexes: [17 17 -1], nextIndexes = [18 18 10]
+2019/03/03 09:27:57 
+ Start: Server 2 (C = 12) sendApplyCh: 12 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24}]----
+2019/03/03 09:27:57 
+ Start: Server 1 (C = 18) sendApplyCh: 13 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24} {102 24} {100 24}]----
+Validating v = 1002019/03/03 09:27:57 
+ Start: Server 1 (C = 18) sendApplyCh: 14 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24} {102 24} {100 24}]----
+2019/03/03 09:27:57 Update server 2 logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24} {102 24} {100 24}]
+ 🥇 CONFIG set cfg.logs[2][12] = 100
+2019/03/03 09:27:57 LeaderCommitIdx = 12, server commit = 12 | Now server logs = 18
+Validating v = 1 🥇 CONFIG set cfg.logs[1][13] = 1
+Validating v = 104 🥇 CONFIG set cfg.logs[1][14] = 104
+2019/03/03 09:27:57 Update server 2 logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24}]
+2019/03/03 09:27:57 
+ Start: Server 1 (C = 18) sendApplyCh: 15 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24} {102 24} {100 24}]----
+2019/03/03 09:27:57 LeaderCommitIdx = 12, server commit = 12 | Now server logs = 15
+Validating v = 1012019/03/03 09:27:57 
+ Start: Server 1 (C = 18) sendApplyCh: 16 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24} {102 24} {100 24}]----
+ 🥇 CONFIG set cfg.logs[1][15] = 101
+2019/03/03 09:27:57 Update server 2 logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24}]
+Validating v = 103 🥇 CONFIG set cfg.logs[1][16] = 103
+2019/03/03 09:27:57 
+ Start: Server 1 (C = 18) sendApplyCh: 17 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24} {102 24} {100 24}]----
+2019/03/03 09:27:57 
+ Start: Server 1 (C = 18) sendApplyCh: 18 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24} {102 24} {100 24}]----
+2019/03/03 09:27:57 LeaderCommitIdx = 12, server commit = 12 | Now server logs = 16
+Validating v = 102 🥇 CONFIG set cfg.logs[1][17] = 102
+2019/03/03 09:27:57 Update server 2 logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24}]
+2019/03/03 09:27:57 LeaderCommitIdx = 12, server commit = 12 | Now server logs = 16
+2019/03/03 09:27:57 leader 1 send data to server 0 , prevIndex = 17, entries = []
+Validating v = 100 🥇 CONFIG set cfg.logs[1][18] = 100
+2019/03/03 09:27:57 leader 1 send data to server 0 , prevIndex = 17, entries = []
+2019/03/03 09:27:57 Update server 2 logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24} {102 24} {100 24}]
+2019/03/03 09:27:57 LeaderCommitIdx = 12, server commit = 12 | Now server logs = 18
+2019/03/03 09:27:57 Success: Updated Leader 1 matchIndexes: [17 17 -1], nextIndexes = [18 18 10]
+2019/03/03 09:27:57 Success: Updated Leader 1 matchIndexes: [17 17 -1], nextIndexes = [18 18 10]
+2019/03/03 09:27:57 leader 1 send data to server 0 , prevIndex = 17, entries = []
+2019/03/03 09:27:57 Success: Updated Leader 1 matchIndexes: [17 17 17], nextIndexes = [18 18 18]
+2019/03/03 09:27:57 Success: Updated Leader 1 matchIndexes: [17 17 17], nextIndexes = [18 18 18]
+2019/03/03 09:27:57 Success: Updated Leader 1 matchIndexes: [17 17 17], nextIndexes = [18 18 18]
+2019/03/03 09:27:57 Success: Updated Leader 1 matchIndexes: [17 17 17], nextIndexes = [18 18 18]
+2019/03/03 09:27:57 Success: Updated Leader 1 matchIndexes: [17 17 17], nextIndexes = [18 18 18]
+2019/03/03 09:27:57 Success: Updated Leader 1 matchIndexes: [17 17 17], nextIndexes = [18 18 18]
+2019/03/03 09:27:57 Leader 1 sending heartbeats to serverv
+2019/03/03 09:27:57 LeaderCommitIdx = 18, server commit = 18 | Now server logs = 18
+2019/03/03 09:27:57 LeaderCommitIdx = 18, server commit = 12 | Now server logs = 18
+2019/03/03 09:27:57 
+ Start: Server 2 (C = 18) sendApplyCh: 13 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24} {102 24} {100 24}]----
+2019/03/03 09:27:57 
+ Start: Server 2 (C = 18) sendApplyCh: 14 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24} {102 24} {100 24}]----
+Validating v = 1 🥇 CONFIG set cfg.logs[2][13] = 1
+Validating v = 104 🥇 CONFIG set cfg.logs[2][14] = 104
+2019/03/03 09:27:57 
+ Start: Server 2 (C = 18) sendApplyCh: 15 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24} {102 24} {100 24}]----
+2019/03/03 09:27:57 
+ Start: Server 2 (C = 18) sendApplyCh: 16 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24} {102 24} {100 24}]----
+Validating v = 101 🥇 CONFIG set cfg.logs[2][15] = 101
+Validating v = 103 🥇 CONFIG set cfg.logs[2][16] = 103
+2019/03/03 09:27:57 
+ Start: Server 2 (C = 18) sendApplyCh: 17 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24} {102 24} {100 24}]----
+2019/03/03 09:27:57 
+ Start: Server 2 (C = 18) sendApplyCh: 18 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24} {102 24} {100 24}]----
+Validating v = 102 🥇 CONFIG set cfg.logs[2][17] = 102
+Validating v = 100 🥇 CONFIG set cfg.logs[2][18] = 100
+2019/03/03 09:27:57 Leader 1 sending heartbeats to serverv
+2019/03/03 09:27:57 LeaderCommitIdx = 18, server commit = 18 | Now server logs = 18
+2019/03/03 09:27:57 LeaderCommitIdx = 18, server commit = 18 | Now server logs = 18
+2019/03/03 09:27:57 Leader 1 sending heartbeats to serverv
+2019/03/03 09:27:57 LeaderCommitIdx = 18, server commit = 18 | Now server logs = 18
+2019/03/03 09:27:57 LeaderCommitIdx = 18, server commit = 18 | Now server logs = 18
+2019/03/03 09:27:57 Leader 1 sending heartbeats to serverv
+2019/03/03 09:27:57 LeaderCommitIdx = 18, server commit = 18 | Now server logs = 18
+2019/03/03 09:27:57 LeaderCommitIdx = 18, server commit = 18 | Now server logs = 18
+2019/03/03 09:27:57 Leader 1 sending heartbeats to serverv
+2019/03/03 09:27:57 LeaderCommitIdx = 18, server commit = 18 | Now server logs = 18
+2019/03/03 09:27:57 LeaderCommitIdx = 18, server commit = 18 | Now server logs = 18
+2019/03/03 09:27:57 Leader 1 sending heartbeats to serverv
+2019/03/03 09:27:57 LeaderCommitIdx = 18, server commit = 18 | Now server logs = 18
+2019/03/03 09:27:57 LeaderCommitIdx = 18, server commit = 18 | Now server logs = 18
+2019/03/03 09:27:57 Leader 1 sending heartbeats to serverv
+2019/03/03 09:27:57 LeaderCommitIdx = 18, server commit = 18 | Now server logs = 18
+2019/03/03 09:27:57 LeaderCommitIdx = 18, server commit = 18 | Now server logs = 18
+2019/03/03 09:27:58 Leader 1 sending heartbeats to serverv
+2019/03/03 09:27:58 >>>>>> Server 0 becomes a candidate, new term: 25 <<<<<<<<
+2019/03/03 09:27:58 LeaderCommitIdx = 18, server commit = 18 | Now server logs = 18
+2019/03/03 09:27:58 server 2 checking hasMoreRecentLogsThan: myLast.Term = 24, lastLogTerm = 24
+2019/03/03 09:27:58 LeaderCommitIdx = 18, server commit = 18 | Now server logs = 18
+2019/03/03 09:27:58 server 1 checking hasMoreRecentLogsThan: myLast.Term = 24, lastLogTerm = 24
+2019/03/03 09:27:58 >>>>>> Server 1 becomes a candidate, new term: 26 <<<<<<<<
+2019/03/03 09:27:58 server 2 checking hasMoreRecentLogsThan: myLast.Term = 24, lastLogTerm = 24
+2019/03/03 09:27:58 server 0 checking hasMoreRecentLogsThan: myLast.Term = 24, lastLogTerm = 24
+2019/03/03 09:27:58 
+ ----- NEW LEADER: 1 - Term: 26 (C = 18, logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24} {102 24} {100 24}]) -----
+2019/03/03 09:27:58 Leader 1 sending heartbeats to serverv
+2019/03/03 09:27:58 LeaderCommitIdx = 18, server commit = 18 | Now server logs = 18
+2019/03/03 09:27:58 LeaderCommitIdx = 18, server commit = 18 | Now server logs = 18
+2019/03/03 09:27:58 Leader 1 sending heartbeats to serverv
+2019/03/03 09:27:58 LeaderCommitIdx = 18, server commit = 18 | Now server logs = 18
+2019/03/03 09:27:58 LeaderCommitIdx = 18, server commit = 18 | Now server logs = 18
+2019/03/03 09:27:58 Leader 1 sending heartbeats to serverv
+2019/03/03 09:27:58 LeaderCommitIdx = 18, server commit = 18 | Now server logs = 18
+2019/03/03 09:27:58 LeaderCommitIdx = 18, server commit = 18 | Now server logs = 18
+2019/03/03 09:27:58 >>>>>> Server 0 becomes a candidate, new term: 27 <<<<<<<<
+2019/03/03 09:27:58 server 2 checking hasMoreRecentLogsThan: myLast.Term = 24, lastLogTerm = 24
+2019/03/03 09:27:58 server 1 checking hasMoreRecentLogsThan: myLast.Term = 24, lastLogTerm = 24
+2019/03/03 09:27:59 >>>>>> Server 2 becomes a candidate, new term: 28 <<<<<<<<
+2019/03/03 09:27:59 server 1 checking hasMoreRecentLogsThan: myLast.Term = 24, lastLogTerm = 24
+2019/03/03 09:27:59 server 0 checking hasMoreRecentLogsThan: myLast.Term = 24, lastLogTerm = 24
+2019/03/03 09:27:59 
+ ----- NEW LEADER: 2 - Term: 28 (C = 18, logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24} {102 24} {100 24}]) -----
+2019/03/03 09:27:59 >>>>>> Server 1 becomes a candidate, new term: 29 <<<<<<<<
+2019/03/03 09:27:59 server 2 checking hasMoreRecentLogsThan: myLast.Term = 24, lastLogTerm = 24
+2019/03/03 09:27:59 server 0 checking hasMoreRecentLogsThan: myLast.Term = 24, lastLogTerm = 24
+2019/03/03 09:27:59 
+ ----- NEW LEADER: 1 - Term: 29 (C = 18, logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24} {102 24} {100 24}]) -----
+2019/03/03 09:27:59 Leader 1 sending heartbeats to serverv
+2019/03/03 09:27:59 LeaderCommitIdx = 18, server commit = 18 | Now server logs = 18
+2019/03/03 09:27:59 LeaderCommitIdx = 18, server commit = 18 | Now server logs = 18
+2019/03/03 09:27:59 >>>>>> Server 0 becomes a candidate, new term: 30 <<<<<<<<
+2019/03/03 09:27:59 server 2 checking hasMoreRecentLogsThan: myLast.Term = 24, lastLogTerm = 24
+2019/03/03 09:27:59 server 1 checking hasMoreRecentLogsThan: myLast.Term = 24, lastLogTerm = 24
+2019/03/03 09:28:00 >>>>>> Server 2 becomes a candidate, new term: 31 <<<<<<<<
+2019/03/03 09:28:00 server 1 checking hasMoreRecentLogsThan: myLast.Term = 24, lastLogTerm = 24
+2019/03/03 09:28:00 server 0 checking hasMoreRecentLogsThan: myLast.Term = 24, lastLogTerm = 24
+2019/03/03 09:28:00 
+ ----- NEW LEADER: 2 - Term: 31 (C = 18, logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24} {102 24} {100 24}]) -----
+2019/03/03 09:28:00 Leader 2 sending heartbeats to serverv
+2019/03/03 09:28:00 LeaderCommitIdx = 18, server commit = 18 | Now server logs = 18
+2019/03/03 09:28:00 LeaderCommitIdx = 18, server commit = 18 | Now server logs = 18
+2019/03/03 09:28:00 >>>>>> Server 0 becomes a candidate, new term: 32 <<<<<<<<
+2019/03/03 09:28:00 server 2 checking hasMoreRecentLogsThan: myLast.Term = 24, lastLogTerm = 24
+2019/03/03 09:28:00 server 1 checking hasMoreRecentLogsThan: myLast.Term = 24, lastLogTerm = 24
+2019/03/03 09:28:01 >>>>>> Server 1 becomes a candidate, new term: 33 <<<<<<<<
+2019/03/03 09:28:01 server 2 checking hasMoreRecentLogsThan: myLast.Term = 24, lastLogTerm = 24
+2019/03/03 09:28:01 server 0 checking hasMoreRecentLogsThan: myLast.Term = 24, lastLogTerm = 24
+2019/03/03 09:28:01 
+ ----- NEW LEADER: 1 - Term: 33 (C = 18, logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24} {102 24} {100 24}]) -----
+2019/03/03 09:28:01 Leader 1 sending heartbeats to serverv
+2019/03/03 09:28:01 LeaderCommitIdx = 18, server commit = 18 | Now server logs = 18
+2019/03/03 09:28:01 LeaderCommitIdx = 18, server commit = 18 | Now server logs = 18
+2019/03/03 09:28:01 Leader 1 sending heartbeats to serverv
+2019/03/03 09:28:01 LeaderCommitIdx = 18, server commit = 18 | Now server logs = 18
+2019/03/03 09:28:01 LeaderCommitIdx = 18, server commit = 18 | Now server logs = 18
+2019/03/03 09:28:01 Leader 1 sending heartbeats to serverv
+2019/03/03 09:28:01 LeaderCommitIdx = 18, server commit = 18 | Now server logs = 18
+2019/03/03 09:28:01 LeaderCommitIdx = 18, server commit = 18 | Now server logs = 18
+2019/03/03 09:28:01 >>>>>> Server 0 becomes a candidate, new term: 34 <<<<<<<<
+2019/03/03 09:28:01 server 2 checking hasMoreRecentLogsThan: myLast.Term = 24, lastLogTerm = 24
+2019/03/03 09:28:01 server 1 checking hasMoreRecentLogsThan: myLast.Term = 24, lastLogTerm = 24
+2019/03/03 09:28:02 >>>>>> Server 1 becomes a candidate, new term: 35 <<<<<<<<
+2019/03/03 09:28:02 server 2 checking hasMoreRecentLogsThan: myLast.Term = 24, lastLogTerm = 24
+2019/03/03 09:28:02 server 0 checking hasMoreRecentLogsThan: myLast.Term = 24, lastLogTerm = 24
+2019/03/03 09:28:02 
+ ----- NEW LEADER: 1 - Term: 35 (C = 18, logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24} {102 24} {100 24}]) -----
+2019/03/03 09:28:02 Leader 1 sending heartbeats to serverv
+2019/03/03 09:28:02 LeaderCommitIdx = 18, server commit = 18 | Now server logs = 18
+2019/03/03 09:28:02 LeaderCommitIdx = 18, server commit = 18 | Now server logs = 18
+2019/03/03 09:28:02 >>>>>> Server 0 becomes a candidate, new term: 36 <<<<<<<<
+2019/03/03 09:28:02 server 2 checking hasMoreRecentLogsThan: myLast.Term = 24, lastLogTerm = 24
+2019/03/03 09:28:02 server 1 checking hasMoreRecentLogsThan: myLast.Term = 24, lastLogTerm = 24
+2019/03/03 09:28:02 >>>>>> Server 2 becomes a candidate, new term: 37 <<<<<<<<
+2019/03/03 09:28:02 server 0 checking hasMoreRecentLogsThan: myLast.Term = 24, lastLogTerm = 24
+2019/03/03 09:28:02 server 1 checking hasMoreRecentLogsThan: myLast.Term = 24, lastLogTerm = 24
+2019/03/03 09:28:02 
+ ----- NEW LEADER: 2 - Term: 37 (C = 18, logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24} {102 24} {100 24}]) -----
+2019/03/03 09:28:03 leader 2 send data to server 1 , prevIndex = 17, entries = [{1 37} {104 37}]
+2019/03/03 09:28:03 leader 2 send data to server 1 , prevIndex = 17, entries = [{1 37} {104 37} {101 37}]
+2019/03/03 09:28:03 Update server 1 logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24} {102 24} {100 24} {1 37} {104 37}]
+2019/03/03 09:28:03 LeaderCommitIdx = 18, server commit = 18 | Now server logs = 20
+2019/03/03 09:28:03 leader 2 send data to server 1 , prevIndex = 17, entries = [{1 37} {104 37} {101 37}]
+2019/03/03 09:28:03 Update server 1 logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24} {102 24} {100 24} {1 37} {104 37} {101 37}]
+2019/03/03 09:28:03 LeaderCommitIdx = 18, server commit = 18 | Now server logs = 21
+2019/03/03 09:28:03 Success: Updated Leader 2 matchIndexes: [-1 20 20], nextIndexes = [18 21 21]
+2019/03/03 09:28:03 
+ Start: Server 2 (C = 21) sendApplyCh: 19 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24} {102 24} {100 24} {1 37} {104 37} {101 37}]----
+2019/03/03 09:28:03 Update server 1 logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24} {102 24} {100 24} {1 37} {104 37} {101 37}]
+Validating v = 1 🥇 CONFIG set cfg.logs[2][19] = 1
+2019/03/03 09:28:03 LeaderCommitIdx = 18, server commit = 18 | Now server logs = 21
+2019/03/03 09:28:03 
+ Start: Server 2 (C = 21) sendApplyCh: 20 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24} {102 24} {100 24} {1 37} {104 37} {101 37}]----
+2019/03/03 09:28:03 
+ Start: Server 2 (C = 21) sendApplyCh: 21 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24} {102 24} {100 24} {1 37} {104 37} {101 37}]----
+Validating v = 104 🥇 CONFIG set cfg.logs[2][20] = 104
+Validating v = 101 🥇 CONFIG set cfg.logs[2][21] = 101
+2019/03/03 09:28:03 Success: Updated Leader 2 matchIndexes: [-1 20 20], nextIndexes = [18 21 21]
+2019/03/03 09:28:03 leader 2 send data to server 0 , prevIndex = 17, entries = [{1 37} {104 37} {101 37} {103 37} {102 37}]
+2019/03/03 09:28:03 leader 2 send data to server 1 , prevIndex = 20, entries = [{103 37} {102 37}]
+2019/03/03 09:28:03 leader 2 send data to server 0 , prevIndex = 17, entries = [{1 37} {104 37} {101 37} {103 37} {102 37} {100 37}]
+2019/03/03 09:28:03 leader 2 send data to server 0 , prevIndex = 17, entries = [{1 37} {104 37} {101 37} {103 37} {102 37} {100 37}]
+2019/03/03 09:28:03 Update server 1 logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24} {102 24} {100 24} {1 37} {104 37} {101 37} {103 37} {102 37}]
+2019/03/03 09:28:03 LeaderCommitIdx = 21, server commit = 18 | Now server logs = 23
+2019/03/03 09:28:03 Success: Updated Leader 2 matchIndexes: [-1 23 23], nextIndexes = [18 24 24]
+2019/03/03 09:28:03 
+ Start: Server 1 (C = 21) sendApplyCh: 19 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24} {102 24} {100 24} {1 37} {104 37} {101 37} {103 37} {102 37}]----
+2019/03/03 09:28:03 
+ Start: Server 2 (C = 24) sendApplyCh: 22 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24} {102 24} {100 24} {1 37} {104 37} {101 37} {103 37} {102 37} {100 37}]----
+Validating v = 12019/03/03 09:28:03 
+ Start: Server 1 (C = 21) sendApplyCh: 20 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24} {102 24} {100 24} {1 37} {104 37} {101 37} {103 37} {102 37}]----
+2019/03/03 09:28:03 
+ Start: Server 2 (C = 24) sendApplyCh: 23 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24} {102 24} {100 24} {1 37} {104 37} {101 37} {103 37} {102 37} {100 37}]----
+ 🥇 CONFIG set cfg.logs[1][19] = 1
+Validating v = 104 🥇 CONFIG set cfg.logs[1][20] = 104
+Validating v = 1032019/03/03 09:28:03 
+ Start: Server 1 (C = 21) sendApplyCh: 21 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24} {102 24} {100 24} {1 37} {104 37} {101 37} {103 37} {102 37}]----
+ 🥇 CONFIG set cfg.logs[2][22] = 103
+Validating v = 102 🥇 CONFIG set cfg.logs[2][23] = 102
+Validating v = 1012019/03/03 09:28:03 
+ Start: Server 2 (C = 24) sendApplyCh: 24 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24} {102 24} {100 24} {1 37} {104 37} {101 37} {103 37} {102 37} {100 37}]----
+ 🥇 CONFIG set cfg.logs[1][21] = 101
+2019/03/03 09:28:03 Success: Updated Leader 2 matchIndexes: [-1 23 23], nextIndexes = [18 24 24]
+Validating v = 1002019/03/03 09:28:03 leader 2 send data to server 0 , prevIndex = 16, entries = [{100 24} {1 37} {104 37} {101 37} {103 37} {102 37} {100 37}]
+ 🥇 CONFIG set cfg.logs[2][24] = 100
+2019/03/03 09:28:03 leader 2 send data to server 0 , prevIndex = 16, entries = [{100 24} {1 37} {104 37} {101 37} {103 37} {102 37} {100 37}]
+2019/03/03 09:28:03 leader 2 send data to server 1 , prevIndex = 23, entries = []
+2019/03/03 09:28:03 leader 2 send data to server 0 , prevIndex = 16, entries = [{100 24} {1 37} {104 37} {101 37} {103 37} {102 37} {100 37}]
+2019/03/03 09:28:03 Update server 0 logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24} {102 24} {100 24} {1 37} {104 37} {101 37} {103 37} {102 37} {100 37}]
+2019/03/03 09:28:03 LeaderCommitIdx = 24, server commit = 12 | Now server logs = 24
+2019/03/03 09:28:03 leader 2 send data to server 0 , prevIndex = 15, entries = [{102 24} {100 24} {1 37} {104 37} {101 37} {103 37} {102 37} {100 37}]
+2019/03/03 09:28:03 
+ Start: Server 0 (C = 24) sendApplyCh: 13 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24} {102 24} {100 24} {1 37} {104 37} {101 37} {103 37} {102 37} {100 37}]----
+2019/03/03 09:28:03 
+ Start: Server 0 (C = 24) sendApplyCh: 14 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24} {102 24} {100 24} {1 37} {104 37} {101 37} {103 37} {102 37} {100 37}]----
+2019/03/03 09:28:03 leader 2 send data to server 1 , prevIndex = 23, entries = []
+Validating v = 1 🥇 CONFIG set cfg.logs[0][13] = 1
+2019/03/03 09:28:03 leader 2 send data to server 0 , prevIndex = 14, entries = [{103 24} {102 24} {100 24} {1 37} {104 37} {101 37} {103 37} {102 37} {100 37}]
+Validating v = 1042019/03/03 09:28:03 
+ Start: Server 0 (C = 24) sendApplyCh: 15 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24} {102 24} {100 24} {1 37} {104 37} {101 37} {103 37} {102 37} {100 37}]----
+ 🥇 CONFIG set cfg.logs[0][14] = 104
+2019/03/03 09:28:03 leader 2 send data to server 0 , prevIndex = 14, entries = [{103 24} {102 24} {100 24} {1 37} {104 37} {101 37} {103 37} {102 37} {100 37}]
+Validating v = 101 🥇 CONFIG set cfg.logs[0][15] = 101
+2019/03/03 09:28:03 
+ Start: Server 0 (C = 24) sendApplyCh: 16 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24} {102 24} {100 24} {1 37} {104 37} {101 37} {103 37} {102 37} {100 37}]----
+2019/03/03 09:28:03 
+ Start: Server 0 (C = 24) sendApplyCh: 17 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24} {102 24} {100 24} {1 37} {104 37} {101 37} {103 37} {102 37} {100 37}]----
+Validating v = 103 🥇 CONFIG set cfg.logs[0][16] = 103
+Validating v = 102 🥇 CONFIG set cfg.logs[0][17] = 102
+2019/03/03 09:28:03 
+ Start: Server 0 (C = 24) sendApplyCh: 18 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24} {102 24} {100 24} {1 37} {104 37} {101 37} {103 37} {102 37} {100 37}]----
+2019/03/03 09:28:03 
+ Start: Server 0 (C = 24) sendApplyCh: 19 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24} {102 24} {100 24} {1 37} {104 37} {101 37} {103 37} {102 37} {100 37}]----
+Validating v = 100 🥇 CONFIG set cfg.logs[0][18] = 100
+Validating v = 1 🥇 CONFIG set cfg.logs[0][19] = 1
+2019/03/03 09:28:03 
+ Start: Server 0 (C = 24) sendApplyCh: 20 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24} {102 24} {100 24} {1 37} {104 37} {101 37} {103 37} {102 37} {100 37}]----
+2019/03/03 09:28:03 
+ Start: Server 0 (C = 24) sendApplyCh: 21 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24} {102 24} {100 24} {1 37} {104 37} {101 37} {103 37} {102 37} {100 37}]----
+Validating v = 104 🥇 CONFIG set cfg.logs[0][20] = 104
+Validating v = 101 🥇 CONFIG set cfg.logs[0][21] = 101
+2019/03/03 09:28:03 
+ Start: Server 0 (C = 24) sendApplyCh: 22 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24} {102 24} {100 24} {1 37} {104 37} {101 37} {103 37} {102 37} {100 37}]----
+2019/03/03 09:28:03 
+ Start: Server 0 (C = 24) sendApplyCh: 23 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24} {102 24} {100 24} {1 37} {104 37} {101 37} {103 37} {102 37} {100 37}]----
+Validating v = 103 🥇 CONFIG set cfg.logs[0][22] = 103
+Validating v = 102 🥇 CONFIG set cfg.logs[0][23] = 102
+2019/03/03 09:28:03 
+ Start: Server 0 (C = 24) sendApplyCh: 24 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24} {102 24} {100 24} {1 37} {104 37} {101 37} {103 37} {102 37} {100 37}]----
+Validating v = 100 🥇 CONFIG set cfg.logs[0][24] = 100
+2019/03/03 09:28:03 Update server 0 logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24} {102 24} {100 24} {1 37} {104 37} {101 37} {103 37} {102 37} {100 37}]
+2019/03/03 09:28:03 LeaderCommitIdx = 24, server commit = 24 | Now server logs = 24
+2019/03/03 09:28:03 Success: Updated Leader 2 matchIndexes: [23 23 23], nextIndexes = [24 24 24]
+2019/03/03 09:28:03 Update server 0 logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24} {102 24} {100 24} {1 37} {104 37} {101 37} {103 37} {102 37} {100 37}]
+2019/03/03 09:28:03 LeaderCommitIdx = 24, server commit = 24 | Now server logs = 24
+2019/03/03 09:28:03 Success: Updated Leader 2 matchIndexes: [23 23 23], nextIndexes = [24 24 24]
+2019/03/03 09:28:03 Update server 0 logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24} {102 24} {100 24} {1 37} {104 37} {101 37} {103 37} {102 37} {100 37}]
+2019/03/03 09:28:03 Success: Updated Leader 2 matchIndexes: [23 23 23], nextIndexes = [24 24 24]
+2019/03/03 09:28:03 LeaderCommitIdx = 24, server commit = 24 | Now server logs = 24
+2019/03/03 09:28:03 Update server 0 logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24} {102 24} {100 24} {1 37} {104 37} {101 37} {103 37} {102 37} {100 37}]
+2019/03/03 09:28:03 Success: Updated Leader 2 matchIndexes: [23 23 23], nextIndexes = [24 24 24]
+2019/03/03 09:28:03 LeaderCommitIdx = 24, server commit = 24 | Now server logs = 24
+2019/03/03 09:28:03 Update server 0 logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24} {102 24} {100 24} {1 37} {104 37} {101 37} {103 37} {102 37} {100 37}]
+2019/03/03 09:28:03 Success: Updated Leader 2 matchIndexes: [23 23 23], nextIndexes = [24 24 24]
+2019/03/03 09:28:03 LeaderCommitIdx = 24, server commit = 24 | Now server logs = 24
+2019/03/03 09:28:03 Success: Updated Leader 2 matchIndexes: [23 23 23], nextIndexes = [24 24 24]
+2019/03/03 09:28:03 Leader 2 sending heartbeats to serverv
+2019/03/03 09:28:03 LeaderCommitIdx = 24, server commit = 24 | Now server logs = 24
+2019/03/03 09:28:03 LeaderCommitIdx = 24, server commit = 24 | Now server logs = 24
+2019/03/03 09:28:03 Leader 2 sending heartbeats to serverv
+2019/03/03 09:28:03 LeaderCommitIdx = 24, server commit = 24 | Now server logs = 24
+2019/03/03 09:28:03 LeaderCommitIdx = 24, server commit = 24 | Now server logs = 24
+2019/03/03 09:28:03 Leader 2 sending heartbeats to serverv
+2019/03/03 09:28:03 LeaderCommitIdx = 24, server commit = 24 | Now server logs = 24
+2019/03/03 09:28:03 LeaderCommitIdx = 24, server commit = 24 | Now server logs = 24
+2019/03/03 09:28:03 Leader 2 sending heartbeats to serverv
+2019/03/03 09:28:03 LeaderCommitIdx = 24, server commit = 24 | Now server logs = 24
+2019/03/03 09:28:03 LeaderCommitIdx = 24, server commit = 24 | Now server logs = 24
+2019/03/03 09:28:03 Leader 2 sending heartbeats to serverv
+2019/03/03 09:28:03 LeaderCommitIdx = 24, server commit = 24 | Now server logs = 24
+2019/03/03 09:28:03 LeaderCommitIdx = 24, server commit = 24 | Now server logs = 24
+2019/03/03 09:28:03 Leader 2 sending heartbeats to serverv
+2019/03/03 09:28:03 LeaderCommitIdx = 24, server commit = 24 | Now server logs = 24
+2019/03/03 09:28:03 LeaderCommitIdx = 24, server commit = 24 | Now server logs = 24
+2019/03/03 09:28:03 Leader 2 sending heartbeats to serverv
+2019/03/03 09:28:03 LeaderCommitIdx = 24, server commit = 24 | Now server logs = 24
+2019/03/03 09:28:03 LeaderCommitIdx = 24, server commit = 24 | Now server logs = 24
+2019/03/03 09:28:03 >>>>>> Server 1 becomes a candidate, new term: 38 <<<<<<<<
+2019/03/03 09:28:03 server 2 checking hasMoreRecentLogsThan: myLast.Term = 37, lastLogTerm = 37
+2019/03/03 09:28:03 server 0 checking hasMoreRecentLogsThan: myLast.Term = 37, lastLogTerm = 37
+2019/03/03 09:28:04 >>>>>> Server 1 becomes a candidate, new term: 39 <<<<<<<<
+2019/03/03 09:28:04 server 2 checking hasMoreRecentLogsThan: myLast.Term = 37, lastLogTerm = 37
+2019/03/03 09:28:04 server 0 checking hasMoreRecentLogsThan: myLast.Term = 37, lastLogTerm = 37
+2019/03/03 09:28:04 >>>>>> Server 2 becomes a candidate, new term: 40 <<<<<<<<
+2019/03/03 09:28:04 server 1 checking hasMoreRecentLogsThan: myLast.Term = 37, lastLogTerm = 37
+2019/03/03 09:28:04 server 0 checking hasMoreRecentLogsThan: myLast.Term = 37, lastLogTerm = 37
+2019/03/03 09:28:04 
+ ----- NEW LEADER: 2 - Term: 40 (C = 24, logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24} {102 24} {100 24} {1 37} {104 37} {101 37} {103 37} {102 37} {100 37}]) -----
+2019/03/03 09:28:04 Leader 2 sending heartbeats to serverv
+2019/03/03 09:28:04 LeaderCommitIdx = 24, server commit = 24 | Now server logs = 24
+2019/03/03 09:28:04 LeaderCommitIdx = 24, server commit = 24 | Now server logs = 24
+2019/03/03 09:28:04 Leader 2 sending heartbeats to serverv
+2019/03/03 09:28:04 LeaderCommitIdx = 24, server commit = 24 | Now server logs = 24
+2019/03/03 09:28:04 LeaderCommitIdx = 24, server commit = 24 | Now server logs = 24
+2019/03/03 09:28:04 Leader 2 sending heartbeats to serverv
+2019/03/03 09:28:04 LeaderCommitIdx = 24, server commit = 24 | Now server logs = 24
+2019/03/03 09:28:04 LeaderCommitIdx = 24, server commit = 24 | Now server logs = 24
+2019/03/03 09:28:04 Leader 2 sending heartbeats to serverv
+2019/03/03 09:28:04 LeaderCommitIdx = 24, server commit = 24 | Now server logs = 24
+2019/03/03 09:28:04 LeaderCommitIdx = 24, server commit = 24 | Now server logs = 24
+2019/03/03 09:28:04 Leader 2 sending heartbeats to serverv
+2019/03/03 09:28:04 LeaderCommitIdx = 24, server commit = 24 | Now server logs = 24
+2019/03/03 09:28:04 LeaderCommitIdx = 24, server commit = 24 | Now server logs = 24
+2019/03/03 09:28:04 Leader 2 sending heartbeats to serverv
+2019/03/03 09:28:04 LeaderCommitIdx = 24, server commit = 24 | Now server logs = 24
+2019/03/03 09:28:04 LeaderCommitIdx = 24, server commit = 24 | Now server logs = 24
+2019/03/03 09:28:05 >>>>>> Server 1 becomes a candidate, new term: 41 <<<<<<<<
+2019/03/03 09:28:05 server 2 checking hasMoreRecentLogsThan: myLast.Term = 37, lastLogTerm = 37
+2019/03/03 09:28:05 server 0 checking hasMoreRecentLogsThan: myLast.Term = 37, lastLogTerm = 37
+2019/03/03 09:28:05 >>>>>> Server 1 becomes a candidate, new term: 42 <<<<<<<<
+2019/03/03 09:28:05 server 2 checking hasMoreRecentLogsThan: myLast.Term = 37, lastLogTerm = 37
+2019/03/03 09:28:05 server 0 checking hasMoreRecentLogsThan: myLast.Term = 37, lastLogTerm = 37
+2019/03/03 09:28:05 >>>>>> Server 0 becomes a candidate, new term: 43 <<<<<<<<
+2019/03/03 09:28:05 server 2 checking hasMoreRecentLogsThan: myLast.Term = 37, lastLogTerm = 37
+2019/03/03 09:28:05 server 1 checking hasMoreRecentLogsThan: myLast.Term = 37, lastLogTerm = 37
+2019/03/03 09:28:05 
+ ----- NEW LEADER: 0 - Term: 43 (C = 24, logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24} {102 24} {100 24} {1 37} {104 37} {101 37} {103 37} {102 37} {100 37}]) -----
+2019/03/03 09:28:05 Leader 0 sending heartbeats to serverv
+2019/03/03 09:28:05 LeaderCommitIdx = 24, server commit = 24 | Now server logs = 24
+2019/03/03 09:28:05 LeaderCommitIdx = 24, server commit = 24 | Now server logs = 24
+2019/03/03 09:28:06 Leader 0 sending heartbeats to serverv
+2019/03/03 09:28:06 LeaderCommitIdx = 24, server commit = 24 | Now server logs = 24
+2019/03/03 09:28:06 LeaderCommitIdx = 24, server commit = 24 | Now server logs = 24
+2019/03/03 09:28:06 Leader 0 sending heartbeats to serverv
+2019/03/03 09:28:06 LeaderCommitIdx = 24, server commit = 24 | Now server logs = 24
+2019/03/03 09:28:06 LeaderCommitIdx = 24, server commit = 24 | Now server logs = 24
+2019/03/03 09:28:06 >>>>>> Server 1 becomes a candidate, new term: 44 <<<<<<<<
+2019/03/03 09:28:06 server 2 checking hasMoreRecentLogsThan: myLast.Term = 37, lastLogTerm = 37
+2019/03/03 09:28:06 server 0 checking hasMoreRecentLogsThan: myLast.Term = 37, lastLogTerm = 37
+2019/03/03 09:28:06 >>>>>> Server 0 becomes a candidate, new term: 45 <<<<<<<<
+2019/03/03 09:28:06 server 2 checking hasMoreRecentLogsThan: myLast.Term = 37, lastLogTerm = 37
+2019/03/03 09:28:06 server 1 checking hasMoreRecentLogsThan: myLast.Term = 37, lastLogTerm = 37
+2019/03/03 09:28:06 
+ ----- NEW LEADER: 0 - Term: 45 (C = 24, logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24} {102 24} {100 24} {1 37} {104 37} {101 37} {103 37} {102 37} {100 37}]) -----
+2019/03/03 09:28:07 >>>>>> Server 1 becomes a candidate, new term: 46 <<<<<<<<
+2019/03/03 09:28:07 server 0 checking hasMoreRecentLogsThan: myLast.Term = 37, lastLogTerm = 37
+2019/03/03 09:28:07 server 2 checking hasMoreRecentLogsThan: myLast.Term = 37, lastLogTerm = 37
+2019/03/03 09:28:07 >>>>>> Server 2 becomes a candidate, new term: 47 <<<<<<<<
+2019/03/03 09:28:07 server 1 checking hasMoreRecentLogsThan: myLast.Term = 37, lastLogTerm = 37
+2019/03/03 09:28:07 server 0 checking hasMoreRecentLogsThan: myLast.Term = 37, lastLogTerm = 37
+2019/03/03 09:28:07 
+ ----- NEW LEADER: 2 - Term: 47 (C = 24, logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24} {102 24} {100 24} {1 37} {104 37} {101 37} {103 37} {102 37} {100 37}]) -----
+2019/03/03 09:28:07 Leader 2 sending heartbeats to serverv
+2019/03/03 09:28:07 LeaderCommitIdx = 24, server commit = 24 | Now server logs = 24
+2019/03/03 09:28:07 LeaderCommitIdx = 24, server commit = 24 | Now server logs = 24
+2019/03/03 09:28:07 leader 2 send data to server 1 , prevIndex = 23, entries = [{1 47} {104 47}]
+2019/03/03 09:28:07 leader 2 send data to server 1 , prevIndex = 23, entries = [{1 47} {104 47} {102 47} {101 47}]
+2019/03/03 09:28:07 leader 2 send data to server 0 , prevIndex = 23, entries = [{1 47} {104 47} {102 47} {101 47}]
+2019/03/03 09:28:07 leader 2 send data to server 0 , prevIndex = 23, entries = [{1 47} {104 47} {102 47} {101 47}]
+2019/03/03 09:28:07 Update server 0 logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24} {102 24} {100 24} {1 37} {104 37} {101 37} {103 37} {102 37} {100 37} {1 47} {104 47} {102 47} {101 47}]
+2019/03/03 09:28:07 LeaderCommitIdx = 24, server commit = 24 | Now server logs = 28
+2019/03/03 09:28:07 leader 2 send data to server 1 , prevIndex = 23, entries = [{1 47} {104 47} {102 47} {101 47} {103 47}]
+2019/03/03 09:28:07 leader 2 send data to server 1 , prevIndex = 22, entries = [{100 37} {1 47} {104 47} {102 47} {101 47} {103 47}]
+2019/03/03 09:28:07 Update server 0 logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24} {102 24} {100 24} {1 37} {104 37} {101 37} {103 37} {102 37} {100 37} {1 47} {104 47} {102 47} {101 47}]
+2019/03/03 09:28:07 Success: Updated Leader 2 matchIndexes: [28 -1 28], nextIndexes = [29 23 29]
+2019/03/03 09:28:07 
+ Start: Server 2 (C = 29) sendApplyCh: 25 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24} {102 24} {100 24} {1 37} {104 37} {101 37} {103 37} {102 37} {100 37} {1 47} {104 47} {102 47} {101 47} {103 47}]----
+2019/03/03 09:28:07 LeaderCommitIdx = 24, server commit = 24 | Now server logs = 28
+Validating v = 1 🥇 CONFIG set cfg.logs[2][25] = 1
+2019/03/03 09:28:07 
+ Start: Server 2 (C = 29) sendApplyCh: 26 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24} {102 24} {100 24} {1 37} {104 37} {101 37} {103 37} {102 37} {100 37} {1 47} {104 47} {102 47} {101 47} {103 47}]----
+2019/03/03 09:28:07 
+ Start: Server 2 (C = 29) sendApplyCh: 27 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24} {102 24} {100 24} {1 37} {104 37} {101 37} {103 37} {102 37} {100 37} {1 47} {104 47} {102 47} {101 47} {103 47}]----
+2019/03/03 09:28:07 Update server 1 logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24} {102 24} {100 24} {1 37} {104 37} {101 37} {103 37} {102 37} {100 37} {1 47} {104 47} {102 47} {101 47} {103 47}]
+Validating v = 1042019/03/03 09:28:07 LeaderCommitIdx = 24, server commit = 21 | Now server logs = 29
+ 🥇 CONFIG set cfg.logs[2][26] = 104
+2019/03/03 09:28:07 
+ Start: Server 1 (C = 24) sendApplyCh: 22 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24} {102 24} {100 24} {1 37} {104 37} {101 37} {103 37} {102 37} {100 37} {1 47} {104 47} {102 47} {101 47} {103 47}]----
+Validating v = 1022019/03/03 09:28:07 
+ Start: Server 1 (C = 24) sendApplyCh: 23 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24} {102 24} {100 24} {1 37} {104 37} {101 37} {103 37} {102 37} {100 37} {1 47} {104 47} {102 47} {101 47} {103 47}]----
+2019/03/03 09:28:07 
+ Start: Server 2 (C = 29) sendApplyCh: 28 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24} {102 24} {100 24} {1 37} {104 37} {101 37} {103 37} {102 37} {100 37} {1 47} {104 47} {102 47} {101 47} {103 47}]----
+ 🥇 CONFIG set cfg.logs[2][27] = 102
+Validating v = 101 🥇 CONFIG set cfg.logs[2][28] = 101
+Validating v = 103 🥇 CONFIG set cfg.logs[1][22] = 103
+Validating v = 102 🥇 CONFIG set cfg.logs[1][23] = 102
+2019/03/03 09:28:07 
+ Start: Server 2 (C = 29) sendApplyCh: 29 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24} {102 24} {100 24} {1 37} {104 37} {101 37} {103 37} {102 37} {100 37} {1 47} {104 47} {102 47} {101 47} {103 47}]----
+2019/03/03 09:28:07 leader 2 send data to server 1 , prevIndex = 21, entries = [{102 37} {100 37} {1 47} {104 47} {102 47} {101 47} {103 47}]
+2019/03/03 09:28:07 
+ Start: Server 1 (C = 24) sendApplyCh: 24 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24} {102 24} {100 24} {1 37} {104 37} {101 37} {103 37} {102 37} {100 37} {1 47} {104 47} {102 47} {101 47} {103 47}]----
+Validating v = 103 🥇 CONFIG set cfg.logs[2][29] = 103
+Validating v = 100 🥇 CONFIG set cfg.logs[1][24] = 100
+2019/03/03 09:28:07 leader 2 send data to server 1 , prevIndex = 21, entries = [{102 37} {100 37} {1 47} {104 47} {102 47} {101 47} {103 47}]
+2019/03/03 09:28:07 Update server 1 logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24} {102 24} {100 24} {1 37} {104 37} {101 37} {103 37} {102 37} {100 37} {1 47} {104 47} {102 47} {101 47} {103 47}]
+2019/03/03 09:28:07 leader 2 send data to server 1 , prevIndex = 21, entries = [{102 37} {100 37} {1 47} {104 47} {102 47} {101 47} {103 47}]
+2019/03/03 09:28:07 LeaderCommitIdx = 29, server commit = 24 | Now server logs = 29
+2019/03/03 09:28:07 
+ Start: Server 1 (C = 29) sendApplyCh: 25 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24} {102 24} {100 24} {1 37} {104 37} {101 37} {103 37} {102 37} {100 37} {1 47} {104 47} {102 47} {101 47} {103 47}]----
+2019/03/03 09:28:07 leader 2 send data to server 0 , prevIndex = 28, entries = []
+2019/03/03 09:28:07 
+ Start: Server 1 (C = 29) sendApplyCh: 26 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24} {102 24} {100 24} {1 37} {104 37} {101 37} {103 37} {102 37} {100 37} {1 47} {104 47} {102 47} {101 47} {103 47}]----
+Validating v = 1 🥇 CONFIG set cfg.logs[1][25] = 1
+2019/03/03 09:28:07 leader 2 send data to server 1 , prevIndex = 20, entries = [{103 37} {102 37} {100 37} {1 47} {104 47} {102 47} {101 47} {103 47} {100 47}]
+Validating v = 104 🥇 CONFIG set cfg.logs[1][26] = 104
+2019/03/03 09:28:07 
+ Start: Server 1 (C = 29) sendApplyCh: 27 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24} {102 24} {100 24} {1 37} {104 37} {101 37} {103 37} {102 37} {100 37} {1 47} {104 47} {102 47} {101 47} {103 47}]----
+2019/03/03 09:28:07 Success: Updated Leader 2 matchIndexes: [29 -1 29], nextIndexes = [30 21 30]
+Validating v = 102 🥇 CONFIG set cfg.logs[1][27] = 102
+2019/03/03 09:28:07 
+ Start: Server 1 (C = 29) sendApplyCh: 28 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24} {102 24} {100 24} {1 37} {104 37} {101 37} {103 37} {102 37} {100 37} {1 47} {104 47} {102 47} {101 47} {103 47}]----
+2019/03/03 09:28:07 
+ Start: Server 2 (C = 30) sendApplyCh: 30 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24} {102 24} {100 24} {1 37} {104 37} {101 37} {103 37} {102 37} {100 37} {1 47} {104 47} {102 47} {101 47} {103 47} {100 47}]----
+Validating v = 101 🥇 CONFIG set cfg.logs[1][28] = 101
+2019/03/03 09:28:07 Success: Updated Leader 2 matchIndexes: [29 29 29], nextIndexes = [30 30 30]
+Validating v = 100 🥇 CONFIG set cfg.logs[2][30] = 100
+2019/03/03 09:28:07 leader 2 send data to server 0 , prevIndex = 29, entries = []
+2019/03/03 09:28:07 
+ Start: Server 1 (C = 29) sendApplyCh: 29 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24} {102 24} {100 24} {1 37} {104 37} {101 37} {103 37} {102 37} {100 37} {1 47} {104 47} {102 47} {101 47} {103 47}]----
+2019/03/03 09:28:07 leader 2 send data to server 0 , prevIndex = 29, entries = []
+Validating v = 103 🥇 CONFIG set cfg.logs[1][29] = 103
+2019/03/03 09:28:07 leader 2 send data to server 1 , prevIndex = 29, entries = []
+2019/03/03 09:28:07 Update server 1 logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24} {102 24} {100 24} {1 37} {104 37} {101 37} {103 37} {102 37} {100 37} {1 47} {104 47} {102 47} {101 47} {103 47}]
+2019/03/03 09:28:07 LeaderCommitIdx = 29, server commit = 29 | Now server logs = 29
+2019/03/03 09:28:07 leader 2 send data to server 0 , prevIndex = 29, entries = []
+2019/03/03 09:28:07 Success: Updated Leader 2 matchIndexes: [29 29 29], nextIndexes = [30 30 30]
+2019/03/03 09:28:07 Update server 1 logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24} {102 24} {100 24} {1 37} {104 37} {101 37} {103 37} {102 37} {100 37} {1 47} {104 47} {102 47} {101 47} {103 47}]
+2019/03/03 09:28:07 Success: Updated Leader 2 matchIndexes: [29 29 29], nextIndexes = [30 30 30]
+2019/03/03 09:28:07 LeaderCommitIdx = 29, server commit = 29 | Now server logs = 29
+2019/03/03 09:28:07 Update server 1 logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24} {102 24} {100 24} {1 37} {104 37} {101 37} {103 37} {102 37} {100 37} {1 47} {104 47} {102 47} {101 47} {103 47} {100 47}]
+2019/03/03 09:28:07 LeaderCommitIdx = 29, server commit = 29 | Now server logs = 30
+2019/03/03 09:28:07 Success: Updated Leader 2 matchIndexes: [29 29 29], nextIndexes = [30 30 30]
+2019/03/03 09:28:07 Success: Updated Leader 2 matchIndexes: [29 29 29], nextIndexes = [30 30 30]
+2019/03/03 09:28:07 Leader 2 sending heartbeats to serverv
+2019/03/03 09:28:07 LeaderCommitIdx = 30, server commit = 30 | Now server logs = 30
+2019/03/03 09:28:07 LeaderCommitIdx = 30, server commit = 29 | Now server logs = 30
+2019/03/03 09:28:07 
+ Start: Server 1 (C = 30) sendApplyCh: 30 : logs = [{1 1} {104 1} {101 1} {100 1} {103 1} {102 1} {1 12} {104 12} {101 12} {103 12} {102 12} {100 12} {1 24} {104 24} {101 24} {103 24} {102 24} {100 24} {1 37} {104 37} {101 37} {103 37} {102 37} {100 37} {1 47} {104 47} {102 47} {101 47} {103 47} {100 47}]----
+Validating v = 100 🥇 CONFIG set cfg.logs[1][30] = 100
+2019/03/03 09:28:07 Leader 2 sending heartbeats to serverv
+2019/03/03 09:28:07 LeaderCommitIdx = 30, server commit = 30 | Now server logs = 30
+2019/03/03 09:28:07 LeaderCommitIdx = 30, server commit = 30 | Now server logs = 30
+2019/03/03 09:28:07 Leader 2 sending heartbeats to serverv
+2019/03/03 09:28:07 LeaderCommitIdx = 30, server commit = 30 | Now server logs = 30
+2019/03/03 09:28:07 LeaderCommitIdx = 30, server commit = 30 | Now server logs = 30
+2019/03/03 09:28:07 Leader 2 sending heartbeats to serverv
+2019/03/03 09:28:07 LeaderCommitIdx = 30, server commit = 30 | Now server logs = 30
+2019/03/03 09:28:07 LeaderCommitIdx = 30, server commit = 30 | Now server logs = 30
+2019/03/03 09:28:07 Leader 2 sending heartbeats to serverv
+2019/03/03 09:28:07 LeaderCommitIdx = 30, server commit = 30 | Now server logs = 30
+2019/03/03 09:28:07 LeaderCommitIdx = 30, server commit = 30 | Now server logs = 30
+2019/03/03 09:28:07 Leader 2 sending heartbeats to serverv
+2019/03/03 09:28:07 LeaderCommitIdx = 30, server commit = 30 | Now server logs = 30
+2019/03/03 09:28:07 LeaderCommitIdx = 30, server commit = 30 | Now server logs = 30
+2019/03/03 09:28:07 Leader 2 sending heartbeats to serverv
+2019/03/03 09:28:07 LeaderCommitIdx = 30, server commit = 30 | Now server logs = 30
+2019/03/03 09:28:07 LeaderCommitIdx = 30, server commit = 30 | Now server logs = 30
+2019/03/03 09:28:07 Leader 2 sending heartbeats to serverv
+2019/03/03 09:28:07 LeaderCommitIdx = 30, server commit = 30 | Now server logs = 30
+2019/03/03 09:28:07 LeaderCommitIdx = 30, server commit = 30 | Now server logs = 30
+2019/03/03 09:28:08 Leader 2 sending heartbeats to serverv
+2019/03/03 09:28:08 LeaderCommitIdx = 30, server commit = 30 | Now server logs = 30
+2019/03/03 09:28:08 LeaderCommitIdx = 30, server commit = 30 | Now server logs = 30
+2019/03/03 09:28:08 >>>>>> Server 0 becomes a candidate, new term: 48 <<<<<<<<
+2019/03/03 09:28:08 server 2 checking hasMoreRecentLogsThan: myLast.Term = 47, lastLogTerm = 47
+2019/03/03 09:28:08 server 1 checking hasMoreRecentLogsThan: myLast.Term = 47, lastLogTerm = 47
+--- FAIL: TestConcurrentStarts2B (21.72s)
+    test_test.go:302: term changed too often
+FAIL
+exit status 1
+FAIL	raft	21.726s
