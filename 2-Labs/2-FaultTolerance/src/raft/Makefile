@@ -35,4 +35,23 @@ clean:
 2B7:
 	go test -run TestCount2B
 
+2C1:
+	go test -run TestPersist12C
 
+2C2:
+	go test -run TestPersist32C
+
+2C3:
+	go test -run TestFigure82C
+
+2C31:
+	go test -run TestUnreliableAgree2C
+
+2C4:
+	go test -run TestFigure8Unreliable2C
+
+2C5:
+	go test -run TestReliableChurn2C
+
+2C6:
+	go test -run TestUnreliableChurn2C

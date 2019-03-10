@@ -24,8 +24,8 @@ import "time"
 //import "fmt"
 import "math/rand"
 
-// import "bytes"
-// import "encoding/gob"
+import "bytes"
+import "encoding/gob"
 
 //
 // as each Raft peer becomes aware that successive log entries are
@@ -300,6 +300,7 @@ done:
 
 		rf.setCurrentTerm(args.Term)
 		rf.votedFor = -1
+		rf.persist()
 
 		DPrintf("Server: %v, Leader: %v,  LeaderCommitIdx = %v, server commit = %v | Now server logs = %v", rf.me, args.Leader, args.LeaderCommitIdx, rf.commitIndex, len(rf.logs))
 		if args.LeaderCommitIdx > rf.commitIndex {
@@ -340,6 +341,7 @@ func (rf *Raft) OnAppendEntriesData(args *AppendEntriesArgs, reply *AppendEntrie
 			rf.logs = append(rf.logs, args.Entries[offset:]...)
 		}
 	}
+	rf.persist()
 	DPrintf("Update server %v logs = %v", rf.me, rf.logs)
 
 	return true
@@ -368,6 +370,13 @@ func (rf *Raft) persist() {
 	// e.Encode(rf.yyy)
 	// data := w.Bytes()
 	// rf.persister.SaveRaftState(data)
+	w := new(bytes.Buffer)
+	e := gob.NewEncoder(w)
+	e.Encode(rf.currentTerm)
+	e.Encode(rf.votedFor)
+	e.Encode(rf.logs)
+	data := w.Bytes()
+	rf.persister.SaveRaftState(data)
 }
 
 //
@@ -383,6 +392,11 @@ func (rf *Raft) readPersist(data []byte) {
 	if data == nil || len(data) < 1 { // bootstrap without any state?
 		return
 	}
+	r := bytes.NewBuffer(data)
+	d := gob.NewDecoder(r)
+	d.Decode(&rf.currentTerm)
+	d.Decode(&rf.votedFor)
+	d.Decode(&rf.logs)
 }
 
 //
@@ -431,7 +445,7 @@ func (rf *Raft) RequestVote(args *RequestVoteArgs, reply *RequestVoteReply) {
 		rf.votedFor = -1
 		rf.isLeader = false
 		rf.setCurrentTerm(args.MyTerm)
-
+		rf.persist()
 	}
 	DPrintf("%v > %v : candidateUpdated = %v", rf.me, args.MyId, candidateUpdated)
 	if candidateUpdated {
@@ -444,7 +458,7 @@ func (rf *Raft) RequestVote(args *RequestVoteArgs, reply *RequestVoteReply) {
 				rf.setCurrentTerm(args.MyTerm)
 				rf.votedFor = args.MyId
 				//DPrintf("Server %d granted vote for server %d", rf.me, args.MyId)
-
+				rf.persist()
 				return
 			}
 		}
@@ -488,6 +502,7 @@ func (rf *Raft) sendRequestVote(server int, args *RequestVoteArgs, reply *Reques
 	defer rf.mu.Unlock()
 	if ok && reply.Term > rf.currentTerm {
 		rf.currentTerm = reply.Term
+		rf.persist()
 		//DPrintf("Reply: %v", reply)
 		//DPrintf("Server %d request vote ok", rf.me)
 	}
@@ -520,6 +535,7 @@ func (rf *Raft) Start(command interface{}) (int, int, bool) {
 
 	// Append the command to logs
 	rf.logs = append(rf.logs, logEntry)
+	rf.persist()
 	rf.matchIndexes[rf.me] = len(rf.logs) - 1
 	rf.nextIndexes[rf.me] = len(rf.logs)
 
@@ -693,6 +709,7 @@ func convertToCandidate(rf *Raft) {
 	rf.heartbeat <- true // reset election timer
 	//DPrintf("Server %d becomes a candidate current Term: %d", rf.me, rf.currentTerm)
 	rf.votedFor = rf.me
+	rf.persist()
 
 	rf.mu.Unlock()
 

@@ -533,7 +533,7 @@ func TestPersist12C(t *testing.T) {
 
 	fmt.Printf("Test (2C): basic persistence ...\n")
 
-	cfg.one(11, servers)
+	cfg.one(11, servers) // 1
 
 	// crash and re-start all
 	for i := 0; i < servers; i++ {
@@ -544,18 +544,19 @@ func TestPersist12C(t *testing.T) {
 		cfg.connect(i)
 	}
 
-	cfg.one(12, servers)
+	cfg.one(12, servers) // 2
 
 	leader1 := cfg.checkOneLeader()
 	cfg.disconnect(leader1)
 	cfg.start1(leader1)
 	cfg.connect(leader1)
 
-	cfg.one(13, servers)
+	cfg.one(13, servers) // 3
 
 	leader2 := cfg.checkOneLeader()
 	cfg.disconnect(leader2)
-	cfg.one(14, servers-1)
+	cfg.one(14, servers-1) // 4
+
 	cfg.start1(leader2)
 	cfg.connect(leader2)
 
