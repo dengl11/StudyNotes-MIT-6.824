@@ -210,6 +210,10 @@ func (rf *Raft) keepSendAppendEntriesToServer(idx int, empty bool) bool {
 		if ok {
 			return accepted
 		}
+        if (empty) {
+            return false
+        }
+
 		// Keep looping if try to send data but got rejected
 	}
 }
