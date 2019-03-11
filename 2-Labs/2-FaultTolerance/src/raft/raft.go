@@ -204,15 +204,11 @@ func (rf *Raft) keepSendAppendEntriesToServer(idx int, empty bool) bool {
 		ok, accepted = rf.sendAppendEntriesToServer(idx, empty)
 		//DPrintf("---> sendAppendEntriesToServer: leader %v send data to server %v, empty: %v | accepted = %v", rf.me, idx, empty, accepted)
 
-		if !ok {
-			return false
-		}
-		if accepted {
-			return true
-		}
-		// rejection
-		if empty {
-			return false
+		//if !ok {
+		//return false
+		//}
+		if ok {
+			return accepted
 		}
 		// Keep looping if try to send data but got rejected
 	}
@@ -397,6 +393,7 @@ func (rf *Raft) readPersist(data []byte) {
 	d.Decode(&rf.currentTerm)
 	d.Decode(&rf.votedFor)
 	d.Decode(&rf.logs)
+	DPrintf("[%v] readPersist: currentTerm = %v, votedFor = %v, logs = %v", rf.me, rf.currentTerm, rf.votedFor, rf.logs)
 }
 
 //
@@ -457,7 +454,7 @@ func (rf *Raft) RequestVote(args *RequestVoteArgs, reply *RequestVoteReply) {
 				reply.Term = rf.currentTerm
 				rf.setCurrentTerm(args.MyTerm)
 				rf.votedFor = args.MyId
-				//DPrintf("Server %d granted vote for server %d", rf.me, args.MyId)
+				DPrintf("Server %d granted vote for server %d", rf.me, args.MyId)
 				rf.persist()
 				return
 			}
@@ -721,16 +718,20 @@ func convertToCandidate(rf *Raft) {
 		}
 		wg.Add(1)
 		go func(i int) {
+			DPrintf("Server %d current votes = %v before requesting server %v", rf.me, votes, i)
 			defer wg.Done()
 			var requestReply RequestVoteReply
 			ok := rf.sendRequestVote(i, &requestArgs, &requestReply)
+			DPrintf("Server %d ok = %v, granted = %v, before requesting server %v", rf.me, ok, requestReply.VoteGranted, i)
 			if ok && requestReply.VoteGranted {
 				votes++
+				DPrintf("Server %d get vote from server %v, current votes = %v", rf.me, i, votes)
 			}
+			DPrintf("Server %d current votes = %v after requesting server %v", rf.me, votes, i)
 		}(i)
 	}
 	wg.Wait()
-	//DPrintf("Server %d get votes: %v, %v", rf.me, votes, len(rf.peers)/2)
+	DPrintf("Server %d get votes: %v, %v", rf.me, votes, len(rf.peers)/2)
 	if votes > len(rf.peers)/2 { // Wins the majority
 		rf.becomeALeader()
 	}

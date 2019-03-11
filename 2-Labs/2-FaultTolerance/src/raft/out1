@@ -1,0 +1,977 @@
+go test -run TestPersist12C
+connect(0)
+connect(1)
+connect(2)
+Test (2C): basic persistence ...
+2019/03/10 07:02:39 >>>>>> Server 1 becomes a candidate, new term: 1 <<<<<<<<
+2019/03/10 07:02:39 2 > 1 : candidateUpdated = true
+2019/03/10 07:02:39 0 > 1 : candidateUpdated = true
+2019/03/10 07:02:39 
+ ----- NEW LEADER: 1 - Term: 1 (C = 0, logs = []) -----
+2019/03/10 07:02:39 ------ Leader 1 Start Command  11  😡😡😡: New Logs = [{11 1}] --------
+One : Commit Index = 1
+2019/03/10 07:02:39 leader 1 send data to server 2 , prevIndex = -1, entries = [{11 1}]
+2019/03/10 07:02:39 leader 1 send data to server 0 , prevIndex = -1, entries = [{11 1}]
+2019/03/10 07:02:39 Update server 0 logs = [{11 1}]
+2019/03/10 07:02:39 Update server 2 logs = [{11 1}]
+2019/03/10 07:02:39 Server: 0, Leader: 1,  LeaderCommitIdx = 0, server commit = 0 | Now server logs = 1
+2019/03/10 07:02:39 Server: 2, Leader: 1,  LeaderCommitIdx = 0, server commit = 0 | Now server logs = 1
+2019/03/10 07:02:39 
+ Start: Server 1 (C = 1) sendApplyCh: 1 : logs = [{11 1}]----
+2019/03/10 07:02:40 Server: 2, Leader: 1,  LeaderCommitIdx = 1, server commit = 0 | Now server logs = 1
+2019/03/10 07:02:40 
+ Start: Server 2 (C = 1) sendApplyCh: 1 : logs = [{11 1}]----
+2019/03/10 07:02:40 Server: 0, Leader: 1,  LeaderCommitIdx = 1, server commit = 0 | Now server logs = 1
+2019/03/10 07:02:40 
+ Start: Server 0 (C = 1) sendApplyCh: 1 : logs = [{11 1}]----
+2019/03/10 07:02:40 Server: 1, Leader: 1,  LeaderCommitIdx = 1, server commit = 1 | Now server logs = 1
+2019/03/10 07:02:40 [0] readPersist: currentTerm = 1, votedFor = -1, logs = [{11 1}]
+2019/03/10 07:02:40 [1] readPersist: currentTerm = 1, votedFor = -1, logs = [{11 1}]
+2019/03/10 07:02:40 [2] readPersist: currentTerm = 1, votedFor = -1, logs = [{11 1}]
+connect(0)
+connect(1)
+connect(2)
+2019/03/10 07:02:40 >>>>>> Server 1 becomes a candidate, new term: 2 <<<<<<<<
+2019/03/10 07:02:40 >>>>>> Server 1 becomes a candidate, new term: 2 <<<<<<<<
+2019/03/10 07:02:40 server 2 checking hasMoreRecentLogsThan: myLast.Term = 1, lastLogTerm = 1, mylogs = 1, other = 1
+2019/03/10 07:02:40 2 > 1 : candidateUpdated = true
+2019/03/10 07:02:40 server 0 checking hasMoreRecentLogsThan: myLast.Term = 1, lastLogTerm = 1, mylogs = 1, other = 1
+2019/03/10 07:02:40 0 > 1 : candidateUpdated = true
+2019/03/10 07:02:40 
+ ----- NEW LEADER: 1 - Term: 2 (C = 0, logs = [{11 1}]) -----
+2019/03/10 07:02:40 ------ Leader 1 Start Command  12  😡😡😡: New Logs = [{11 1} {12 2}] --------
+One : Commit Index = 2
+2019/03/10 07:02:40 leader 1 send data to server 2 , prevIndex = 0, entries = [{12 2}]
+2019/03/10 07:02:40 leader 1 send data to server 0 , prevIndex = 0, entries = [{12 2}]
+2019/03/10 07:02:40 Update server 2 logs = [{11 1} {12 2}]
+2019/03/10 07:02:40 Update server 0 logs = [{11 1} {12 2}]
+2019/03/10 07:02:40 Server: 2, Leader: 1,  LeaderCommitIdx = 0, server commit = 0 | Now server logs = 2
+2019/03/10 07:02:40 Server: 0, Leader: 1,  LeaderCommitIdx = 0, server commit = 0 | Now server logs = 2
+2019/03/10 07:02:40 
+ Start: Server 1 (C = 2) sendApplyCh: 1 : logs = [{11 1} {12 2}]----
+2019/03/10 07:02:40 
+ Start: Server 1 (C = 2) sendApplyCh: 2 : logs = [{11 1} {12 2}]----
+2019/03/10 07:02:41 >>>>>> Server 2 becomes a candidate, new term: 2 <<<<<<<<
+2019/03/10 07:02:41 Server: 1, Leader: 1,  LeaderCommitIdx = 2, server commit = 2 | Now server logs = 2
+2019/03/10 07:02:41 Server: 2, Leader: 1,  LeaderCommitIdx = 2, server commit = 0 | Now server logs = 2
+2019/03/10 07:02:41 
+ Start: Server 2 (C = 2) sendApplyCh: 1 : logs = [{11 1} {12 2}]----
+2019/03/10 07:02:41 
+ Start: Server 2 (C = 2) sendApplyCh: 2 : logs = [{11 1} {12 2}]----
+2019/03/10 07:02:41 Server: 0, Leader: 1,  LeaderCommitIdx = 2, server commit = 0 | Now server logs = 2
+2019/03/10 07:02:41 
+ Start: Server 0 (C = 2) sendApplyCh: 1 : logs = [{11 1} {12 2}]----
+2019/03/10 07:02:41 
+ Start: Server 0 (C = 2) sendApplyCh: 2 : logs = [{11 1} {12 2}]----
+2019/03/10 07:02:41 Server: 0, Leader: 1,  LeaderCommitIdx = 2, server commit = 2 | Now server logs = 2
+2019/03/10 07:02:41 Server: 1, Leader: 1,  LeaderCommitIdx = 2, server commit = 2 | Now server logs = 2
+2019/03/10 07:02:41 Server: 2, Leader: 1,  LeaderCommitIdx = 2, server commit = 2 | Now server logs = 2
+2019/03/10 07:02:41 >>>>>> Server 0 becomes a candidate, new term: 2 <<<<<<<<
+2019/03/10 07:02:41 Server: 2, Leader: 1,  LeaderCommitIdx = 2, server commit = 2 | Now server logs = 2
+2019/03/10 07:02:41 Server: 0, Leader: 1,  LeaderCommitIdx = 2, server commit = 2 | Now server logs = 2
+2019/03/10 07:02:41 Server: 1, Leader: 1,  LeaderCommitIdx = 2, server commit = 2 | Now server logs = 2
+2019/03/10 07:02:41 Server: 2, Leader: 1,  LeaderCommitIdx = 2, server commit = 2 | Now server logs = 2
+2019/03/10 07:02:41 Server: 0, Leader: 1,  LeaderCommitIdx = 2, server commit = 2 | Now server logs = 2
+2019/03/10 07:02:41 Server: 1, Leader: 1,  LeaderCommitIdx = 2, server commit = 2 | Now server logs = 2
+2019/03/10 07:02:41 Server: 2, Leader: 1,  LeaderCommitIdx = 2, server commit = 2 | Now server logs = 2
+2019/03/10 07:02:41 Server: 1, Leader: 1,  LeaderCommitIdx = 2, server commit = 2 | Now server logs = 2
+2019/03/10 07:02:41 Server: 0, Leader: 1,  LeaderCommitIdx = 2, server commit = 2 | Now server logs = 2
+2019/03/10 07:02:41 [1] readPersist: currentTerm = 2, votedFor = -1, logs = [{11 1} {12 2}]
+connect(1)
+2019/03/10 07:02:41 >>>>>> Server 2 becomes a candidate, new term: 3 <<<<<<<<
+2019/03/10 07:02:42 >>>>>> Server 0 becomes a candidate, new term: 3 <<<<<<<<
+2019/03/10 07:02:42 >>>>>> Server 1 becomes a candidate, new term: 3 <<<<<<<<
+2019/03/10 07:02:42 >>>>>> Server 1 becomes a candidate, new term: 3 <<<<<<<<
+2019/03/10 07:02:42 >>>>>> Server 1 becomes a candidate, new term: 3 <<<<<<<<
+2019/03/10 07:02:42 server 2 checking hasMoreRecentLogsThan: myLast.Term = 2, lastLogTerm = 2, mylogs = 2, other = 2
+2019/03/10 07:02:42 2 > 1 : candidateUpdated = true
+2019/03/10 07:02:42 server 0 checking hasMoreRecentLogsThan: myLast.Term = 2, lastLogTerm = 2, mylogs = 2, other = 2
+2019/03/10 07:02:42 0 > 1 : candidateUpdated = true
+2019/03/10 07:02:42 
+ ----- NEW LEADER: 1 - Term: 3 (C = 0, logs = [{11 1} {12 2}]) -----
+2019/03/10 07:02:42 ------ Leader 1 Start Command  13  😡😡😡: New Logs = [{11 1} {12 2} {13 3}] --------
+One : Commit Index = 3
+2019/03/10 07:02:42 leader 1 send data to server 2 , prevIndex = 1, entries = [{13 3}]
+2019/03/10 07:02:42 leader 1 send data to server 0 , prevIndex = 1, entries = [{13 3}]
+2019/03/10 07:02:42 Update server 2 logs = [{11 1} {12 2} {13 3}]
+2019/03/10 07:02:42 Update server 0 logs = [{11 1} {12 2} {13 3}]
+2019/03/10 07:02:42 Server: 2, Leader: 1,  LeaderCommitIdx = 0, server commit = 2 | Now server logs = 3
+2019/03/10 07:02:42 Server: 0, Leader: 1,  LeaderCommitIdx = 0, server commit = 2 | Now server logs = 3
+2019/03/10 07:02:42 
+ Start: Server 1 (C = 3) sendApplyCh: 1 : logs = [{11 1} {12 2} {13 3}]----
+2019/03/10 07:02:42 
+ Start: Server 1 (C = 3) sendApplyCh: 2 : logs = [{11 1} {12 2} {13 3}]----
+2019/03/10 07:02:42 
+ Start: Server 1 (C = 3) sendApplyCh: 3 : logs = [{11 1} {12 2} {13 3}]----
+2019/03/10 07:02:42 Server: 0, Leader: 1,  LeaderCommitIdx = 3, server commit = 2 | Now server logs = 3
+2019/03/10 07:02:42 
+ Start: Server 0 (C = 3) sendApplyCh: 3 : logs = [{11 1} {12 2} {13 3}]----
+2019/03/10 07:02:42 Server: 1, Leader: 1,  LeaderCommitIdx = 3, server commit = 3 | Now server logs = 3
+2019/03/10 07:02:42 Server: 2, Leader: 1,  LeaderCommitIdx = 3, server commit = 2 | Now server logs = 3
+2019/03/10 07:02:42 
+ Start: Server 2 (C = 3) sendApplyCh: 3 : logs = [{11 1} {12 2} {13 3}]----
+2019/03/10 07:02:42 Server: 1, Leader: 1,  LeaderCommitIdx = 3, server commit = 3 | Now server logs = 3
+2019/03/10 07:02:42 Server: 0, Leader: 1,  LeaderCommitIdx = 3, server commit = 3 | Now server logs = 3
+2019/03/10 07:02:42 Server: 2, Leader: 1,  LeaderCommitIdx = 3, server commit = 3 | Now server logs = 3
+2019/03/10 07:02:42 Server: 1, Leader: 1,  LeaderCommitIdx = 3, server commit = 3 | Now server logs = 3
+2019/03/10 07:02:42 Server: 0, Leader: 1,  LeaderCommitIdx = 3, server commit = 3 | Now server logs = 3
+2019/03/10 07:02:42 Server: 2, Leader: 1,  LeaderCommitIdx = 3, server commit = 3 | Now server logs = 3
+2019/03/10 07:02:42 Server: 2, Leader: 1,  LeaderCommitIdx = 3, server commit = 3 | Now server logs = 3
+2019/03/10 07:02:42 Server: 0, Leader: 1,  LeaderCommitIdx = 3, server commit = 3 | Now server logs = 3
+2019/03/10 07:02:42 Server: 1, Leader: 1,  LeaderCommitIdx = 3, server commit = 3 | Now server logs = 3
+2019/03/10 07:02:42 >>>>>> Server 1 becomes a candidate, new term: 4 <<<<<<<<
+2019/03/10 07:02:42 Server: 2, Leader: 1,  LeaderCommitIdx = 3, server commit = 3 | Now server logs = 3
+2019/03/10 07:02:42 Server: 1, Leader: 1,  LeaderCommitIdx = 3, server commit = 3 | Now server logs = 3
+2019/03/10 07:02:42 Server: 0, Leader: 1,  LeaderCommitIdx = 3, server commit = 3 | Now server logs = 3
+2019/03/10 07:02:43 >>>>>> Server 2 becomes a candidate, new term: 4 <<<<<<<<
+2019/03/10 07:02:43 >>>>>> Server 0 becomes a candidate, new term: 4 <<<<<<<<
+2019/03/10 07:02:43 >>>>>> Server 1 becomes a candidate, new term: 4 <<<<<<<<
+2019/03/10 07:02:43 >>>>>> Server 2 becomes a candidate, new term: 5 <<<<<<<<
+2019/03/10 07:02:43 >>>>>> Server 1 becomes a candidate, new term: 4 <<<<<<<<
+2019/03/10 07:02:43 >>>>>> Server 2 becomes a candidate, new term: 4 <<<<<<<<
+2019/03/10 07:02:43 server 0 checking hasMoreRecentLogsThan: myLast.Term = 3, lastLogTerm = 3, mylogs = 3, other = 3
+2019/03/10 07:02:43 0 > 2 : candidateUpdated = true
+2019/03/10 07:02:43 >>>>>> Server 1 becomes a candidate, new term: 5 <<<<<<<<
+2019/03/10 07:02:44 >>>>>> Server 0 becomes a candidate, new term: 5 <<<<<<<<
+2019/03/10 07:02:44 server 2 checking hasMoreRecentLogsThan: myLast.Term = 3, lastLogTerm = 3, mylogs = 3, other = 3
+2019/03/10 07:02:44 2 > 0 : candidateUpdated = true
+2019/03/10 07:02:44 >>>>>> Server 0 becomes a candidate, new term: 5 <<<<<<<<
+2019/03/10 07:02:44 >>>>>> Server 1 becomes a candidate, new term: 5 <<<<<<<<
+2019/03/10 07:02:44 >>>>>> Server 1 becomes a candidate, new term: 6 <<<<<<<<
+2019/03/10 07:02:44 >>>>>> Server 2 becomes a candidate, new term: 6 <<<<<<<<
+2019/03/10 07:02:44 server 0 checking hasMoreRecentLogsThan: myLast.Term = 3, lastLogTerm = 3, mylogs = 3, other = 3
+2019/03/10 07:02:44 0 > 2 : candidateUpdated = true
+2019/03/10 07:02:44 >>>>>> Server 2 becomes a candidate, new term: 6 <<<<<<<<
+2019/03/10 07:02:44 >>>>>> Server 1 becomes a candidate, new term: 5 <<<<<<<<
+2019/03/10 07:02:45 >>>>>> Server 0 becomes a candidate, new term: 7 <<<<<<<<
+2019/03/10 07:02:45 server 2 checking hasMoreRecentLogsThan: myLast.Term = 3, lastLogTerm = 3, mylogs = 3, other = 3
+2019/03/10 07:02:45 2 > 0 : candidateUpdated = true
+2019/03/10 07:02:45 >>>>>> Server 1 becomes a candidate, new term: 6 <<<<<<<<
+2019/03/10 07:02:45 >>>>>> Server 0 becomes a candidate, new term: 6 <<<<<<<<
+2019/03/10 07:02:45 >>>>>> Server 1 becomes a candidate, new term: 7 <<<<<<<<
+2019/03/10 07:02:45 >>>>>> Server 1 becomes a candidate, new term: 6 <<<<<<<<
+2019/03/10 07:02:45 >>>>>> Server 2 becomes a candidate, new term: 8 <<<<<<<<
+2019/03/10 07:02:45 server 0 checking hasMoreRecentLogsThan: myLast.Term = 3, lastLogTerm = 3, mylogs = 3, other = 3
+2019/03/10 07:02:45 0 > 2 : candidateUpdated = true
+2019/03/10 07:02:45 >>>>>> Server 2 becomes a candidate, new term: 7 <<<<<<<<
+2019/03/10 07:02:46 >>>>>> Server 0 becomes a candidate, new term: 9 <<<<<<<<
+2019/03/10 07:02:46 server 2 checking hasMoreRecentLogsThan: myLast.Term = 3, lastLogTerm = 3, mylogs = 3, other = 3
+2019/03/10 07:02:46 2 > 0 : candidateUpdated = true
+2019/03/10 07:02:46 >>>>>> Server 1 becomes a candidate, new term: 7 <<<<<<<<
+2019/03/10 07:02:46 >>>>>> Server 0 becomes a candidate, new term: 7 <<<<<<<<
+2019/03/10 07:02:46 >>>>>> Server 1 becomes a candidate, new term: 7 <<<<<<<<
+2019/03/10 07:02:46 >>>>>> Server 2 becomes a candidate, new term: 10 <<<<<<<<
+2019/03/10 07:02:46 server 0 checking hasMoreRecentLogsThan: myLast.Term = 3, lastLogTerm = 3, mylogs = 3, other = 3
+2019/03/10 07:02:46 0 > 2 : candidateUpdated = true
+2019/03/10 07:02:46 >>>>>> Server 1 becomes a candidate, new term: 8 <<<<<<<<
+2019/03/10 07:02:46 >>>>>> Server 2 becomes a candidate, new term: 8 <<<<<<<<
+2019/03/10 07:02:47 
+ ----- NEW LEADER: 2 - Term: 10 (C = 3, logs = [{11 1} {12 2} {13 3}]) -----
+2019/03/10 07:02:47 >>>>>> Server 0 becomes a candidate, new term: 11 <<<<<<<<
+2019/03/10 07:02:47 server 2 checking hasMoreRecentLogsThan: myLast.Term = 3, lastLogTerm = 3, mylogs = 3, other = 3
+2019/03/10 07:02:47 2 > 0 : candidateUpdated = true
+2019/03/10 07:02:47 >>>>>> Server 1 becomes a candidate, new term: 8 <<<<<<<<
+2019/03/10 07:02:47 >>>>>> Server 0 becomes a candidate, new term: 8 <<<<<<<<
+2019/03/10 07:02:47 >>>>>> Server 2 becomes a candidate, new term: 9 <<<<<<<<
+2019/03/10 07:02:47 >>>>>> Server 1 becomes a candidate, new term: 8 <<<<<<<<
+2019/03/10 07:02:47 >>>>>> Server 2 becomes a candidate, new term: 12 <<<<<<<<
+2019/03/10 07:02:47 server 0 checking hasMoreRecentLogsThan: myLast.Term = 3, lastLogTerm = 3, mylogs = 3, other = 3
+2019/03/10 07:02:47 0 > 2 : candidateUpdated = true
+2019/03/10 07:02:47 
+ ----- NEW LEADER: 0 - Term: 12 (C = 3, logs = [{11 1} {12 2} {13 3}]) -----
+2019/03/10 07:02:48 ------ Leader 0 Start Command  14  😡😡😡: New Logs = [{11 1} {12 2} {13 3} {14 12}] --------
+One : Commit Index = 4
+2019/03/10 07:02:48 leader 0 send data to server 2 , prevIndex = 2, entries = [{14 12}]
+2019/03/10 07:02:48 leader 0 send data to server 1 , prevIndex = 2, entries = [{14 12}]
+2019/03/10 07:02:48 Update server 2 logs = [{11 1} {12 2} {13 3} {14 12}]
+2019/03/10 07:02:48 Server: 2, Leader: 0,  LeaderCommitIdx = 3, server commit = 3 | Now server logs = 4
+2019/03/10 07:02:48 
+ Start: Server 0 (C = 4) sendApplyCh: 4 : logs = [{11 1} {12 2} {13 3} {14 12}]----
+2019/03/10 07:02:48 >>>>>> Server 1 becomes a candidate, new term: 9 <<<<<<<<
+2019/03/10 07:02:48 Server: 0, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:48 Server: 2, Leader: 0,  LeaderCommitIdx = 4, server commit = 3 | Now server logs = 4
+2019/03/10 07:02:48 
+ Start: Server 2 (C = 4) sendApplyCh: 4 : logs = [{11 1} {12 2} {13 3} {14 12}]----
+2019/03/10 07:02:48 [1] readPersist: currentTerm = 8, votedFor = 1, logs = [{11 1} {12 2} {13 3}]
+connect(1)
+
+
+RECONNECT: LEADER2 = 1
+
+2019/03/10 07:02:48 Server: 0, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:48 Server: 2, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:48 Server: 1, Leader: 0,  LeaderCommitIdx = 4, server commit = 0 | Now server logs = 3
+2019/03/10 07:02:48 
+ Start: Server 1 (C = 3) sendApplyCh: 1 : logs = [{11 1} {12 2} {13 3}]----
+2019/03/10 07:02:48 
+ Start: Server 1 (C = 3) sendApplyCh: 2 : logs = [{11 1} {12 2} {13 3}]----
+2019/03/10 07:02:48 
+ Start: Server 1 (C = 3) sendApplyCh: 3 : logs = [{11 1} {12 2} {13 3}]----
+2019/03/10 07:02:48 
+ ----- NEW LEADER: 0 - Term: 12 (C = 4, logs = [{11 1} {12 2} {13 3} {14 12}]) -----
+2019/03/10 07:02:48 Server: 0, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:48 Server: 2, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:48 Server: 2, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:48 Server: 0, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:48 >>>>>> Server 1 becomes a candidate, new term: 9 <<<<<<<<
+2019/03/10 07:02:48 Server: 0, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:48 Server: 2, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:48 Server: 2, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:48 Server: 0, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:48 Server: 0, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:48 Server: 2, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:48 Server: 0, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:48 Server: 2, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:48 Server: 2, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:48 Server: 0, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:48 Server: 0, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:48 Server: 2, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:48 >>>>>> Server 2 becomes a candidate, new term: 10 <<<<<<<<
+2019/03/10 07:02:48 >>>>>> Server 0 becomes a candidate, new term: 9 <<<<<<<<
+2019/03/10 07:02:48 Server: 2, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:48 Server: 0, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:48 Server: 2, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:48 Server: 0, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:48 Server: 2, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:48 Server: 0, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:48 Server: 0, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:48 Server: 2, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:48 Server: 2, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:48 Server: 0, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:48 Server: 2, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:48 Server: 0, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:48 >>>>>> Server 1 becomes a candidate, new term: 10 <<<<<<<<
+2019/03/10 07:02:48 >>>>>> Server 1 becomes a candidate, new term: 9 <<<<<<<<
+2019/03/10 07:02:49 Server: 2, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:49 Server: 0, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:49 Server: 2, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:49 Server: 0, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:49 Server: 0, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:49 Server: 2, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:49 Server: 0, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:49 Server: 2, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:49 Server: 0, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:49 Server: 2, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:49 Server: 2, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:49 Server: 0, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:49 Server: 0, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:49 Server: 2, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:49 Server: 2, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:49 Server: 0, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:49 >>>>>> Server 1 becomes a candidate, new term: 13 <<<<<<<<
+2019/03/10 07:02:49 server 2 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 3, mylogs = 4, other = 3
+2019/03/10 07:02:49 2 > 1 : candidateUpdated = false
+2019/03/10 07:02:49 server 0 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 3, mylogs = 4, other = 3
+2019/03/10 07:02:49 0 > 1 : candidateUpdated = false
+2019/03/10 07:02:49 >>>>>> Server 1 becomes a candidate, new term: 10 <<<<<<<<
+2019/03/10 07:02:49 
+ ----- NEW LEADER: 2 - Term: 13 (C = 4, logs = [{11 1} {12 2} {13 3} {14 12}]) -----
+2019/03/10 07:02:49 >>>>>> Server 1 becomes a candidate, new term: 10 <<<<<<<<
+2019/03/10 07:02:49 >>>>>> Server 2 becomes a candidate, new term: 11 <<<<<<<<
+2019/03/10 07:02:49 Server: 2, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:49 Server: 0, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:49 >>>>>> Server 0 becomes a candidate, new term: 10 <<<<<<<<
+2019/03/10 07:02:50 Server: 2, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:50 Server: 0, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:50 
+ ----- NEW LEADER: 0 - Term: 13 (C = 4, logs = [{11 1} {12 2} {13 3} {14 12}]) -----
+2019/03/10 07:02:50 Server: 2, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:50 Server: 0, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:50 >>>>>> Server 1 becomes a candidate, new term: 11 <<<<<<<<
+2019/03/10 07:02:50 Server: 2, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:50 Server: 0, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:50 >>>>>> Server 1 becomes a candidate, new term: 14 <<<<<<<<
+2019/03/10 07:02:50 server 0 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 3, mylogs = 4, other = 3
+2019/03/10 07:02:50 server 2 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 3, mylogs = 4, other = 3
+2019/03/10 07:02:50 0 > 1 : candidateUpdated = false
+2019/03/10 07:02:50 2 > 1 : candidateUpdated = false
+2019/03/10 07:02:50 
+ ----- NEW LEADER: 2 - Term: 14 (C = 4, logs = [{11 1} {12 2} {13 3} {14 12}]) -----
+2019/03/10 07:02:50 >>>>>> Server 1 becomes a candidate, new term: 11 <<<<<<<<
+2019/03/10 07:02:50 >>>>>> Server 0 becomes a candidate, new term: 11 <<<<<<<<
+2019/03/10 07:02:50 Server: 0, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:50 Server: 2, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:50 Server: 0, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:50 Server: 2, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:50 >>>>>> Server 2 becomes a candidate, new term: 12 <<<<<<<<
+2019/03/10 07:02:50 Server: 2, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:50 Server: 0, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:51 Server: 0, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:51 Server: 2, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:51 >>>>>> Server 1 becomes a candidate, new term: 11 <<<<<<<<
+2019/03/10 07:02:51 Server: 2, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:51 Server: 0, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:51 >>>>>> Server 1 becomes a candidate, new term: 12 <<<<<<<<
+2019/03/10 07:02:51 Server: 0, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:51 Server: 2, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:51 >>>>>> Server 1 becomes a candidate, new term: 15 <<<<<<<<
+2019/03/10 07:02:51 server 2 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 3, mylogs = 4, other = 3
+2019/03/10 07:02:51 2 > 1 : candidateUpdated = false
+2019/03/10 07:02:51 server 0 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 3, mylogs = 4, other = 3
+2019/03/10 07:02:51 0 > 1 : candidateUpdated = false
+2019/03/10 07:02:51 >>>>>> Server 0 becomes a candidate, new term: 12 <<<<<<<<
+2019/03/10 07:02:51 >>>>>> Server 1 becomes a candidate, new term: 12 <<<<<<<<
+2019/03/10 07:02:52 >>>>>> Server 1 becomes a candidate, new term: 12 <<<<<<<<
+2019/03/10 07:02:52 >>>>>> Server 1 becomes a candidate, new term: 16 <<<<<<<<
+2019/03/10 07:02:52 >>>>>> Server 2 becomes a candidate, new term: 13 <<<<<<<<
+2019/03/10 07:02:52 server 2 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 3, mylogs = 4, other = 3
+2019/03/10 07:02:52 2 > 1 : candidateUpdated = false
+2019/03/10 07:02:52 server 0 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 3, mylogs = 4, other = 3
+2019/03/10 07:02:52 0 > 1 : candidateUpdated = false
+2019/03/10 07:02:52 >>>>>> Server 2 becomes a candidate, new term: 17 <<<<<<<<
+2019/03/10 07:02:52 server 1 checking hasMoreRecentLogsThan: myLast.Term = 3, lastLogTerm = 12, mylogs = 3, other = 4
+2019/03/10 07:02:52 1 > 2 : candidateUpdated = true
+2019/03/10 07:02:52 server 0 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 12, mylogs = 4, other = 4
+2019/03/10 07:02:52 0 > 2 : candidateUpdated = true
+2019/03/10 07:02:52 
+ ----- NEW LEADER: 2 - Term: 17 (C = 4, logs = [{11 1} {12 2} {13 3} {14 12}]) -----
+2019/03/10 07:02:52 
+ ----- NEW LEADER: 2 - Term: 17 (C = 4, logs = [{11 1} {12 2} {13 3} {14 12}]) -----
+2019/03/10 07:02:52 >>>>>> Server 1 becomes a candidate, new term: 13 <<<<<<<<
+2019/03/10 07:02:52 >>>>>> Server 0 becomes a candidate, new term: 18 <<<<<<<<
+2019/03/10 07:02:52 server 1 checking hasMoreRecentLogsThan: myLast.Term = 3, lastLogTerm = 12, mylogs = 3, other = 4
+2019/03/10 07:02:52 server 2 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 12, mylogs = 4, other = 4
+2019/03/10 07:02:52 1 > 0 : candidateUpdated = true
+2019/03/10 07:02:52 2 > 0 : candidateUpdated = true
+2019/03/10 07:02:52 
+ ----- NEW LEADER: 0 - Term: 18 (C = 4, logs = [{11 1} {12 2} {13 3} {14 12}]) -----
+2019/03/10 07:02:52 >>>>>> Server 0 becomes a candidate, new term: 13 <<<<<<<<
+2019/03/10 07:02:52 Server: 2, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:52 Server: 0, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:52 Server: 0, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:52 Server: 2, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:52 Server: 0, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:52 Server: 2, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:52 
+ ----- NEW LEADER: 0 - Term: 18 (C = 4, logs = [{11 1} {12 2} {13 3} {14 12}]) -----
+2019/03/10 07:02:52 Server: 2, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:52 Server: 0, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:53 
+ ----- NEW LEADER: 2 - Term: 18 (C = 4, logs = [{11 1} {12 2} {13 3} {14 12}]) -----
+2019/03/10 07:02:53 Server: 0, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:53 Server: 2, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:53 Server: 0, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:53 Server: 2, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:53 >>>>>> Server 2 becomes a candidate, new term: 14 <<<<<<<<
+2019/03/10 07:02:53 Server: 0, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:53 Server: 2, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:53 Server: 2, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:53 Server: 0, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:53 >>>>>> Server 1 becomes a candidate, new term: 13 <<<<<<<<
+2019/03/10 07:02:53 Server: 0, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:53 Server: 2, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:53 Server: 2, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:53 Server: 0, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:53 >>>>>> Server 1 becomes a candidate, new term: 19 <<<<<<<<
+2019/03/10 07:02:53 server 2 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 3, mylogs = 4, other = 3
+2019/03/10 07:02:53 server 0 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 3, mylogs = 4, other = 3
+2019/03/10 07:02:53 2 > 1 : candidateUpdated = false
+2019/03/10 07:02:53 0 > 1 : candidateUpdated = false
+2019/03/10 07:02:53 >>>>>> Server 1 becomes a candidate, new term: 13 <<<<<<<<
+2019/03/10 07:02:53 >>>>>> Server 0 becomes a candidate, new term: 14 <<<<<<<<
+2019/03/10 07:02:53 >>>>>> Server 1 becomes a candidate, new term: 14 <<<<<<<<
+2019/03/10 07:02:53 >>>>>> Server 1 becomes a candidate, new term: 14 <<<<<<<<
+2019/03/10 07:02:54 >>>>>> Server 1 becomes a candidate, new term: 20 <<<<<<<<
+2019/03/10 07:02:54 server 2 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 3, mylogs = 4, other = 3
+2019/03/10 07:02:54 server 0 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 3, mylogs = 4, other = 3
+2019/03/10 07:02:54 2 > 1 : candidateUpdated = false
+2019/03/10 07:02:54 0 > 1 : candidateUpdated = false
+2019/03/10 07:02:54 >>>>>> Server 2 becomes a candidate, new term: 15 <<<<<<<<
+2019/03/10 07:02:54 >>>>>> Server 0 becomes a candidate, new term: 21 <<<<<<<<
+2019/03/10 07:02:54 server 2 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 12, mylogs = 4, other = 4
+2019/03/10 07:02:54 server 1 checking hasMoreRecentLogsThan: myLast.Term = 3, lastLogTerm = 12, mylogs = 3, other = 4
+2019/03/10 07:02:54 2 > 0 : candidateUpdated = true
+2019/03/10 07:02:54 1 > 0 : candidateUpdated = true
+2019/03/10 07:02:54 
+ ----- NEW LEADER: 0 - Term: 21 (C = 4, logs = [{11 1} {12 2} {13 3} {14 12}]) -----
+2019/03/10 07:02:54 >>>>>> Server 2 becomes a candidate, new term: 22 <<<<<<<<
+2019/03/10 07:02:54 server 1 checking hasMoreRecentLogsThan: myLast.Term = 3, lastLogTerm = 12, mylogs = 3, other = 4
+2019/03/10 07:02:54 server 0 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 12, mylogs = 4, other = 4
+2019/03/10 07:02:54 0 > 2 : candidateUpdated = true
+2019/03/10 07:02:54 1 > 2 : candidateUpdated = true
+2019/03/10 07:02:54 
+ ----- NEW LEADER: 2 - Term: 22 (C = 4, logs = [{11 1} {12 2} {13 3} {14 12}]) -----
+2019/03/10 07:02:54 Server: 0, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:54 Server: 2, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:54 Server: 2, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:54 Server: 0, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:54 >>>>>> Server 1 becomes a candidate, new term: 15 <<<<<<<<
+2019/03/10 07:02:54 Server: 2, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:54 Server: 0, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:54 Server: 0, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:54 Server: 2, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:54 >>>>>> Server 1 becomes a candidate, new term: 14 <<<<<<<<
+2019/03/10 07:02:54 Server: 2, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:54 Server: 0, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:54 >>>>>> Server 0 becomes a candidate, new term: 15 <<<<<<<<
+2019/03/10 07:02:54 Server: 0, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:54 Server: 2, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:54 Server: 2, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:54 Server: 0, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:55 >>>>>> Server 1 becomes a candidate, new term: 23 <<<<<<<<
+2019/03/10 07:02:55 server 2 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 3, mylogs = 4, other = 3
+2019/03/10 07:02:55 2 > 1 : candidateUpdated = false
+2019/03/10 07:02:55 server 0 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 3, mylogs = 4, other = 3
+2019/03/10 07:02:55 0 > 1 : candidateUpdated = false
+2019/03/10 07:02:55 >>>>>> Server 2 becomes a candidate, new term: 16 <<<<<<<<
+2019/03/10 07:02:55 >>>>>> Server 1 becomes a candidate, new term: 15 <<<<<<<<
+2019/03/10 07:02:55 >>>>>> Server 1 becomes a candidate, new term: 15 <<<<<<<<
+2019/03/10 07:02:55 >>>>>> Server 1 becomes a candidate, new term: 16 <<<<<<<<
+2019/03/10 07:02:55 >>>>>> Server 0 becomes a candidate, new term: 16 <<<<<<<<
+2019/03/10 07:02:55 >>>>>> Server 2 becomes a candidate, new term: 24 <<<<<<<<
+2019/03/10 07:02:55 server 0 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 12, mylogs = 4, other = 4
+2019/03/10 07:02:55 server 1 checking hasMoreRecentLogsThan: myLast.Term = 3, lastLogTerm = 12, mylogs = 3, other = 4
+2019/03/10 07:02:55 0 > 2 : candidateUpdated = true
+2019/03/10 07:02:55 1 > 2 : candidateUpdated = true
+2019/03/10 07:02:55 
+ ----- NEW LEADER: 2 - Term: 24 (C = 4, logs = [{11 1} {12 2} {13 3} {14 12}]) -----
+2019/03/10 07:02:55 >>>>>> Server 0 becomes a candidate, new term: 25 <<<<<<<<
+2019/03/10 07:02:55 server 1 checking hasMoreRecentLogsThan: myLast.Term = 3, lastLogTerm = 12, mylogs = 3, other = 4
+2019/03/10 07:02:55 1 > 0 : candidateUpdated = true
+2019/03/10 07:02:55 server 2 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 12, mylogs = 4, other = 4
+2019/03/10 07:02:55 2 > 0 : candidateUpdated = true
+2019/03/10 07:02:55 
+ ----- NEW LEADER: 0 - Term: 25 (C = 4, logs = [{11 1} {12 2} {13 3} {14 12}]) -----
+2019/03/10 07:02:55 Server: 2, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:55 Server: 0, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:55 >>>>>> Server 2 becomes a candidate, new term: 17 <<<<<<<<
+2019/03/10 07:02:56 Server: 2, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:56 Server: 0, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:56 >>>>>> Server 1 becomes a candidate, new term: 26 <<<<<<<<
+2019/03/10 07:02:56 server 2 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 3, mylogs = 4, other = 3
+2019/03/10 07:02:56 server 0 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 3, mylogs = 4, other = 3
+2019/03/10 07:02:56 0 > 1 : candidateUpdated = false
+2019/03/10 07:02:56 2 > 1 : candidateUpdated = false
+2019/03/10 07:02:56 >>>>>> Server 1 becomes a candidate, new term: 16 <<<<<<<<
+2019/03/10 07:02:56 >>>>>> Server 0 becomes a candidate, new term: 17 <<<<<<<<
+2019/03/10 07:02:56 >>>>>> Server 1 becomes a candidate, new term: 16 <<<<<<<<
+2019/03/10 07:02:56 >>>>>> Server 2 becomes a candidate, new term: 18 <<<<<<<<
+2019/03/10 07:02:56 >>>>>> Server 1 becomes a candidate, new term: 17 <<<<<<<<
+2019/03/10 07:02:56 >>>>>> Server 2 becomes a candidate, new term: 27 <<<<<<<<
+2019/03/10 07:02:56 server 0 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 12, mylogs = 4, other = 4
+2019/03/10 07:02:56 0 > 2 : candidateUpdated = true
+2019/03/10 07:02:56 server 1 checking hasMoreRecentLogsThan: myLast.Term = 3, lastLogTerm = 12, mylogs = 3, other = 4
+2019/03/10 07:02:56 1 > 2 : candidateUpdated = true
+2019/03/10 07:02:56 
+ ----- NEW LEADER: 2 - Term: 27 (C = 4, logs = [{11 1} {12 2} {13 3} {14 12}]) -----
+2019/03/10 07:02:57 Server: 2, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:57 Server: 0, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:57 Server: 0, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:57 Server: 2, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:57 Server: 0, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:57 Server: 2, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:57 >>>>>> Server 1 becomes a candidate, new term: 28 <<<<<<<<
+2019/03/10 07:02:57 server 2 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 3, mylogs = 4, other = 3
+2019/03/10 07:02:57 server 0 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 3, mylogs = 4, other = 3
+2019/03/10 07:02:57 2 > 1 : candidateUpdated = false
+2019/03/10 07:02:57 0 > 1 : candidateUpdated = false
+2019/03/10 07:02:57 >>>>>> Server 1 becomes a candidate, new term: 17 <<<<<<<<
+2019/03/10 07:02:57 >>>>>> Server 0 becomes a candidate, new term: 18 <<<<<<<<
+2019/03/10 07:02:57 >>>>>> Server 1 becomes a candidate, new term: 17 <<<<<<<<
+2019/03/10 07:02:57 >>>>>> Server 2 becomes a candidate, new term: 19 <<<<<<<<
+2019/03/10 07:02:58 >>>>>> Server 1 becomes a candidate, new term: 18 <<<<<<<<
+2019/03/10 07:02:58 >>>>>> Server 0 becomes a candidate, new term: 29 <<<<<<<<
+2019/03/10 07:02:58 server 2 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 12, mylogs = 4, other = 4
+2019/03/10 07:02:58 server 1 checking hasMoreRecentLogsThan: myLast.Term = 3, lastLogTerm = 12, mylogs = 3, other = 4
+2019/03/10 07:02:58 1 > 0 : candidateUpdated = true
+2019/03/10 07:02:58 2 > 0 : candidateUpdated = true
+2019/03/10 07:02:58 
+ ----- NEW LEADER: 0 - Term: 29 (C = 4, logs = [{11 1} {12 2} {13 3} {14 12}]) -----
+2019/03/10 07:02:58 >>>>>> Server 1 becomes a candidate, new term: 30 <<<<<<<<
+2019/03/10 07:02:58 server 2 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 3, mylogs = 4, other = 3
+2019/03/10 07:02:58 server 0 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 3, mylogs = 4, other = 3
+2019/03/10 07:02:58 0 > 1 : candidateUpdated = false
+2019/03/10 07:02:58 2 > 1 : candidateUpdated = false
+2019/03/10 07:02:58 >>>>>> Server 2 becomes a candidate, new term: 31 <<<<<<<<
+2019/03/10 07:02:58 server 1 checking hasMoreRecentLogsThan: myLast.Term = 3, lastLogTerm = 12, mylogs = 3, other = 4
+2019/03/10 07:02:58 1 > 2 : candidateUpdated = true
+2019/03/10 07:02:58 server 0 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 12, mylogs = 4, other = 4
+2019/03/10 07:02:58 0 > 2 : candidateUpdated = true
+2019/03/10 07:02:58 
+ ----- NEW LEADER: 2 - Term: 31 (C = 4, logs = [{11 1} {12 2} {13 3} {14 12}]) -----
+2019/03/10 07:02:58 Server: 2, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:58 Server: 0, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:58 >>>>>> Server 1 becomes a candidate, new term: 18 <<<<<<<<
+2019/03/10 07:02:58 Server: 0, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:58 Server: 2, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:58 >>>>>> Server 0 becomes a candidate, new term: 19 <<<<<<<<
+2019/03/10 07:02:58 Server: 2, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:58 Server: 0, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:58 >>>>>> Server 2 becomes a candidate, new term: 20 <<<<<<<<
+2019/03/10 07:02:58 Server: 2, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:58 Server: 0, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:58 Server: 0, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:58 Server: 2, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:58 Server: 0, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:58 Server: 2, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:58 >>>>>> Server 1 becomes a candidate, new term: 19 <<<<<<<<
+2019/03/10 07:02:58 >>>>>> Server 1 becomes a candidate, new term: 18 <<<<<<<<
+2019/03/10 07:02:59 Server: 0, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:59 Server: 2, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:59 Server: 2, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:59 Server: 0, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:59 Server: 2, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:59 Server: 0, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:59 >>>>>> Server 1 becomes a candidate, new term: 19 <<<<<<<<
+2019/03/10 07:02:59 Server: 2, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:59 Server: 0, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:59 Server: 0, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:59 Server: 2, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:02:59 >>>>>> Server 0 becomes a candidate, new term: 20 <<<<<<<<
+2019/03/10 07:02:59 >>>>>> Server 1 becomes a candidate, new term: 32 <<<<<<<<
+2019/03/10 07:02:59 server 0 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 3, mylogs = 4, other = 3
+2019/03/10 07:02:59 0 > 1 : candidateUpdated = false
+2019/03/10 07:02:59 server 2 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 3, mylogs = 4, other = 3
+2019/03/10 07:02:59 2 > 1 : candidateUpdated = false
+2019/03/10 07:02:59 >>>>>> Server 1 becomes a candidate, new term: 20 <<<<<<<<
+2019/03/10 07:02:59 >>>>>> Server 2 becomes a candidate, new term: 21 <<<<<<<<
+2019/03/10 07:02:59 >>>>>> Server 1 becomes a candidate, new term: 19 <<<<<<<<
+2019/03/10 07:03:00 >>>>>> Server 1 becomes a candidate, new term: 20 <<<<<<<<
+2019/03/10 07:03:00 >>>>>> Server 0 becomes a candidate, new term: 33 <<<<<<<<
+2019/03/10 07:03:00 server 2 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 12, mylogs = 4, other = 4
+2019/03/10 07:03:00 2 > 0 : candidateUpdated = true
+2019/03/10 07:03:00 server 1 checking hasMoreRecentLogsThan: myLast.Term = 3, lastLogTerm = 12, mylogs = 3, other = 4
+2019/03/10 07:03:00 1 > 0 : candidateUpdated = true
+2019/03/10 07:03:00 
+ ----- NEW LEADER: 0 - Term: 33 (C = 4, logs = [{11 1} {12 2} {13 3} {14 12}]) -----
+2019/03/10 07:03:00 >>>>>> Server 2 becomes a candidate, new term: 34 <<<<<<<<
+2019/03/10 07:03:00 server 1 checking hasMoreRecentLogsThan: myLast.Term = 3, lastLogTerm = 12, mylogs = 3, other = 4
+2019/03/10 07:03:00 1 > 2 : candidateUpdated = true
+2019/03/10 07:03:00 server 0 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 12, mylogs = 4, other = 4
+2019/03/10 07:03:00 0 > 2 : candidateUpdated = true
+2019/03/10 07:03:00 
+ ----- NEW LEADER: 2 - Term: 34 (C = 4, logs = [{11 1} {12 2} {13 3} {14 12}]) -----
+2019/03/10 07:03:00 Server: 0, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:00 Server: 2, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:00 Server: 2, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:00 Server: 0, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:00 >>>>>> Server 1 becomes a candidate, new term: 35 <<<<<<<<
+2019/03/10 07:03:00 server 0 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 3, mylogs = 4, other = 3
+2019/03/10 07:03:00 0 > 1 : candidateUpdated = false
+2019/03/10 07:03:00 server 2 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 3, mylogs = 4, other = 3
+2019/03/10 07:03:00 2 > 1 : candidateUpdated = false
+2019/03/10 07:03:00 >>>>>> Server 1 becomes a candidate, new term: 21 <<<<<<<<
+2019/03/10 07:03:00 >>>>>> Server 2 becomes a candidate, new term: 22 <<<<<<<<
+2019/03/10 07:03:00 >>>>>> Server 1 becomes a candidate, new term: 20 <<<<<<<<
+2019/03/10 07:03:00 >>>>>> Server 0 becomes a candidate, new term: 21 <<<<<<<<
+2019/03/10 07:03:01 >>>>>> Server 1 becomes a candidate, new term: 21 <<<<<<<<
+2019/03/10 07:03:01 >>>>>> Server 0 becomes a candidate, new term: 36 <<<<<<<<
+2019/03/10 07:03:01 server 2 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 12, mylogs = 4, other = 4
+2019/03/10 07:03:01 server 1 checking hasMoreRecentLogsThan: myLast.Term = 3, lastLogTerm = 12, mylogs = 3, other = 4
+2019/03/10 07:03:01 2 > 0 : candidateUpdated = true
+2019/03/10 07:03:01 1 > 0 : candidateUpdated = true
+2019/03/10 07:03:01 
+ ----- NEW LEADER: 0 - Term: 36 (C = 4, logs = [{11 1} {12 2} {13 3} {14 12}]) -----
+2019/03/10 07:03:01 Server: 0, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:01 Server: 2, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:01 >>>>>> Server 1 becomes a candidate, new term: 22 <<<<<<<<
+2019/03/10 07:03:01 Server: 2, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:01 Server: 0, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:01 >>>>>> Server 1 becomes a candidate, new term: 21 <<<<<<<<
+2019/03/10 07:03:01 >>>>>> Server 2 becomes a candidate, new term: 23 <<<<<<<<
+2019/03/10 07:03:01 Server: 0, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:01 Server: 2, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:01 Server: 2, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:01 Server: 0, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:01 >>>>>> Server 1 becomes a candidate, new term: 37 <<<<<<<<
+2019/03/10 07:03:01 server 2 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 3, mylogs = 4, other = 3
+2019/03/10 07:03:01 2 > 1 : candidateUpdated = false
+2019/03/10 07:03:01 server 0 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 3, mylogs = 4, other = 3
+2019/03/10 07:03:01 0 > 1 : candidateUpdated = false
+2019/03/10 07:03:01 >>>>>> Server 0 becomes a candidate, new term: 22 <<<<<<<<
+2019/03/10 07:03:01 >>>>>> Server 1 becomes a candidate, new term: 22 <<<<<<<<
+2019/03/10 07:03:02 >>>>>> Server 1 becomes a candidate, new term: 23 <<<<<<<<
+2019/03/10 07:03:02 >>>>>> Server 1 becomes a candidate, new term: 22 <<<<<<<<
+2019/03/10 07:03:02 >>>>>> Server 2 becomes a candidate, new term: 24 <<<<<<<<
+2019/03/10 07:03:02 >>>>>> Server 2 becomes a candidate, new term: 38 <<<<<<<<
+2019/03/10 07:03:02 server 1 checking hasMoreRecentLogsThan: myLast.Term = 3, lastLogTerm = 12, mylogs = 3, other = 4
+2019/03/10 07:03:02 server 0 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 12, mylogs = 4, other = 4
+2019/03/10 07:03:02 1 > 2 : candidateUpdated = true
+2019/03/10 07:03:02 0 > 2 : candidateUpdated = true
+2019/03/10 07:03:02 
+ ----- NEW LEADER: 2 - Term: 38 (C = 4, logs = [{11 1} {12 2} {13 3} {14 12}]) -----
+2019/03/10 07:03:02 Server: 2, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:02 Server: 0, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:02 Server: 2, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:02 Server: 0, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:03 >>>>>> Server 1 becomes a candidate, new term: 39 <<<<<<<<
+2019/03/10 07:03:03 server 2 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 3, mylogs = 4, other = 3
+2019/03/10 07:03:03 server 0 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 3, mylogs = 4, other = 3
+2019/03/10 07:03:03 0 > 1 : candidateUpdated = false
+2019/03/10 07:03:03 2 > 1 : candidateUpdated = false
+2019/03/10 07:03:03 >>>>>> Server 1 becomes a candidate, new term: 23 <<<<<<<<
+2019/03/10 07:03:03 >>>>>> Server 0 becomes a candidate, new term: 23 <<<<<<<<
+2019/03/10 07:03:03 >>>>>> Server 1 becomes a candidate, new term: 23 <<<<<<<<
+2019/03/10 07:03:03 >>>>>> Server 1 becomes a candidate, new term: 24 <<<<<<<<
+2019/03/10 07:03:03 >>>>>> Server 2 becomes a candidate, new term: 25 <<<<<<<<
+2019/03/10 07:03:03 >>>>>> Server 1 becomes a candidate, new term: 40 <<<<<<<<
+2019/03/10 07:03:03 server 0 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 3, mylogs = 4, other = 3
+2019/03/10 07:03:03 0 > 1 : candidateUpdated = false
+2019/03/10 07:03:03 server 2 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 3, mylogs = 4, other = 3
+2019/03/10 07:03:03 2 > 1 : candidateUpdated = false
+2019/03/10 07:03:03 >>>>>> Server 0 becomes a candidate, new term: 41 <<<<<<<<
+2019/03/10 07:03:03 server 2 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 12, mylogs = 4, other = 4
+2019/03/10 07:03:03 server 1 checking hasMoreRecentLogsThan: myLast.Term = 3, lastLogTerm = 12, mylogs = 3, other = 4
+2019/03/10 07:03:03 2 > 0 : candidateUpdated = true
+2019/03/10 07:03:03 1 > 0 : candidateUpdated = true
+2019/03/10 07:03:03 
+ ----- NEW LEADER: 0 - Term: 41 (C = 4, logs = [{11 1} {12 2} {13 3} {14 12}]) -----
+2019/03/10 07:03:04 Server: 2, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:04 Server: 0, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:04 >>>>>> Server 0 becomes a candidate, new term: 24 <<<<<<<<
+2019/03/10 07:03:04 Server: 0, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:04 Server: 2, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:04 Server: 2, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:04 Server: 0, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:04 >>>>>> Server 1 becomes a candidate, new term: 24 <<<<<<<<
+2019/03/10 07:03:04 Server: 2, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:04 Server: 0, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:04 Server: 0, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:04 Server: 2, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:04 Server: 2, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:04 Server: 0, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:04 >>>>>> Server 1 becomes a candidate, new term: 24 <<<<<<<<
+2019/03/10 07:03:04 Server: 0, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:04 Server: 2, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:04 Server: 0, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:04 Server: 2, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:04 >>>>>> Server 2 becomes a candidate, new term: 26 <<<<<<<<
+2019/03/10 07:03:04 >>>>>> Server 1 becomes a candidate, new term: 25 <<<<<<<<
+2019/03/10 07:03:04 Server: 2, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:04 Server: 0, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:04 Server: 2, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:04 Server: 0, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:05 Server: 0, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:05 Server: 2, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:05 >>>>>> Server 1 becomes a candidate, new term: 42 <<<<<<<<
+2019/03/10 07:03:05 server 2 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 3, mylogs = 4, other = 3
+2019/03/10 07:03:05 2 > 1 : candidateUpdated = false
+2019/03/10 07:03:05 server 0 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 3, mylogs = 4, other = 3
+2019/03/10 07:03:05 0 > 1 : candidateUpdated = false
+2019/03/10 07:03:05 >>>>>> Server 0 becomes a candidate, new term: 25 <<<<<<<<
+2019/03/10 07:03:05 >>>>>> Server 1 becomes a candidate, new term: 25 <<<<<<<<
+2019/03/10 07:03:05 >>>>>> Server 1 becomes a candidate, new term: 25 <<<<<<<<
+2019/03/10 07:03:05 >>>>>> Server 1 becomes a candidate, new term: 26 <<<<<<<<
+2019/03/10 07:03:05 >>>>>> Server 2 becomes a candidate, new term: 27 <<<<<<<<
+2019/03/10 07:03:06 >>>>>> Server 0 becomes a candidate, new term: 43 <<<<<<<<
+2019/03/10 07:03:06 server 2 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 12, mylogs = 4, other = 4
+2019/03/10 07:03:06 server 1 checking hasMoreRecentLogsThan: myLast.Term = 3, lastLogTerm = 12, mylogs = 3, other = 4
+2019/03/10 07:03:06 2 > 0 : candidateUpdated = true
+2019/03/10 07:03:06 1 > 0 : candidateUpdated = true
+2019/03/10 07:03:06 
+ ----- NEW LEADER: 0 - Term: 43 (C = 4, logs = [{11 1} {12 2} {13 3} {14 12}]) -----
+2019/03/10 07:03:06 >>>>>> Server 1 becomes a candidate, new term: 44 <<<<<<<<
+2019/03/10 07:03:06 server 2 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 3, mylogs = 4, other = 3
+2019/03/10 07:03:06 server 0 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 3, mylogs = 4, other = 3
+2019/03/10 07:03:06 2 > 1 : candidateUpdated = false
+2019/03/10 07:03:06 0 > 1 : candidateUpdated = false
+2019/03/10 07:03:06 >>>>>> Server 2 becomes a candidate, new term: 45 <<<<<<<<
+2019/03/10 07:03:06 server 1 checking hasMoreRecentLogsThan: myLast.Term = 3, lastLogTerm = 12, mylogs = 3, other = 4
+2019/03/10 07:03:06 1 > 2 : candidateUpdated = true
+2019/03/10 07:03:06 server 0 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 12, mylogs = 4, other = 4
+2019/03/10 07:03:06 0 > 2 : candidateUpdated = true
+2019/03/10 07:03:06 
+ ----- NEW LEADER: 2 - Term: 45 (C = 4, logs = [{11 1} {12 2} {13 3} {14 12}]) -----
+2019/03/10 07:03:06 >>>>>> Server 1 becomes a candidate, new term: 26 <<<<<<<<
+2019/03/10 07:03:06 >>>>>> Server 0 becomes a candidate, new term: 26 <<<<<<<<
+2019/03/10 07:03:06 Server: 2, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:06 Server: 0, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:06 Server: 2, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:06 Server: 0, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:06 Server: 0, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:06 Server: 2, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:06 Server: 2, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:06 Server: 0, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:06 >>>>>> Server 1 becomes a candidate, new term: 26 <<<<<<<<
+2019/03/10 07:03:06 Server: 2, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:06 Server: 0, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:06 >>>>>> Server 1 becomes a candidate, new term: 27 <<<<<<<<
+2019/03/10 07:03:06 Server: 2, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:06 Server: 0, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:06 Server: 2, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:06 Server: 0, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:07 >>>>>> Server 2 becomes a candidate, new term: 28 <<<<<<<<
+2019/03/10 07:03:07 Server: 2, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:07 Server: 0, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:07 Server: 2, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:07 Server: 0, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:07 >>>>>> Server 1 becomes a candidate, new term: 27 <<<<<<<<
+2019/03/10 07:03:07 >>>>>> Server 0 becomes a candidate, new term: 27 <<<<<<<<
+2019/03/10 07:03:07 Server: 0, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:07 Server: 2, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:07 >>>>>> Server 1 becomes a candidate, new term: 46 <<<<<<<<
+2019/03/10 07:03:07 server 2 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 3, mylogs = 4, other = 3
+2019/03/10 07:03:07 server 0 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 3, mylogs = 4, other = 3
+2019/03/10 07:03:07 2 > 1 : candidateUpdated = false
+2019/03/10 07:03:07 0 > 1 : candidateUpdated = false
+2019/03/10 07:03:07 >>>>>> Server 1 becomes a candidate, new term: 27 <<<<<<<<
+2019/03/10 07:03:07 >>>>>> Server 1 becomes a candidate, new term: 28 <<<<<<<<
+2019/03/10 07:03:08 >>>>>> Server 1 becomes a candidate, new term: 28 <<<<<<<<
+2019/03/10 07:03:08 >>>>>> Server 2 becomes a candidate, new term: 29 <<<<<<<<
+2019/03/10 07:03:08 >>>>>> Server 0 becomes a candidate, new term: 47 <<<<<<<<
+2019/03/10 07:03:08 server 2 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 12, mylogs = 4, other = 4
+2019/03/10 07:03:08 server 1 checking hasMoreRecentLogsThan: myLast.Term = 3, lastLogTerm = 12, mylogs = 3, other = 4
+2019/03/10 07:03:08 2 > 0 : candidateUpdated = true
+2019/03/10 07:03:08 1 > 0 : candidateUpdated = true
+2019/03/10 07:03:08 
+ ----- NEW LEADER: 0 - Term: 47 (C = 4, logs = [{11 1} {12 2} {13 3} {14 12}]) -----
+2019/03/10 07:03:08 >>>>>> Server 2 becomes a candidate, new term: 48 <<<<<<<<
+2019/03/10 07:03:08 server 1 checking hasMoreRecentLogsThan: myLast.Term = 3, lastLogTerm = 12, mylogs = 3, other = 4
+2019/03/10 07:03:08 server 0 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 12, mylogs = 4, other = 4
+2019/03/10 07:03:08 0 > 2 : candidateUpdated = true
+2019/03/10 07:03:08 1 > 2 : candidateUpdated = true
+2019/03/10 07:03:08 
+ ----- NEW LEADER: 2 - Term: 48 (C = 4, logs = [{11 1} {12 2} {13 3} {14 12}]) -----
+2019/03/10 07:03:08 >>>>>> Server 1 becomes a candidate, new term: 49 <<<<<<<<
+2019/03/10 07:03:08 server 0 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 3, mylogs = 4, other = 3
+2019/03/10 07:03:08 server 2 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 3, mylogs = 4, other = 3
+2019/03/10 07:03:08 0 > 1 : candidateUpdated = false
+2019/03/10 07:03:08 2 > 1 : candidateUpdated = false
+2019/03/10 07:03:08 >>>>>> Server 0 becomes a candidate, new term: 28 <<<<<<<<
+2019/03/10 07:03:08 >>>>>> Server 1 becomes a candidate, new term: 29 <<<<<<<<
+2019/03/10 07:03:08 >>>>>> Server 1 becomes a candidate, new term: 28 <<<<<<<<
+2019/03/10 07:03:09 >>>>>> Server 1 becomes a candidate, new term: 50 <<<<<<<<
+2019/03/10 07:03:09 server 2 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 3, mylogs = 4, other = 3
+2019/03/10 07:03:09 server 0 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 3, mylogs = 4, other = 3
+2019/03/10 07:03:09 2 > 1 : candidateUpdated = false
+2019/03/10 07:03:09 0 > 1 : candidateUpdated = false
+2019/03/10 07:03:09 >>>>>> Server 2 becomes a candidate, new term: 51 <<<<<<<<
+2019/03/10 07:03:09 server 1 checking hasMoreRecentLogsThan: myLast.Term = 3, lastLogTerm = 12, mylogs = 3, other = 4
+2019/03/10 07:03:09 server 0 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 12, mylogs = 4, other = 4
+2019/03/10 07:03:09 0 > 2 : candidateUpdated = true
+2019/03/10 07:03:09 1 > 2 : candidateUpdated = true
+2019/03/10 07:03:09 
+ ----- NEW LEADER: 2 - Term: 51 (C = 4, logs = [{11 1} {12 2} {13 3} {14 12}]) -----
+2019/03/10 07:03:09 Server: 2, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:09 Server: 0, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:09 >>>>>> Server 1 becomes a candidate, new term: 29 <<<<<<<<
+2019/03/10 07:03:09 >>>>>> Server 2 becomes a candidate, new term: 30 <<<<<<<<
+2019/03/10 07:03:09 Server: 2, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:09 Server: 0, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:09 Server: 2, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:09 Server: 0, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:09 Server: 2, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:09 Server: 0, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:09 >>>>>> Server 1 becomes a candidate, new term: 29 <<<<<<<<
+2019/03/10 07:03:09 Server: 0, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:09 Server: 2, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:09 >>>>>> Server 0 becomes a candidate, new term: 29 <<<<<<<<
+2019/03/10 07:03:09 Server: 2, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:09 Server: 0, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:09 >>>>>> Server 1 becomes a candidate, new term: 30 <<<<<<<<
+2019/03/10 07:03:09 Server: 0, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:09 Server: 2, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:09 Server: 0, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:09 Server: 2, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:10 >>>>>> Server 1 becomes a candidate, new term: 52 <<<<<<<<
+2019/03/10 07:03:10 server 2 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 3, mylogs = 4, other = 3
+2019/03/10 07:03:10 2 > 1 : candidateUpdated = false
+2019/03/10 07:03:10 server 0 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 3, mylogs = 4, other = 3
+2019/03/10 07:03:10 0 > 1 : candidateUpdated = false
+2019/03/10 07:03:10 >>>>>> Server 1 becomes a candidate, new term: 30 <<<<<<<<
+2019/03/10 07:03:10 >>>>>> Server 2 becomes a candidate, new term: 31 <<<<<<<<
+2019/03/10 07:03:10 >>>>>> Server 1 becomes a candidate, new term: 31 <<<<<<<<
+2019/03/10 07:03:10 >>>>>> Server 1 becomes a candidate, new term: 30 <<<<<<<<
+2019/03/10 07:03:10 >>>>>> Server 1 becomes a candidate, new term: 53 <<<<<<<<
+2019/03/10 07:03:10 server 2 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 3, mylogs = 4, other = 3
+2019/03/10 07:03:10 2 > 1 : candidateUpdated = false
+2019/03/10 07:03:10 server 0 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 3, mylogs = 4, other = 3
+2019/03/10 07:03:10 0 > 1 : candidateUpdated = false
+2019/03/10 07:03:10 >>>>>> Server 0 becomes a candidate, new term: 30 <<<<<<<<
+2019/03/10 07:03:10 >>>>>> Server 0 becomes a candidate, new term: 54 <<<<<<<<
+2019/03/10 07:03:10 server 2 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 12, mylogs = 4, other = 4
+2019/03/10 07:03:10 server 1 checking hasMoreRecentLogsThan: myLast.Term = 3, lastLogTerm = 12, mylogs = 3, other = 4
+2019/03/10 07:03:10 2 > 0 : candidateUpdated = true
+2019/03/10 07:03:10 1 > 0 : candidateUpdated = true
+2019/03/10 07:03:10 
+ ----- NEW LEADER: 0 - Term: 54 (C = 4, logs = [{11 1} {12 2} {13 3} {14 12}]) -----
+2019/03/10 07:03:11 >>>>>> Server 2 becomes a candidate, new term: 55 <<<<<<<<
+2019/03/10 07:03:11 >>>>>> Server 1 becomes a candidate, new term: 31 <<<<<<<<
+2019/03/10 07:03:11 server 1 checking hasMoreRecentLogsThan: myLast.Term = 3, lastLogTerm = 12, mylogs = 3, other = 4
+2019/03/10 07:03:11 server 0 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 12, mylogs = 4, other = 4
+2019/03/10 07:03:11 0 > 2 : candidateUpdated = true
+2019/03/10 07:03:11 1 > 2 : candidateUpdated = true
+2019/03/10 07:03:11 
+ ----- NEW LEADER: 2 - Term: 55 (C = 4, logs = [{11 1} {12 2} {13 3} {14 12}]) -----
+2019/03/10 07:03:11 Server: 0, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:11 Server: 2, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:11 Server: 0, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:11 Server: 2, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:11 Server: 2, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:11 Server: 0, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:11 Server: 0, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:11 Server: 2, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:11 >>>>>> Server 2 becomes a candidate, new term: 32 <<<<<<<<
+2019/03/10 07:03:11 Server: 2, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:11 Server: 0, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:11 >>>>>> Server 1 becomes a candidate, new term: 31 <<<<<<<<
+2019/03/10 07:03:11 >>>>>> Server 1 becomes a candidate, new term: 32 <<<<<<<<
+2019/03/10 07:03:11 Server: 2, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:11 Server: 0, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:11 Server: 0, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:11 Server: 2, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:11 >>>>>> Server 1 becomes a candidate, new term: 56 <<<<<<<<
+2019/03/10 07:03:11 server 2 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 3, mylogs = 4, other = 3
+2019/03/10 07:03:11 server 0 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 3, mylogs = 4, other = 3
+2019/03/10 07:03:11 0 > 1 : candidateUpdated = false
+2019/03/10 07:03:11 2 > 1 : candidateUpdated = false
+2019/03/10 07:03:12 >>>>>> Server 0 becomes a candidate, new term: 31 <<<<<<<<
+2019/03/10 07:03:12 >>>>>> Server 1 becomes a candidate, new term: 32 <<<<<<<<
+2019/03/10 07:03:12 >>>>>> Server 1 becomes a candidate, new term: 32 <<<<<<<<
+2019/03/10 07:03:12 >>>>>> Server 2 becomes a candidate, new term: 33 <<<<<<<<
+2019/03/10 07:03:12 >>>>>> Server 0 becomes a candidate, new term: 57 <<<<<<<<
+2019/03/10 07:03:12 server 1 checking hasMoreRecentLogsThan: myLast.Term = 3, lastLogTerm = 12, mylogs = 3, other = 4
+2019/03/10 07:03:12 1 > 0 : candidateUpdated = true
+2019/03/10 07:03:12 server 2 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 12, mylogs = 4, other = 4
+2019/03/10 07:03:12 2 > 0 : candidateUpdated = true
+2019/03/10 07:03:12 
+ ----- NEW LEADER: 0 - Term: 57 (C = 4, logs = [{11 1} {12 2} {13 3} {14 12}]) -----
+2019/03/10 07:03:12 >>>>>> Server 1 becomes a candidate, new term: 33 <<<<<<<<
+2019/03/10 07:03:12 Server: 0, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:12 Server: 2, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:12 Server: 2, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:12 Server: 0, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:12 >>>>>> Server 1 becomes a candidate, new term: 58 <<<<<<<<
+2019/03/10 07:03:12 server 2 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 3, mylogs = 4, other = 3
+2019/03/10 07:03:12 Server: 0, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:12 2 > 1 : candidateUpdated = false
+2019/03/10 07:03:12 server 0 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 3, mylogs = 4, other = 3
+2019/03/10 07:03:12 0 > 1 : candidateUpdated = false
+2019/03/10 07:03:13 >>>>>> Server 1 becomes a candidate, new term: 33 <<<<<<<<
+2019/03/10 07:03:13 >>>>>> Server 0 becomes a candidate, new term: 32 <<<<<<<<
+2019/03/10 07:03:13 >>>>>> Server 1 becomes a candidate, new term: 33 <<<<<<<<
+2019/03/10 07:03:13 >>>>>> Server 1 becomes a candidate, new term: 34 <<<<<<<<
+2019/03/10 07:03:13 >>>>>> Server 2 becomes a candidate, new term: 34 <<<<<<<<
+2019/03/10 07:03:13 >>>>>> Server 2 becomes a candidate, new term: 59 <<<<<<<<
+2019/03/10 07:03:13 server 1 checking hasMoreRecentLogsThan: myLast.Term = 3, lastLogTerm = 12, mylogs = 3, other = 4
+2019/03/10 07:03:13 server 0 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 12, mylogs = 4, other = 4
+2019/03/10 07:03:13 0 > 2 : candidateUpdated = true
+2019/03/10 07:03:13 1 > 2 : candidateUpdated = true
+2019/03/10 07:03:13 
+ ----- NEW LEADER: 2 - Term: 59 (C = 4, logs = [{11 1} {12 2} {13 3} {14 12}]) -----
+2019/03/10 07:03:13 Server: 0, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:13 Server: 2, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:14 Server: 2, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:14 Server: 0, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:14 >>>>>> Server 1 becomes a candidate, new term: 60 <<<<<<<<
+2019/03/10 07:03:14 server 2 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 3, mylogs = 4, other = 3
+2019/03/10 07:03:14 server 0 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 3, mylogs = 4, other = 3
+2019/03/10 07:03:14 2 > 1 : candidateUpdated = false
+2019/03/10 07:03:14 0 > 1 : candidateUpdated = false
+2019/03/10 07:03:14 >>>>>> Server 1 becomes a candidate, new term: 34 <<<<<<<<
+2019/03/10 07:03:14 >>>>>> Server 0 becomes a candidate, new term: 33 <<<<<<<<
+2019/03/10 07:03:14 >>>>>> Server 2 becomes a candidate, new term: 35 <<<<<<<<
+2019/03/10 07:03:14 >>>>>> Server 1 becomes a candidate, new term: 34 <<<<<<<<
+2019/03/10 07:03:14 >>>>>> Server 1 becomes a candidate, new term: 35 <<<<<<<<
+2019/03/10 07:03:15 >>>>>> Server 2 becomes a candidate, new term: 61 <<<<<<<<
+2019/03/10 07:03:15 server 1 checking hasMoreRecentLogsThan: myLast.Term = 3, lastLogTerm = 12, mylogs = 3, other = 4
+2019/03/10 07:03:15 server 0 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 12, mylogs = 4, other = 4
+2019/03/10 07:03:15 1 > 2 : candidateUpdated = true
+2019/03/10 07:03:15 0 > 2 : candidateUpdated = true
+2019/03/10 07:03:15 
+ ----- NEW LEADER: 2 - Term: 61 (C = 4, logs = [{11 1} {12 2} {13 3} {14 12}]) -----
+2019/03/10 07:03:15 >>>>>> Server 1 becomes a candidate, new term: 62 <<<<<<<<
+2019/03/10 07:03:15 server 2 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 3, mylogs = 4, other = 3
+2019/03/10 07:03:15 2 > 1 : candidateUpdated = false
+2019/03/10 07:03:15 server 0 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 3, mylogs = 4, other = 3
+2019/03/10 07:03:15 0 > 1 : candidateUpdated = false
+2019/03/10 07:03:15 >>>>>> Server 0 becomes a candidate, new term: 34 <<<<<<<<
+2019/03/10 07:03:15 >>>>>> Server 0 becomes a candidate, new term: 63 <<<<<<<<
+2019/03/10 07:03:15 server 2 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 12, mylogs = 4, other = 4
+2019/03/10 07:03:15 server 1 checking hasMoreRecentLogsThan: myLast.Term = 3, lastLogTerm = 12, mylogs = 3, other = 4
+2019/03/10 07:03:15 1 > 0 : candidateUpdated = true
+2019/03/10 07:03:15 2 > 0 : candidateUpdated = true
+2019/03/10 07:03:15 
+ ----- NEW LEADER: 0 - Term: 63 (C = 4, logs = [{11 1} {12 2} {13 3} {14 12}]) -----
+2019/03/10 07:03:15 Server: 0, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:15 Server: 2, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:15 >>>>>> Server 1 becomes a candidate, new term: 35 <<<<<<<<
+2019/03/10 07:03:15 Server: 2, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:15 Server: 0, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:15 Server: 2, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:15 Server: 0, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:15 Server: 2, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:15 Server: 0, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:15 >>>>>> Server 2 becomes a candidate, new term: 36 <<<<<<<<
+2019/03/10 07:03:15 >>>>>> Server 1 becomes a candidate, new term: 35 <<<<<<<<
+2019/03/10 07:03:15 Server: 0, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:15 Server: 2, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:15 Server: 0, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:15 Server: 2, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:15 Server: 2, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:15 Server: 0, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:15 >>>>>> Server 1 becomes a candidate, new term: 36 <<<<<<<<
+2019/03/10 07:03:16 Server: 0, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:16 Server: 2, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:16 >>>>>> Server 1 becomes a candidate, new term: 64 <<<<<<<<
+2019/03/10 07:03:16 server 2 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 3, mylogs = 4, other = 3
+2019/03/10 07:03:16 server 0 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 3, mylogs = 4, other = 3
+2019/03/10 07:03:16 2 > 1 : candidateUpdated = false
+2019/03/10 07:03:16 0 > 1 : candidateUpdated = false
+2019/03/10 07:03:16 >>>>>> Server 0 becomes a candidate, new term: 35 <<<<<<<<
+2019/03/10 07:03:16 >>>>>> Server 1 becomes a candidate, new term: 36 <<<<<<<<
+2019/03/10 07:03:16 >>>>>> Server 1 becomes a candidate, new term: 36 <<<<<<<<
+2019/03/10 07:03:16 >>>>>> Server 2 becomes a candidate, new term: 37 <<<<<<<<
+2019/03/10 07:03:16 >>>>>> Server 1 becomes a candidate, new term: 37 <<<<<<<<
+2019/03/10 07:03:17 >>>>>> Server 0 becomes a candidate, new term: 65 <<<<<<<<
+2019/03/10 07:03:17 server 2 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 12, mylogs = 4, other = 4
+2019/03/10 07:03:17 2 > 0 : candidateUpdated = true
+2019/03/10 07:03:17 server 1 checking hasMoreRecentLogsThan: myLast.Term = 3, lastLogTerm = 12, mylogs = 3, other = 4
+2019/03/10 07:03:17 1 > 0 : candidateUpdated = true
+2019/03/10 07:03:17 
+ ----- NEW LEADER: 0 - Term: 65 (C = 4, logs = [{11 1} {12 2} {13 3} {14 12}]) -----
+2019/03/10 07:03:17 >>>>>> Server 1 becomes a candidate, new term: 66 <<<<<<<<
+2019/03/10 07:03:17 server 2 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 3, mylogs = 4, other = 3
+2019/03/10 07:03:17 2 > 1 : candidateUpdated = false
+2019/03/10 07:03:17 server 0 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 3, mylogs = 4, other = 3
+2019/03/10 07:03:17 0 > 1 : candidateUpdated = false
+2019/03/10 07:03:17 >>>>>> Server 2 becomes a candidate, new term: 67 <<<<<<<<
+2019/03/10 07:03:17 server 1 checking hasMoreRecentLogsThan: myLast.Term = 3, lastLogTerm = 12, mylogs = 3, other = 4
+2019/03/10 07:03:17 server 0 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 12, mylogs = 4, other = 4
+2019/03/10 07:03:17 0 > 2 : candidateUpdated = true
+2019/03/10 07:03:17 1 > 2 : candidateUpdated = true
+2019/03/10 07:03:17 
+ ----- NEW LEADER: 2 - Term: 67 (C = 4, logs = [{11 1} {12 2} {13 3} {14 12}]) -----
+2019/03/10 07:03:17 >>>>>> Server 0 becomes a candidate, new term: 36 <<<<<<<<
+2019/03/10 07:03:17 Server: 0, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:17 Server: 2, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:17 >>>>>> Server 1 becomes a candidate, new term: 37 <<<<<<<<
+2019/03/10 07:03:17 Server: 0, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:17 Server: 2, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:17 Server: 0, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:17 Server: 2, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:17 Server: 0, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:17 Server: 2, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:17 Server: 2, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:17 Server: 0, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:17 Server: 0, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:17 Server: 2, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:17 Server: 0, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:17 Server: 2, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:17 >>>>>> Server 1 becomes a candidate, new term: 38 <<<<<<<<
+2019/03/10 07:03:17 >>>>>> Server 1 becomes a candidate, new term: 37 <<<<<<<<
+2019/03/10 07:03:17 Server: 0, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:17 Server: 2, Leader: 2,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:17 >>>>>> Server 1 becomes a candidate, new term: 68 <<<<<<<<
+2019/03/10 07:03:17 server 2 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 3, mylogs = 4, other = 3
+2019/03/10 07:03:17 server 0 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 3, mylogs = 4, other = 3
+2019/03/10 07:03:17 2 > 1 : candidateUpdated = false
+2019/03/10 07:03:17 0 > 1 : candidateUpdated = false
+2019/03/10 07:03:18 >>>>>> Server 2 becomes a candidate, new term: 38 <<<<<<<<
+2019/03/10 07:03:18 >>>>>> Server 0 becomes a candidate, new term: 37 <<<<<<<<
+2019/03/10 07:03:18 >>>>>> Server 1 becomes a candidate, new term: 38 <<<<<<<<
+2019/03/10 07:03:18 >>>>>> Server 0 becomes a candidate, new term: 69 <<<<<<<<
+2019/03/10 07:03:18 server 2 checking hasMoreRecentLogsThan: myLast.Term = 12, lastLogTerm = 12, mylogs = 4, other = 4
+2019/03/10 07:03:18 server 1 checking hasMoreRecentLogsThan: myLast.Term = 3, lastLogTerm = 12, mylogs = 3, other = 4
+2019/03/10 07:03:18 2 > 0 : candidateUpdated = true
+2019/03/10 07:03:18 1 > 0 : candidateUpdated = true
+2019/03/10 07:03:18 
+ ----- NEW LEADER: 0 - Term: 69 (C = 4, logs = [{11 1} {12 2} {13 3} {14 12}]) -----
+2019/03/10 07:03:18 >>>>>> Server 1 becomes a candidate, new term: 38 <<<<<<<<
+2019/03/10 07:03:18 Server: 2, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/10 07:03:18 Server: 0, Leader: 0,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+--- FAIL: TestPersist12C (39.81s)
+    config.go:380: only 2 decided for index 4; wanted 3
+FAIL
+exit status 1
+FAIL	raft	39.812s

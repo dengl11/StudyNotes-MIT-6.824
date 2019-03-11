@@ -77,6 +77,10 @@ func TestReElection2A(t *testing.T) {
 	// be elected.
 	cfg.disconnect(leader2)
 	cfg.disconnect((leader2 + 1) % servers)
+	fmt.Printf("")
+	fmt.Printf("------------ disconnect: %d\n", leader2)
+	fmt.Printf("------------ disconnect: %d\n", (leader2+1)%servers)
+	fmt.Printf("")
 	time.Sleep(2 * RaftElectionTimeout)
 	cfg.checkNoLeader()
 
@@ -537,7 +541,7 @@ func TestPersist12C(t *testing.T) {
 
 	// crash and re-start all
 	for i := 0; i < servers; i++ {
-		cfg.start1(i)
+		//cfg.start1(i)
 	}
 	for i := 0; i < servers; i++ {
 		cfg.disconnect(i)
@@ -548,7 +552,7 @@ func TestPersist12C(t *testing.T) {
 
 	leader1 := cfg.checkOneLeader()
 	cfg.disconnect(leader1)
-	cfg.start1(leader1)
+	//cfg.start1(leader1)
 	cfg.connect(leader1)
 
 	cfg.one(13, servers) // 3
@@ -557,15 +561,17 @@ func TestPersist12C(t *testing.T) {
 	cfg.disconnect(leader2)
 	cfg.one(14, servers-1) // 4
 
-	cfg.start1(leader2)
+	//cfg.start1(leader2)
 	cfg.connect(leader2)
+
+	fmt.Printf("\n\nRECONNECT: LEADER2 = %v\n\n", leader2)
 
 	cfg.wait(4, servers, -1) // wait for leader2 to join before killing i3
 
 	i3 := (cfg.checkOneLeader() + 1) % servers
 	cfg.disconnect(i3)
 	cfg.one(15, servers-1)
-	cfg.start1(i3)
+	//cfg.start1(i3)
 	cfg.connect(i3)
 
 	cfg.one(16, servers)
