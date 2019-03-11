@@ -174,8 +174,10 @@ func (rf *Raft) sendAppendEntriesToServer(server int, empty bool) (bool, bool) {
 
 	rf.mu.Lock()
 	defer rf.mu.Unlock()
+    DPrintf("After Leader %v send to server %v:  callSuccess = %v, appendEntriesReply.Success = %v, appendEntriesReply.Term = %v, rf.currentTerm = %v", rf.me, server, callSuccess, appendEntriesReply.Success, appendEntriesReply.Term, rf.currentTerm )
 	if callSuccess && !appendEntriesReply.Success && appendEntriesReply.Term > rf.currentTerm {
 		rf.isLeader = false
+        DPrintf("Leader %v Step down ....", rf.me)
 		return callSuccess, appendEntriesReply.Success
 	}
 	if !empty {
@@ -252,8 +254,8 @@ func (rf *Raft) sendAppendEntries(empty bool) bool {
 
 // AppendEntries handler
 func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply) {
-	//DPrintf("Server %d get AppendEntries from leader %d", rf.me, args.Leader)
-	//DPrintf("args.Term: %v, my term: %d", args.Term, rf.currentTerm)
+    DPrintf("Server %d get AppendEntries from leader %d", rf.me, args.Leader)
+    DPrintf("args.Term: %v, my term: %d", args.Term, rf.currentTerm)
 
 	commitIndexUpdated := false
 	prevIndex := args.PrevLogIndex
@@ -267,7 +269,7 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 
 	// 1) Check term is updated enough?
 	if args.Term < rf.currentTerm {
-		//DPrintf("😡Rejects outdated append-entries ... ")
+        DPrintf("😡Rejects outdated append-entries ... ")
 		goto done
 	}
 
