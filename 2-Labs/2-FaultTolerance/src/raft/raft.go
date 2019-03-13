@@ -68,6 +68,7 @@ type Raft struct {
 	me        int                 // this peer's index into peers[]
 	heartbeat chan bool           // Channel for receiving heartbeat
 	isLeader  bool
+	synched  bool
 	applyCh   chan ApplyMsg
 
 	// Your data here (2A, 2B, 2C).
@@ -269,6 +270,7 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 	reply.Term = rf.currentTerm
 
 	accepted := false
+    empty := args.Entries == nil
 
 	// 1) Check term is updated enough?
 	if args.Term < rf.currentTerm {
@@ -283,12 +285,13 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 	// 2) Check log mismatch
 	if prevIndex >= 0 && (len(rf.logs) <= prevIndex || rf.logs[prevIndex].Term != prevTerm) {
         DPrintf("Server %v Rejects server %v because of mismatch: prevIndex = %v, logs = %v, prevTerm = %v\n\n", rf.me, args.Leader, prevIndex, rf.logs, prevTerm)
+        rf.synched = false
 		if len(rf.logs) > prevIndex {
 			//fmt.Printf("rf.logs[prevIndex].Term = %v\n\n", rf.logs[prevIndex].Term)
 		}
 		goto done
 	}
-	if args.Entries == nil { // heartbeat
+	if empty { // heartbeat
 		//DPrintf("🧡")
 		accepted = true
 		goto done
@@ -298,7 +301,7 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 
 done:
 	reply.Success = accepted
-    DPrintf("Server %d (Term: %v) reply AppendEntries from leader %d (Term = %v): accepted = %v\n", rf.me, rf.currentTerm, args.Leader, args.Term, accepted)
+    DPrintf("Server %d (Term: %v) reply AppendEntries from leader %d (Term = %v): accepted = %v, empty = %v\n", rf.me, rf.currentTerm, args.Leader, args.Term, accepted, empty)
 	if accepted {
 		rf.heartbeat <- true
 		rf.isLeader = (args.Leader == rf.me)
@@ -308,7 +311,7 @@ done:
 		rf.persist()
 
 		DPrintf("Server: %v, Leader: %v,  LeaderCommitIdx = %v, server commit = %v | Now server logs = %v", rf.me, args.Leader, args.LeaderCommitIdx, rf.commitIndex, len(rf.logs))
-		if args.LeaderCommitIdx > rf.commitIndex {
+		if rf.synched && args.LeaderCommitIdx > rf.commitIndex {
 			commitIndexUpdated = rf.updateCommitIndex(min(args.LeaderCommitIdx, len(rf.logs)))
 			if commitIndexUpdated {
 				//DPrintf("💤🌕🌕Set server %v commitIndex as %v", rf.me, rf.commitIndex)
@@ -347,6 +350,7 @@ func (rf *Raft) OnAppendEntriesData(args *AppendEntriesArgs, reply *AppendEntrie
 		}
 	}
 	rf.persist()
+    rf.synched = true
 	DPrintf("Update server %v logs = %v", rf.me, rf.logs)
 
 	return true
@@ -613,14 +617,14 @@ func (rf *Raft) sendApplyChWithCommmitIndex(idx int) {
 	applyMsg := ApplyMsg{idx + 1, rf.logs[idx].Command, false, nil}
 	rf.mu.Unlock()
 
-	//DPrintf("\n Waiting on applyCh Server %v sendApplyCh: %v ----\n\n", rf.me, rf.commitIndex)
+    DPrintf("\n Waiting on applyCh Server %v sendApplyCh: %v ----\n\n", rf.me, rf.commitIndex)
 	rf.applyCh <- applyMsg
 
 	rf.mu.Lock()
 	rf.lastApplied = idx
 	rf.mu.Unlock()
 
-	//DPrintf("\n Done: Server %v sendApplyCh: %v ----\n\n", rf.me, rf.commitIndex)
+    DPrintf("\n Done: Server %v sendApplyCh: %v ----\n\n", rf.me, rf.commitIndex)
 }
 
 //
