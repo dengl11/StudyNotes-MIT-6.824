@@ -202,9 +202,9 @@ func (rf *Raft) updateWithAppendEntriesReply(idx int, appendEntriesReply *Append
 func (rf *Raft) keepSendAppendEntriesToServer(idx int, empty bool) bool {
 	for { // Keep sendAppendEntriesToServer until accepted or lost connection
 		//DPrintf("sendAppendEntriesToServer: leader %v send data to server %v, empty: %v |", rf.me, idx, empty)
-        //if (!rf.getIsLeader()) {
-            //return false;
-        //}
+        if (!rf.getIsLeader()) {
+            return false;
+        }
 		var ok, accepted bool
 		ok, accepted = rf.sendAppendEntriesToServer(idx, empty)
 		//DPrintf("---> sendAppendEntriesToServer: leader %v send data to server %v, empty: %v | accepted = %v", rf.me, idx, empty, accepted)
