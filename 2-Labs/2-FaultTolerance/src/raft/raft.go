@@ -174,28 +174,28 @@ func (rf *Raft) sendAppendEntriesToServer(server int, empty bool) (bool, bool) {
 
 	rf.mu.Lock()
 	defer rf.mu.Unlock()
-    DPrintf("After Leader %v send to server %v:  callSuccess = %v, appendEntriesReply.Success = %v, appendEntriesReply.Term = %v, rf.currentTerm = %v", rf.me, server, callSuccess, appendEntriesReply.Success, appendEntriesReply.Term, rf.currentTerm )
+    DPrintf("After Leader %v send to server %v:  callSuccess = %v, appendEntriesReply.Success = %v, appendEntriesReply.Term = %v, rf.currentTerm = %v, Empty = %v", rf.me, server, callSuccess, appendEntriesReply.Success, appendEntriesReply.Term, rf.currentTerm, empty)
 	if callSuccess && !appendEntriesReply.Success && appendEntriesReply.Term > rf.currentTerm {
 		rf.isLeader = false
         DPrintf("Leader %v Step down ....", rf.me)
 		return callSuccess, appendEntriesReply.Success
 	}
-	if !empty {
-		rf.updateWithAppendEntriesReply(server, &appendEntriesReply, nLogs)
-	}
+    if callSuccess {
+        rf.updateWithAppendEntriesReply(server, &appendEntriesReply, nLogs, empty)
+    }
 	return callSuccess, appendEntriesReply.Success
 }
 
-func (rf *Raft) updateWithAppendEntriesReply(idx int, appendEntriesReply *AppendEntriesReply, newNextIdx int) {
-	if appendEntriesReply.Success {
-		rf.nextIndexes[idx] = newNextIdx
-		rf.matchIndexes[idx] = newNextIdx - 1
-        DPrintf("Success: Updated Leader %v matchIndexes: %v, nextIndexes = %v", rf.me, rf.matchIndexes, rf.nextIndexes)
-	} else {
+func (rf *Raft) updateWithAppendEntriesReply(idx int, appendEntriesReply *AppendEntriesReply, newNextIdx int, empty bool) {
+	if !appendEntriesReply.Success {
 		if rf.nextIndexes[idx] > rf.matchIndexes[idx]+1 {
 			rf.nextIndexes[idx]--
             DPrintf("Fail: Updated Leader %v matchIndexes: %v, nextIndexes = %v", rf.me, rf.matchIndexes, rf.nextIndexes)
 		}
+	} else if !empty{
+		rf.nextIndexes[idx] = newNextIdx
+		rf.matchIndexes[idx] = newNextIdx - 1
+        DPrintf("Success: Updated Leader %v matchIndexes: %v, nextIndexes = %v", rf.me, rf.matchIndexes, rf.nextIndexes)
 	}
 }
 

@@ -3,1372 +3,800 @@ connect(0)
 connect(1)
 connect(2)
 Test (2B): agreement despite follower disconnection ...
-2019/03/12 21:37:56 >>>>>> Server 1 becomes a candidate, new term: 1 <<<<<<<<
-2019/03/12 21:37:56 Server 1 current votes = 1 before requesting server 2
-2019/03/12 21:37:56 Server 1 current votes = 1 before requesting server 0
-2019/03/12 21:37:56 Server 2 (Term = 0) get request from server 1 - term 1
-2019/03/12 21:37:56 2 > 1 : candidateUpdated = true
-2019/03/12 21:37:56 Server 2 granted vote for server 1
-2019/03/12 21:37:56 Server 0 (Term = 0) get request from server 1 - term 1
-2019/03/12 21:37:56 0 > 1 : candidateUpdated = true
-2019/03/12 21:37:56 Server 0 granted vote for server 1
-2019/03/12 21:37:56 Server 1 ok = true, granted = true, before requesting server 2
-2019/03/12 21:37:56 Server 1 get vote from server 2, current votes = 2
-2019/03/12 21:37:56 Server 1 current votes = 2 after requesting server 2
-2019/03/12 21:37:56 Server 1 ok = true, granted = true, before requesting server 0
-2019/03/12 21:37:56 Server 1 get vote from server 0, current votes = 3
-2019/03/12 21:37:56 Server 1 current votes = 3 after requesting server 0
-2019/03/12 21:37:56 Server 1 get votes: 3, 1
-2019/03/12 21:37:56 
+2019/03/12 22:08:25 >>>>>> Server 1 becomes a candidate, new term: 1 <<<<<<<<
+2019/03/12 22:08:25 Server 1 current votes = 1 before requesting server 2
+2019/03/12 22:08:25 Server 1 current votes = 1 before requesting server 0
+2019/03/12 22:08:25 Server 2 (Term = 0) get request from server 1 - term 1
+2019/03/12 22:08:25 2 > 1 : candidateUpdated = true
+2019/03/12 22:08:25 Server 0 (Term = 0) get request from server 1 - term 1
+2019/03/12 22:08:25 0 > 1 : candidateUpdated = true
+2019/03/12 22:08:25 Server 0 granted vote for server 1
+2019/03/12 22:08:25 Server 2 granted vote for server 1
+2019/03/12 22:08:25 Server 1 ok = true, granted = true, before requesting server 2
+2019/03/12 22:08:25 Server 1 get vote from server 2, current votes = 2
+2019/03/12 22:08:25 Server 1 current votes = 2 after requesting server 2
+2019/03/12 22:08:25 Server 1 ok = true, granted = true, before requesting server 0
+2019/03/12 22:08:25 Server 1 get vote from server 0, current votes = 3
+2019/03/12 22:08:25 Server 1 current votes = 3 after requesting server 0
+2019/03/12 22:08:25 Server 1 get votes: 3, 1
+2019/03/12 22:08:25 
  ----- NEW LEADER: 1 - Term: 1 (C = 0, logs = []) -----
-2019/03/12 21:37:56 ------ Leader 1 Start Command  101  😡😡😡: New Logs = [{101 1}] --------
+2019/03/12 22:08:25 ------ Leader 1 Start Command  101  😡😡😡: New Logs = [{101 1}] --------
 One : Commit Index = 1
-2019/03/12 21:37:56 leader 1 send data to server 0 , prevIndex = -1, entries = [{101 1}]
-2019/03/12 21:37:56 leader 1 send data to server 2 , prevIndex = -1, entries = [{101 1}]
-2019/03/12 21:37:56 Server 0 get AppendEntries from leader 1
-2019/03/12 21:37:56 args.Term: 1, my term: 1
-2019/03/12 21:37:56 OnAppendEntriesData: prevIndex = -1
-2019/03/12 21:37:56 Update server 0 logs = [{101 1}]
-2019/03/12 21:37:56 Server 0 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
-2019/03/12 21:37:56 Server: 0, Leader: 1,  LeaderCommitIdx = 0, server commit = 0 | Now server logs = 1
-2019/03/12 21:37:56 Server 2 get AppendEntries from leader 1
-2019/03/12 21:37:56 args.Term: 1, my term: 1
-2019/03/12 21:37:56 OnAppendEntriesData: prevIndex = -1
-2019/03/12 21:37:56 Update server 2 logs = [{101 1}]
-2019/03/12 21:37:56 Server 2 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
-2019/03/12 21:37:56 Server: 2, Leader: 1,  LeaderCommitIdx = 0, server commit = 0 | Now server logs = 1
-2019/03/12 21:37:56 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1
-2019/03/12 21:37:56 Success: Updated Leader 1 matchIndexes: [0 0 -1], nextIndexes = [1 1 0]
-2019/03/12 21:37:56 
+2019/03/12 22:08:25 leader 1 send data to server 2 , prevIndex = -1, entries = [{101 1}]
+2019/03/12 22:08:25 leader 1 send data to server 0 , prevIndex = -1, entries = [{101 1}]
+2019/03/12 22:08:25 Server 2 get AppendEntries from leader 1
+2019/03/12 22:08:25 args.Term: 1, my term: 1
+2019/03/12 22:08:25 OnAppendEntriesData: prevIndex = -1
+2019/03/12 22:08:25 Update server 2 logs = [{101 1}]
+2019/03/12 22:08:25 Server 2 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
+2019/03/12 22:08:25 Server 0 get AppendEntries from leader 1
+2019/03/12 22:08:25 args.Term: 1, my term: 1
+2019/03/12 22:08:25 OnAppendEntriesData: prevIndex = -1
+2019/03/12 22:08:25 Update server 0 logs = [{101 1}]
+2019/03/12 22:08:25 Server 0 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
+2019/03/12 22:08:25 Server: 2, Leader: 1,  LeaderCommitIdx = 0, server commit = 0 | Now server logs = 1
+2019/03/12 22:08:25 Server: 0, Leader: 1,  LeaderCommitIdx = 0, server commit = 0 | Now server logs = 1
+2019/03/12 22:08:25 After Leader 1 send to server 2:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1, Empty = false
+2019/03/12 22:08:25 Success: Updated Leader 1 matchIndexes: [-1 0 0], nextIndexes = [0 1 1]
+2019/03/12 22:08:25 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1, Empty = false
+2019/03/12 22:08:25 Success: Updated Leader 1 matchIndexes: [0 0 0], nextIndexes = [1 1 1]
+2019/03/12 22:08:25 
  Start: Server 1 (C = 1) sendApplyCh: 1 : logs = [{101 1}]----
-2019/03/12 21:37:56 After Leader 1 send to server 2:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1
-2019/03/12 21:37:56 Success: Updated Leader 1 matchIndexes: [0 0 0], nextIndexes = [1 1 1]
-2019/03/12 21:37:56 Server 1 get AppendEntries from leader 1
-2019/03/12 21:37:56 args.Term: 1, my term: 1
-2019/03/12 21:37:56 Server 1 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
-2019/03/12 21:37:56 Server: 1, Leader: 1,  LeaderCommitIdx = 1, server commit = 1 | Now server logs = 1
-2019/03/12 21:37:56 Server 0 get AppendEntries from leader 1
-2019/03/12 21:37:56 args.Term: 1, my term: 1
-2019/03/12 21:37:56 Server 2 get AppendEntries from leader 1
-2019/03/12 21:37:56 args.Term: 1, my term: 1
-2019/03/12 21:37:56 Server 0 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
-2019/03/12 21:37:56 After Leader 1 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1
-2019/03/12 21:37:56 Server 2 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
-2019/03/12 21:37:56 Server: 0, Leader: 1,  LeaderCommitIdx = 1, server commit = 0 | Now server logs = 1
-2019/03/12 21:37:56 
+2019/03/12 22:08:25 Server 2 get AppendEntries from leader 1
+2019/03/12 22:08:25 Server 1 get AppendEntries from leader 1
+2019/03/12 22:08:25 args.Term: 1, my term: 1
+2019/03/12 22:08:25 Server 1 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
+2019/03/12 22:08:25 args.Term: 1, my term: 1
+2019/03/12 22:08:25 Server 2 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
+2019/03/12 22:08:25 Server 0 get AppendEntries from leader 1
+2019/03/12 22:08:25 args.Term: 1, my term: 1
+2019/03/12 22:08:25 Server 0 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
+2019/03/12 22:08:25 Server: 1, Leader: 1,  LeaderCommitIdx = 1, server commit = 1 | Now server logs = 1
+2019/03/12 22:08:25 Server: 0, Leader: 1,  LeaderCommitIdx = 1, server commit = 0 | Now server logs = 1
+2019/03/12 22:08:25 
  Start: Server 0 (C = 1) sendApplyCh: 1 : logs = [{101 1}]----
-2019/03/12 21:37:56 Server: 2, Leader: 1,  LeaderCommitIdx = 1, server commit = 0 | Now server logs = 1
-2019/03/12 21:37:56 
+2019/03/12 22:08:25 Server: 2, Leader: 1,  LeaderCommitIdx = 1, server commit = 0 | Now server logs = 1
+2019/03/12 22:08:25 
  Start: Server 2 (C = 1) sendApplyCh: 1 : logs = [{101 1}]----
-2019/03/12 21:37:56 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1
-2019/03/12 21:37:56 After Leader 1 send to server 2:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1
-2019/03/12 21:37:56 Server 0 get AppendEntries from leader 1
-2019/03/12 21:37:56 args.Term: 1, my term: 1
-2019/03/12 21:37:56 Server 0 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
-2019/03/12 21:37:56 Server 2 get AppendEntries from leader 1
-2019/03/12 21:37:56 args.Term: 1, my term: 1
-2019/03/12 21:37:56 Server 2 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
-2019/03/12 21:37:56 Server: 0, Leader: 1,  LeaderCommitIdx = 1, server commit = 1 | Now server logs = 1
-2019/03/12 21:37:56 Server 1 get AppendEntries from leader 1
-2019/03/12 21:37:56 args.Term: 1, my term: 1
-2019/03/12 21:37:56 Server: 2, Leader: 1,  LeaderCommitIdx = 1, server commit = 1 | Now server logs = 1
-2019/03/12 21:37:56 Server 1 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
-2019/03/12 21:37:56 Server: 1, Leader: 1,  LeaderCommitIdx = 1, server commit = 1 | Now server logs = 1
-2019/03/12 21:37:56 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1
-2019/03/12 21:37:56 After Leader 1 send to server 2:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1
-2019/03/12 21:37:56 After Leader 1 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1
-2019/03/12 21:37:56 Server 2 get AppendEntries from leader 1
-2019/03/12 21:37:56 args.Term: 1, my term: 1
-2019/03/12 21:37:56 Server 2 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
-2019/03/12 21:37:56 Server 0 get AppendEntries from leader 1
-2019/03/12 21:37:56 args.Term: 1, my term: 1
-2019/03/12 21:37:56 Server 0 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
-2019/03/12 21:37:56 Server 1 get AppendEntries from leader 1
-2019/03/12 21:37:56 args.Term: 1, my term: 1
-2019/03/12 21:37:56 Server 1 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
-2019/03/12 21:37:56 Server: 1, Leader: 1,  LeaderCommitIdx = 1, server commit = 1 | Now server logs = 1
-2019/03/12 21:37:56 Server: 2, Leader: 1,  LeaderCommitIdx = 1, server commit = 1 | Now server logs = 1
-2019/03/12 21:37:56 Server: 0, Leader: 1,  LeaderCommitIdx = 1, server commit = 1 | Now server logs = 1
-2019/03/12 21:37:56 After Leader 1 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1
-2019/03/12 21:37:56 After Leader 1 send to server 2:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1
-2019/03/12 21:37:56 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1
-2019/03/12 21:37:56 Server 2 get AppendEntries from leader 1
-2019/03/12 21:37:56 args.Term: 1, my term: 1
-2019/03/12 21:37:56 Server 2 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
-2019/03/12 21:37:56 Server: 2, Leader: 1,  LeaderCommitIdx = 1, server commit = 1 | Now server logs = 1
-2019/03/12 21:37:56 Server 0 get AppendEntries from leader 1
-2019/03/12 21:37:56 args.Term: 1, my term: 1
-2019/03/12 21:37:56 Server 0 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
-2019/03/12 21:37:56 Server 1 get AppendEntries from leader 1
-2019/03/12 21:37:56 args.Term: 1, my term: 1
-2019/03/12 21:37:56 Server 1 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
-2019/03/12 21:37:56 Server: 0, Leader: 1,  LeaderCommitIdx = 1, server commit = 1 | Now server logs = 1
-2019/03/12 21:37:56 Server: 1, Leader: 1,  LeaderCommitIdx = 1, server commit = 1 | Now server logs = 1
-2019/03/12 21:37:56 After Leader 1 send to server 2:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1
-2019/03/12 21:37:56 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1
-2019/03/12 21:37:56 After Leader 1 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1
-2019/03/12 21:37:56 Server 1 get AppendEntries from leader 1
-2019/03/12 21:37:56 args.Term: 1, my term: 1
-2019/03/12 21:37:56 Server 1 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
-2019/03/12 21:37:56 Server 2 get AppendEntries from leader 1
-2019/03/12 21:37:56 args.Term: 1, my term: 1
-2019/03/12 21:37:56 Server 2 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
-2019/03/12 21:37:56 Server: 1, Leader: 1,  LeaderCommitIdx = 1, server commit = 1 | Now server logs = 1
-2019/03/12 21:37:56 Server: 2, Leader: 1,  LeaderCommitIdx = 1, server commit = 1 | Now server logs = 1
-2019/03/12 21:37:56 Server 0 get AppendEntries from leader 1
-2019/03/12 21:37:56 args.Term: 1, my term: 1
-2019/03/12 21:37:56 Server 0 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
-2019/03/12 21:37:56 Server: 0, Leader: 1,  LeaderCommitIdx = 1, server commit = 1 | Now server logs = 1
-2019/03/12 21:37:56 After Leader 1 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1
-2019/03/12 21:37:56 After Leader 1 send to server 2:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1
-2019/03/12 21:37:56 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1
-2019/03/12 21:37:57 Server 2 get AppendEntries from leader 1
-2019/03/12 21:37:57 args.Term: 1, my term: 1
-2019/03/12 21:37:57 Server 2 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
-2019/03/12 21:37:57 Server 1 get AppendEntries from leader 1
-2019/03/12 21:37:57 args.Term: 1, my term: 1
-2019/03/12 21:37:57 Server 1 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
-2019/03/12 21:37:57 Server: 2, Leader: 1,  LeaderCommitIdx = 1, server commit = 1 | Now server logs = 1
-2019/03/12 21:37:57 Server 0 get AppendEntries from leader 1
-2019/03/12 21:37:57 Server: 1, Leader: 1,  LeaderCommitIdx = 1, server commit = 1 | Now server logs = 1
-2019/03/12 21:37:57 args.Term: 1, my term: 1
-2019/03/12 21:37:57 Server 0 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
-2019/03/12 21:37:57 After Leader 1 send to server 2:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1
-2019/03/12 21:37:57 Server: 0, Leader: 1,  LeaderCommitIdx = 1, server commit = 1 | Now server logs = 1
-2019/03/12 21:37:57 After Leader 1 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1
-2019/03/12 21:37:57 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1
+2019/03/12 22:08:25 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1, Empty = true
+2019/03/12 22:08:25 Success: Updated Leader 1 matchIndexes: [0 0 0], nextIndexes = [1 1 1]
+2019/03/12 22:08:25 After Leader 1 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1, Empty = true
+2019/03/12 22:08:25 Success: Updated Leader 1 matchIndexes: [0 0 0], nextIndexes = [1 1 1]
+2019/03/12 22:08:25 After Leader 1 send to server 2:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1, Empty = true
+2019/03/12 22:08:25 Success: Updated Leader 1 matchIndexes: [0 0 0], nextIndexes = [1 1 1]
+2019/03/12 22:08:25 Server 2 get AppendEntries from leader 1
+2019/03/12 22:08:25 args.Term: 1, my term: 1
+2019/03/12 22:08:25 Server 2 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
+2019/03/12 22:08:25 Server 1 get AppendEntries from leader 1
+2019/03/12 22:08:25 args.Term: 1, my term: 1
+2019/03/12 22:08:25 Server 0 get AppendEntries from leader 1
+2019/03/12 22:08:25 args.Term: 1, my term: 1
+2019/03/12 22:08:25 Server 0 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
+2019/03/12 22:08:25 Server: 0, Leader: 1,  LeaderCommitIdx = 1, server commit = 1 | Now server logs = 1
+2019/03/12 22:08:25 Server 1 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
+2019/03/12 22:08:25 Server: 2, Leader: 1,  LeaderCommitIdx = 1, server commit = 1 | Now server logs = 1
+2019/03/12 22:08:25 Server: 1, Leader: 1,  LeaderCommitIdx = 1, server commit = 1 | Now server logs = 1
+2019/03/12 22:08:25 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1, Empty = true
+2019/03/12 22:08:25 Success: Updated Leader 1 matchIndexes: [0 0 0], nextIndexes = [1 1 1]
+2019/03/12 22:08:25 After Leader 1 send to server 2:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1, Empty = true
+2019/03/12 22:08:25 Success: Updated Leader 1 matchIndexes: [0 0 0], nextIndexes = [1 1 1]
+2019/03/12 22:08:25 After Leader 1 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1, Empty = true
+2019/03/12 22:08:25 Success: Updated Leader 1 matchIndexes: [0 0 0], nextIndexes = [1 1 1]
+2019/03/12 22:08:25 Server 2 get AppendEntries from leader 1
+2019/03/12 22:08:25 args.Term: 1, my term: 1
+2019/03/12 22:08:25 Server 2 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
+2019/03/12 22:08:25 Server 1 get AppendEntries from leader 1
+2019/03/12 22:08:25 args.Term: 1, my term: 1
+2019/03/12 22:08:25 Server: 2, Leader: 1,  LeaderCommitIdx = 1, server commit = 1 | Now server logs = 1
+2019/03/12 22:08:25 Server 0 get AppendEntries from leader 1
+2019/03/12 22:08:25 args.Term: 1, my term: 1
+2019/03/12 22:08:25 Server 0 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
+2019/03/12 22:08:25 Server 1 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
+2019/03/12 22:08:25 Server: 0, Leader: 1,  LeaderCommitIdx = 1, server commit = 1 | Now server logs = 1
+2019/03/12 22:08:25 Server: 1, Leader: 1,  LeaderCommitIdx = 1, server commit = 1 | Now server logs = 1
+2019/03/12 22:08:25 After Leader 1 send to server 2:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1, Empty = true
+2019/03/12 22:08:25 Success: Updated Leader 1 matchIndexes: [0 0 0], nextIndexes = [1 1 1]
+2019/03/12 22:08:25 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1, Empty = true
+2019/03/12 22:08:25 Success: Updated Leader 1 matchIndexes: [0 0 0], nextIndexes = [1 1 1]
+2019/03/12 22:08:25 After Leader 1 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1, Empty = true
+2019/03/12 22:08:25 Success: Updated Leader 1 matchIndexes: [0 0 0], nextIndexes = [1 1 1]
+2019/03/12 22:08:25 Server 0 get AppendEntries from leader 1
+2019/03/12 22:08:25 Server 2 get AppendEntries from leader 1
+2019/03/12 22:08:25 args.Term: 1, my term: 1
+2019/03/12 22:08:25 Server 1 get AppendEntries from leader 1
+2019/03/12 22:08:25 args.Term: 1, my term: 1
+2019/03/12 22:08:25 args.Term: 1, my term: 1
+2019/03/12 22:08:25 Server 0 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
+2019/03/12 22:08:25 Server 2 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
+2019/03/12 22:08:25 Server: 0, Leader: 1,  LeaderCommitIdx = 1, server commit = 1 | Now server logs = 1
+2019/03/12 22:08:25 Server 1 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
+2019/03/12 22:08:25 Server: 2, Leader: 1,  LeaderCommitIdx = 1, server commit = 1 | Now server logs = 1
+2019/03/12 22:08:25 Server: 1, Leader: 1,  LeaderCommitIdx = 1, server commit = 1 | Now server logs = 1
+2019/03/12 22:08:25 After Leader 1 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1, Empty = true
+2019/03/12 22:08:25 Success: Updated Leader 1 matchIndexes: [0 0 0], nextIndexes = [1 1 1]
+2019/03/12 22:08:25 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1, Empty = true
+2019/03/12 22:08:25 Success: Updated Leader 1 matchIndexes: [0 0 0], nextIndexes = [1 1 1]
+2019/03/12 22:08:25 After Leader 1 send to server 2:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1, Empty = true
+2019/03/12 22:08:25 Success: Updated Leader 1 matchIndexes: [0 0 0], nextIndexes = [1 1 1]
+2019/03/12 22:08:25 Server 2 get AppendEntries from leader 1
+2019/03/12 22:08:25 args.Term: 1, my term: 1
+2019/03/12 22:08:25 Server 2 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
+2019/03/12 22:08:25 Server 0 get AppendEntries from leader 1
+2019/03/12 22:08:25 args.Term: 1, my term: 1
+2019/03/12 22:08:25 Server 0 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
+2019/03/12 22:08:25 Server 1 get AppendEntries from leader 1
+2019/03/12 22:08:25 args.Term: 1, my term: 1
+2019/03/12 22:08:25 Server 1 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
+2019/03/12 22:08:25 Server: 0, Leader: 1,  LeaderCommitIdx = 1, server commit = 1 | Now server logs = 1
+2019/03/12 22:08:25 Server: 1, Leader: 1,  LeaderCommitIdx = 1, server commit = 1 | Now server logs = 1
+2019/03/12 22:08:25 Server: 2, Leader: 1,  LeaderCommitIdx = 1, server commit = 1 | Now server logs = 1
+2019/03/12 22:08:25 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1, Empty = true
+2019/03/12 22:08:25 Success: Updated Leader 1 matchIndexes: [0 0 0], nextIndexes = [1 1 1]
+2019/03/12 22:08:25 After Leader 1 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1, Empty = true
+2019/03/12 22:08:25 Success: Updated Leader 1 matchIndexes: [0 0 0], nextIndexes = [1 1 1]
+2019/03/12 22:08:25 After Leader 1 send to server 2:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1, Empty = true
+2019/03/12 22:08:25 Success: Updated Leader 1 matchIndexes: [0 0 0], nextIndexes = [1 1 1]
+2019/03/12 22:08:25 Server 2 get AppendEntries from leader 1
+2019/03/12 22:08:25 args.Term: 1, my term: 1
+2019/03/12 22:08:25 Server 2 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
+2019/03/12 22:08:25 Server: 2, Leader: 1,  LeaderCommitIdx = 1, server commit = 1 | Now server logs = 1
+2019/03/12 22:08:25 Server 1 get AppendEntries from leader 1
+2019/03/12 22:08:25 args.Term: 1, my term: 1
+2019/03/12 22:08:25 Server 1 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
+2019/03/12 22:08:25 Server 0 get AppendEntries from leader 1
+2019/03/12 22:08:25 args.Term: 1, my term: 1
+2019/03/12 22:08:25 Server 0 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
+2019/03/12 22:08:25 Server: 1, Leader: 1,  LeaderCommitIdx = 1, server commit = 1 | Now server logs = 1
+2019/03/12 22:08:25 Server: 0, Leader: 1,  LeaderCommitIdx = 1, server commit = 1 | Now server logs = 1
+2019/03/12 22:08:25 After Leader 1 send to server 2:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1, Empty = true
+2019/03/12 22:08:25 Success: Updated Leader 1 matchIndexes: [0 0 0], nextIndexes = [1 1 1]
+2019/03/12 22:08:25 After Leader 1 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1, Empty = true
+2019/03/12 22:08:25 Success: Updated Leader 1 matchIndexes: [0 0 0], nextIndexes = [1 1 1]
+2019/03/12 22:08:25 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1, Empty = true
+2019/03/12 22:08:25 Success: Updated Leader 1 matchIndexes: [0 0 0], nextIndexes = [1 1 1]
 ⛽️⛽️⛽️Disconnect 2
-2019/03/12 21:37:57 ------ Leader 1 Start Command  102  😡😡😡: New Logs = [{101 1} {102 1}] --------
+2019/03/12 22:08:25 ------ Leader 1 Start Command  102  😡😡😡: New Logs = [{101 1} {102 1}] --------
 One : Commit Index = 2
-2019/03/12 21:37:57 leader 1 send data to server 2 , prevIndex = 0, entries = [{102 1}]
-2019/03/12 21:37:57 leader 1 send data to server 0 , prevIndex = 0, entries = [{102 1}]
-2019/03/12 21:37:57 Server 0 get AppendEntries from leader 1
-2019/03/12 21:37:57 args.Term: 1, my term: 1
-2019/03/12 21:37:57 OnAppendEntriesData: prevIndex = 0
-2019/03/12 21:37:57 Update server 0 logs = [{101 1} {102 1}]
-2019/03/12 21:37:57 Server 0 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
-2019/03/12 21:37:57 Server: 0, Leader: 1,  LeaderCommitIdx = 1, server commit = 1 | Now server logs = 2
-2019/03/12 21:37:57 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1
-2019/03/12 21:37:57 Success: Updated Leader 1 matchIndexes: [1 1 0], nextIndexes = [2 2 1]
-2019/03/12 21:37:57 
+2019/03/12 22:08:25 leader 1 send data to server 2 , prevIndex = 0, entries = [{102 1}]
+2019/03/12 22:08:25 leader 1 send data to server 0 , prevIndex = 0, entries = [{102 1}]
+2019/03/12 22:08:25 Server 0 get AppendEntries from leader 1
+2019/03/12 22:08:25 args.Term: 1, my term: 1
+2019/03/12 22:08:25 OnAppendEntriesData: prevIndex = 0
+2019/03/12 22:08:25 Update server 0 logs = [{101 1} {102 1}]
+2019/03/12 22:08:25 Server 0 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
+2019/03/12 22:08:25 Server: 0, Leader: 1,  LeaderCommitIdx = 1, server commit = 1 | Now server logs = 2
+2019/03/12 22:08:25 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1, Empty = false
+2019/03/12 22:08:25 Success: Updated Leader 1 matchIndexes: [1 1 0], nextIndexes = [2 2 1]
+2019/03/12 22:08:25 
  Start: Server 1 (C = 2) sendApplyCh: 2 : logs = [{101 1} {102 1}]----
-2019/03/12 21:37:57 Server 0 get AppendEntries from leader 1
-2019/03/12 21:37:57 args.Term: 1, my term: 1
-2019/03/12 21:37:57 Server 1 get AppendEntries from leader 1
-2019/03/12 21:37:57 args.Term: 1, my term: 1
-2019/03/12 21:37:57 Server 1 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
-2019/03/12 21:37:57 Server 0 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
-2019/03/12 21:37:57 Server: 1, Leader: 1,  LeaderCommitIdx = 2, server commit = 2 | Now server logs = 2
-2019/03/12 21:37:57 Server: 0, Leader: 1,  LeaderCommitIdx = 2, server commit = 1 | Now server logs = 2
-2019/03/12 21:37:57 
+2019/03/12 22:08:25 Server 1 get AppendEntries from leader 1
+2019/03/12 22:08:25 args.Term: 1, my term: 1
+2019/03/12 22:08:25 Server 0 get AppendEntries from leader 1
+2019/03/12 22:08:25 args.Term: 1, my term: 1
+2019/03/12 22:08:25 Server 1 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
+2019/03/12 22:08:25 Server 0 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
+2019/03/12 22:08:25 Server: 1, Leader: 1,  LeaderCommitIdx = 2, server commit = 2 | Now server logs = 2
+2019/03/12 22:08:25 Server: 0, Leader: 1,  LeaderCommitIdx = 2, server commit = 1 | Now server logs = 2
+2019/03/12 22:08:25 
  Start: Server 0 (C = 2) sendApplyCh: 2 : logs = [{101 1} {102 1}]----
-2019/03/12 21:37:57 After Leader 1 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1
-2019/03/12 21:37:57 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1
-2019/03/12 21:37:57 ------ Leader 1 Start Command  103  😡😡😡: New Logs = [{101 1} {102 1} {103 1}] --------
+2019/03/12 22:08:25 After Leader 1 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1, Empty = true
+2019/03/12 22:08:25 Success: Updated Leader 1 matchIndexes: [1 1 0], nextIndexes = [2 2 1]
+2019/03/12 22:08:25 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1, Empty = true
+2019/03/12 22:08:25 Success: Updated Leader 1 matchIndexes: [1 1 0], nextIndexes = [2 2 1]
+2019/03/12 22:08:25 ------ Leader 1 Start Command  103  😡😡😡: New Logs = [{101 1} {102 1} {103 1}] --------
 One : Commit Index = 3
-2019/03/12 21:37:57 leader 1 send data to server 2 , prevIndex = 0, entries = [{102 1} {103 1}]
-2019/03/12 21:37:57 leader 1 send data to server 0 , prevIndex = 1, entries = [{103 1}]
-2019/03/12 21:37:57 Server 0 get AppendEntries from leader 1
-2019/03/12 21:37:57 args.Term: 1, my term: 1
-2019/03/12 21:37:57 OnAppendEntriesData: prevIndex = 1
-2019/03/12 21:37:57 Update server 0 logs = [{101 1} {102 1} {103 1}]
-2019/03/12 21:37:57 Server 0 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
-2019/03/12 21:37:57 Server: 0, Leader: 1,  LeaderCommitIdx = 2, server commit = 2 | Now server logs = 3
-2019/03/12 21:37:57 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1
-2019/03/12 21:37:57 Success: Updated Leader 1 matchIndexes: [2 2 0], nextIndexes = [3 3 1]
-2019/03/12 21:37:57 
+2019/03/12 22:08:25 leader 1 send data to server 2 , prevIndex = 0, entries = [{102 1} {103 1}]
+2019/03/12 22:08:25 leader 1 send data to server 0 , prevIndex = 1, entries = [{103 1}]
+2019/03/12 22:08:25 Server 0 get AppendEntries from leader 1
+2019/03/12 22:08:25 args.Term: 1, my term: 1
+2019/03/12 22:08:25 OnAppendEntriesData: prevIndex = 1
+2019/03/12 22:08:25 Update server 0 logs = [{101 1} {102 1} {103 1}]
+2019/03/12 22:08:25 Server 0 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
+2019/03/12 22:08:25 Server: 0, Leader: 1,  LeaderCommitIdx = 2, server commit = 2 | Now server logs = 3
+2019/03/12 22:08:25 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1, Empty = false
+2019/03/12 22:08:25 Success: Updated Leader 1 matchIndexes: [2 2 0], nextIndexes = [3 3 1]
+2019/03/12 22:08:25 
  Start: Server 1 (C = 3) sendApplyCh: 3 : logs = [{101 1} {102 1} {103 1}]----
-2019/03/12 21:37:57 Server 0 get AppendEntries from leader 1
-2019/03/12 21:37:57 args.Term: 1, my term: 1
-2019/03/12 21:37:57 Server 0 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
-2019/03/12 21:37:57 Server 1 get AppendEntries from leader 1
-2019/03/12 21:37:57 args.Term: 1, my term: 1
-2019/03/12 21:37:57 Server 1 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
-2019/03/12 21:37:57 Server: 0, Leader: 1,  LeaderCommitIdx = 3, server commit = 2 | Now server logs = 3
-2019/03/12 21:37:57 
+2019/03/12 22:08:25 Server 1 get AppendEntries from leader 1
+2019/03/12 22:08:25 args.Term: 1, my term: 1
+2019/03/12 22:08:25 Server 1 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
+2019/03/12 22:08:25 Server 0 get AppendEntries from leader 1
+2019/03/12 22:08:25 args.Term: 1, my term: 1
+2019/03/12 22:08:25 Server 0 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
+2019/03/12 22:08:25 Server: 1, Leader: 1,  LeaderCommitIdx = 3, server commit = 3 | Now server logs = 3
+2019/03/12 22:08:25 Server: 0, Leader: 1,  LeaderCommitIdx = 3, server commit = 2 | Now server logs = 3
+2019/03/12 22:08:25 
  Start: Server 0 (C = 3) sendApplyCh: 3 : logs = [{101 1} {102 1} {103 1}]----
-2019/03/12 21:37:57 Server: 1, Leader: 1,  LeaderCommitIdx = 3, server commit = 3 | Now server logs = 3
-2019/03/12 21:37:57 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1
-2019/03/12 21:37:57 After Leader 1 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1
-2019/03/12 21:37:57 Server 0 get AppendEntries from leader 1
-2019/03/12 21:37:57 args.Term: 1, my term: 1
-2019/03/12 21:37:57 Server 0 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
-2019/03/12 21:37:57 Server: 0, Leader: 1,  LeaderCommitIdx = 3, server commit = 3 | Now server logs = 3
-2019/03/12 21:37:57 Server 1 get AppendEntries from leader 1
-2019/03/12 21:37:57 args.Term: 1, my term: 1
-2019/03/12 21:37:57 Server 1 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
-2019/03/12 21:37:57 Server: 1, Leader: 1,  LeaderCommitIdx = 3, server commit = 3 | Now server logs = 3
-2019/03/12 21:37:57 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1
-2019/03/12 21:37:57 After Leader 1 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1
-2019/03/12 21:37:57 Server 1 get AppendEntries from leader 1
-2019/03/12 21:37:57 args.Term: 1, my term: 1
-2019/03/12 21:37:57 Server 1 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
-2019/03/12 21:37:57 Server: 1, Leader: 1,  LeaderCommitIdx = 3, server commit = 3 | Now server logs = 3
-2019/03/12 21:37:57 Server 0 get AppendEntries from leader 1
-2019/03/12 21:37:57 args.Term: 1, my term: 1
-2019/03/12 21:37:57 Server 0 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
-2019/03/12 21:37:57 After Leader 1 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1
-2019/03/12 21:37:57 Server: 0, Leader: 1,  LeaderCommitIdx = 3, server commit = 3 | Now server logs = 3
-2019/03/12 21:37:57 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1
-2019/03/12 21:37:57 Server 1 get AppendEntries from leader 1
-2019/03/12 21:37:57 args.Term: 1, my term: 1
-2019/03/12 21:37:57 Server 1 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
-2019/03/12 21:37:57 Server 0 get AppendEntries from leader 1
-2019/03/12 21:37:57 Server: 1, Leader: 1,  LeaderCommitIdx = 3, server commit = 3 | Now server logs = 3
-2019/03/12 21:37:57 args.Term: 1, my term: 1
-2019/03/12 21:37:57 Server 0 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
-2019/03/12 21:37:57 After Leader 1 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1
-2019/03/12 21:37:57 Server: 0, Leader: 1,  LeaderCommitIdx = 3, server commit = 3 | Now server logs = 3
-2019/03/12 21:37:57 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1
-2019/03/12 21:37:57 Server 0 get AppendEntries from leader 1
-2019/03/12 21:37:57 Server 1 get AppendEntries from leader 1
-2019/03/12 21:37:57 args.Term: 1, my term: 1
-2019/03/12 21:37:57 Server 1 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
-2019/03/12 21:37:57 Server: 1, Leader: 1,  LeaderCommitIdx = 3, server commit = 3 | Now server logs = 3
-2019/03/12 21:37:57 args.Term: 1, my term: 1
-2019/03/12 21:37:57 Server 0 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
-2019/03/12 21:37:57 Server: 0, Leader: 1,  LeaderCommitIdx = 3, server commit = 3 | Now server logs = 3
-2019/03/12 21:37:57 After Leader 1 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1
-2019/03/12 21:37:57 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1
-2019/03/12 21:37:57 Server 0 get AppendEntries from leader 1
-2019/03/12 21:37:57 Server 1 get AppendEntries from leader 1
-2019/03/12 21:37:57 args.Term: 1, my term: 1
-2019/03/12 21:37:57 args.Term: 1, my term: 1
-2019/03/12 21:37:57 Server 0 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
-2019/03/12 21:37:57 Server 1 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
-2019/03/12 21:37:57 Server: 1, Leader: 1,  LeaderCommitIdx = 3, server commit = 3 | Now server logs = 3
-2019/03/12 21:37:57 Server: 0, Leader: 1,  LeaderCommitIdx = 3, server commit = 3 | Now server logs = 3
-2019/03/12 21:37:57 After Leader 1 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1
-2019/03/12 21:37:57 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1
-2019/03/12 21:37:57 After Leader 1 send to server 2:  callSuccess = false, appendEntriesReply.Success = false, appendEntriesReply.Term = 0, rf.currentTerm = 1
-2019/03/12 21:37:57 Server 1 get AppendEntries from leader 1
-2019/03/12 21:37:57 args.Term: 1, my term: 1
-2019/03/12 21:37:57 Server 0 get AppendEntries from leader 1
-2019/03/12 21:37:57 args.Term: 1, my term: 1
-2019/03/12 21:37:57 Server 0 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
-2019/03/12 21:37:57 Server 1 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
-2019/03/12 21:37:57 Server: 0, Leader: 1,  LeaderCommitIdx = 3, server commit = 3 | Now server logs = 3
-2019/03/12 21:37:57 Server: 1, Leader: 1,  LeaderCommitIdx = 3, server commit = 3 | Now server logs = 3
-2019/03/12 21:37:57 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1
-2019/03/12 21:37:57 After Leader 1 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1
-2019/03/12 21:37:58 Server 1 get AppendEntries from leader 1
-2019/03/12 21:37:58 args.Term: 1, my term: 1
-2019/03/12 21:37:58 Server 1 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
-2019/03/12 21:37:58 Server 0 get AppendEntries from leader 1
-2019/03/12 21:37:58 args.Term: 1, my term: 1
-2019/03/12 21:37:58 Server 0 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
-2019/03/12 21:37:58 Server: 1, Leader: 1,  LeaderCommitIdx = 3, server commit = 3 | Now server logs = 3
-2019/03/12 21:37:58 Server: 0, Leader: 1,  LeaderCommitIdx = 3, server commit = 3 | Now server logs = 3
-2019/03/12 21:37:58 After Leader 1 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1
-2019/03/12 21:37:58 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1
-2019/03/12 21:37:58 Server 0 get AppendEntries from leader 1
-2019/03/12 21:37:58 Server 1 get AppendEntries from leader 1
-2019/03/12 21:37:58 args.Term: 1, my term: 1
-2019/03/12 21:37:58 args.Term: 1, my term: 1
-2019/03/12 21:37:58 Server 0 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
-2019/03/12 21:37:58 Server 1 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
-2019/03/12 21:37:58 Server: 0, Leader: 1,  LeaderCommitIdx = 3, server commit = 3 | Now server logs = 3
-2019/03/12 21:37:58 Server: 1, Leader: 1,  LeaderCommitIdx = 3, server commit = 3 | Now server logs = 3
-2019/03/12 21:37:58 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1
-2019/03/12 21:37:58 After Leader 1 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1
-2019/03/12 21:37:58 Server 0 get AppendEntries from leader 1
-2019/03/12 21:37:58 args.Term: 1, my term: 1
-2019/03/12 21:37:58 Server 1 get AppendEntries from leader 1
-2019/03/12 21:37:58 args.Term: 1, my term: 1
-2019/03/12 21:37:58 Server 1 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
-2019/03/12 21:37:58 Server 0 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
-2019/03/12 21:37:58 Server: 1, Leader: 1,  LeaderCommitIdx = 3, server commit = 3 | Now server logs = 3
-2019/03/12 21:37:58 Server: 0, Leader: 1,  LeaderCommitIdx = 3, server commit = 3 | Now server logs = 3
-2019/03/12 21:37:58 After Leader 1 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1
-2019/03/12 21:37:58 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1
-2019/03/12 21:37:58 ------ Leader 1 Start Command  104  😡😡😡: New Logs = [{101 1} {102 1} {103 1} {104 1}] --------
+2019/03/12 22:08:25 After Leader 1 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1, Empty = true
+2019/03/12 22:08:25 Success: Updated Leader 1 matchIndexes: [2 2 0], nextIndexes = [3 3 1]
+2019/03/12 22:08:25 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1, Empty = true
+2019/03/12 22:08:25 Success: Updated Leader 1 matchIndexes: [2 2 0], nextIndexes = [3 3 1]
+2019/03/12 22:08:25 Server 0 get AppendEntries from leader 1
+2019/03/12 22:08:25 args.Term: 1, my term: 1
+2019/03/12 22:08:25 Server 0 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
+2019/03/12 22:08:25 Server 1 get AppendEntries from leader 1
+2019/03/12 22:08:25 args.Term: 1, my term: 1
+2019/03/12 22:08:25 Server 1 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
+2019/03/12 22:08:25 Server: 0, Leader: 1,  LeaderCommitIdx = 3, server commit = 3 | Now server logs = 3
+2019/03/12 22:08:25 Server: 1, Leader: 1,  LeaderCommitIdx = 3, server commit = 3 | Now server logs = 3
+2019/03/12 22:08:25 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1, Empty = true
+2019/03/12 22:08:25 Success: Updated Leader 1 matchIndexes: [2 2 0], nextIndexes = [3 3 1]
+2019/03/12 22:08:25 After Leader 1 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1, Empty = true
+2019/03/12 22:08:25 Success: Updated Leader 1 matchIndexes: [2 2 0], nextIndexes = [3 3 1]
+2019/03/12 22:08:26 Server 1 get AppendEntries from leader 1
+2019/03/12 22:08:26 args.Term: 1, my term: 1
+2019/03/12 22:08:26 Server 1 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
+2019/03/12 22:08:26 Server 0 get AppendEntries from leader 1
+2019/03/12 22:08:26 args.Term: 1, my term: 1
+2019/03/12 22:08:26 Server: 1, Leader: 1,  LeaderCommitIdx = 3, server commit = 3 | Now server logs = 3
+2019/03/12 22:08:26 Server 0 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
+2019/03/12 22:08:26 Server: 0, Leader: 1,  LeaderCommitIdx = 3, server commit = 3 | Now server logs = 3
+2019/03/12 22:08:26 After Leader 1 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1, Empty = true
+2019/03/12 22:08:26 Success: Updated Leader 1 matchIndexes: [2 2 0], nextIndexes = [3 3 1]
+2019/03/12 22:08:26 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1, Empty = true
+2019/03/12 22:08:26 Success: Updated Leader 1 matchIndexes: [2 2 0], nextIndexes = [3 3 1]
+2019/03/12 22:08:26 Server 0 get AppendEntries from leader 1
+2019/03/12 22:08:26 args.Term: 1, my term: 1
+2019/03/12 22:08:26 Server 0 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
+2019/03/12 22:08:26 Server 1 get AppendEntries from leader 1
+2019/03/12 22:08:26 args.Term: 1, my term: 1
+2019/03/12 22:08:26 Server 1 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
+2019/03/12 22:08:26 Server: 0, Leader: 1,  LeaderCommitIdx = 3, server commit = 3 | Now server logs = 3
+2019/03/12 22:08:26 Server: 1, Leader: 1,  LeaderCommitIdx = 3, server commit = 3 | Now server logs = 3
+2019/03/12 22:08:26 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1, Empty = true
+2019/03/12 22:08:26 Success: Updated Leader 1 matchIndexes: [2 2 0], nextIndexes = [3 3 1]
+2019/03/12 22:08:26 After Leader 1 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1, Empty = true
+2019/03/12 22:08:26 Success: Updated Leader 1 matchIndexes: [2 2 0], nextIndexes = [3 3 1]
+2019/03/12 22:08:26 Server 0 get AppendEntries from leader 1
+2019/03/12 22:08:26 args.Term: 1, my term: 1
+2019/03/12 22:08:26 Server 0 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
+2019/03/12 22:08:26 Server 1 get AppendEntries from leader 1
+2019/03/12 22:08:26 args.Term: 1, my term: 1
+2019/03/12 22:08:26 Server 1 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
+2019/03/12 22:08:26 Server: 0, Leader: 1,  LeaderCommitIdx = 3, server commit = 3 | Now server logs = 3
+2019/03/12 22:08:26 Server: 1, Leader: 1,  LeaderCommitIdx = 3, server commit = 3 | Now server logs = 3
+2019/03/12 22:08:26 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1, Empty = true
+2019/03/12 22:08:26 Success: Updated Leader 1 matchIndexes: [2 2 0], nextIndexes = [3 3 1]
+2019/03/12 22:08:26 After Leader 1 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1, Empty = true
+2019/03/12 22:08:26 Success: Updated Leader 1 matchIndexes: [2 2 0], nextIndexes = [3 3 1]
+2019/03/12 22:08:26 Server 0 get AppendEntries from leader 1
+2019/03/12 22:08:26 Server 1 get AppendEntries from leader 1
+2019/03/12 22:08:26 args.Term: 1, my term: 1
+2019/03/12 22:08:26 Server 1 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
+2019/03/12 22:08:26 Server: 1, Leader: 1,  LeaderCommitIdx = 3, server commit = 3 | Now server logs = 3
+2019/03/12 22:08:26 args.Term: 1, my term: 1
+2019/03/12 22:08:26 Server 0 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
+2019/03/12 22:08:26 Server: 0, Leader: 1,  LeaderCommitIdx = 3, server commit = 3 | Now server logs = 3
+2019/03/12 22:08:26 After Leader 1 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1, Empty = true
+2019/03/12 22:08:26 Success: Updated Leader 1 matchIndexes: [2 2 0], nextIndexes = [3 3 1]
+2019/03/12 22:08:26 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1, Empty = true
+2019/03/12 22:08:26 Success: Updated Leader 1 matchIndexes: [2 2 0], nextIndexes = [3 3 1]
+2019/03/12 22:08:26 After Leader 1 send to server 2:  callSuccess = false, appendEntriesReply.Success = false, appendEntriesReply.Term = 0, rf.currentTerm = 1, Empty = true
+2019/03/12 22:08:26 Server 0 get AppendEntries from leader 1
+2019/03/12 22:08:26 Server 1 get AppendEntries from leader 1
+2019/03/12 22:08:26 args.Term: 1, my term: 1
+2019/03/12 22:08:26 Server 1 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
+2019/03/12 22:08:26 args.Term: 1, my term: 1
+2019/03/12 22:08:26 Server 0 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
+2019/03/12 22:08:26 Server: 1, Leader: 1,  LeaderCommitIdx = 3, server commit = 3 | Now server logs = 3
+2019/03/12 22:08:26 Server: 0, Leader: 1,  LeaderCommitIdx = 3, server commit = 3 | Now server logs = 3
+2019/03/12 22:08:26 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1, Empty = true
+2019/03/12 22:08:26 Success: Updated Leader 1 matchIndexes: [2 2 0], nextIndexes = [3 3 1]
+2019/03/12 22:08:26 After Leader 1 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1, Empty = true
+2019/03/12 22:08:26 Success: Updated Leader 1 matchIndexes: [2 2 0], nextIndexes = [3 3 1]
+2019/03/12 22:08:26 Server 0 get AppendEntries from leader 1
+2019/03/12 22:08:26 args.Term: 1, my term: 1
+2019/03/12 22:08:26 Server 0 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
+2019/03/12 22:08:26 Server: 0, Leader: 1,  LeaderCommitIdx = 3, server commit = 3 | Now server logs = 3
+2019/03/12 22:08:26 Server 1 get AppendEntries from leader 1
+2019/03/12 22:08:26 args.Term: 1, my term: 1
+2019/03/12 22:08:26 Server 1 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
+2019/03/12 22:08:26 Server: 1, Leader: 1,  LeaderCommitIdx = 3, server commit = 3 | Now server logs = 3
+2019/03/12 22:08:26 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1, Empty = true
+2019/03/12 22:08:26 Success: Updated Leader 1 matchIndexes: [2 2 0], nextIndexes = [3 3 1]
+2019/03/12 22:08:26 After Leader 1 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1, Empty = true
+2019/03/12 22:08:26 Success: Updated Leader 1 matchIndexes: [2 2 0], nextIndexes = [3 3 1]
+2019/03/12 22:08:26 Server 1 get AppendEntries from leader 1
+2019/03/12 22:08:26 Server 0 get AppendEntries from leader 1
+2019/03/12 22:08:26 args.Term: 1, my term: 1
+2019/03/12 22:08:26 Server 0 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
+2019/03/12 22:08:26 args.Term: 1, my term: 1
+2019/03/12 22:08:26 Server 1 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
+2019/03/12 22:08:26 Server: 0, Leader: 1,  LeaderCommitIdx = 3, server commit = 3 | Now server logs = 3
+2019/03/12 22:08:26 Server: 1, Leader: 1,  LeaderCommitIdx = 3, server commit = 3 | Now server logs = 3
+2019/03/12 22:08:26 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1, Empty = true
+2019/03/12 22:08:26 Success: Updated Leader 1 matchIndexes: [2 2 0], nextIndexes = [3 3 1]
+2019/03/12 22:08:26 After Leader 1 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1, Empty = true
+2019/03/12 22:08:26 Success: Updated Leader 1 matchIndexes: [2 2 0], nextIndexes = [3 3 1]
+2019/03/12 22:08:26 Server 1 get AppendEntries from leader 1
+2019/03/12 22:08:26 args.Term: 1, my term: 1
+2019/03/12 22:08:26 Server 1 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
+2019/03/12 22:08:26 Server 0 get AppendEntries from leader 1
+2019/03/12 22:08:26 args.Term: 1, my term: 1
+2019/03/12 22:08:26 Server 0 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
+2019/03/12 22:08:26 Server: 1, Leader: 1,  LeaderCommitIdx = 3, server commit = 3 | Now server logs = 3
+2019/03/12 22:08:26 Server: 0, Leader: 1,  LeaderCommitIdx = 3, server commit = 3 | Now server logs = 3
+2019/03/12 22:08:26 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1, Empty = true
+2019/03/12 22:08:26 Success: Updated Leader 1 matchIndexes: [2 2 0], nextIndexes = [3 3 1]
+2019/03/12 22:08:26 After Leader 1 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1, Empty = true
+2019/03/12 22:08:26 Success: Updated Leader 1 matchIndexes: [2 2 0], nextIndexes = [3 3 1]
+2019/03/12 22:08:26 ------ Leader 1 Start Command  104  😡😡😡: New Logs = [{101 1} {102 1} {103 1} {104 1}] --------
 One : Commit Index = 4
-2019/03/12 21:37:58 Server 0 get AppendEntries from leader 1
-2019/03/12 21:37:58 Server 1 get AppendEntries from leader 1
-2019/03/12 21:37:58 args.Term: 1, my term: 1
-2019/03/12 21:37:58 args.Term: 1, my term: 1
-2019/03/12 21:37:58 Server 0 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
-2019/03/12 21:37:58 leader 1 send data to server 2 , prevIndex = 0, entries = [{102 1} {103 1} {104 1}]
-2019/03/12 21:37:58 Server: 0, Leader: 1,  LeaderCommitIdx = 3, server commit = 3 | Now server logs = 3
-2019/03/12 21:37:58 leader 1 send data to server 0 , prevIndex = 2, entries = [{104 1}]
-2019/03/12 21:37:58 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1
-2019/03/12 21:37:58 Server 1 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
-2019/03/12 21:37:58 Server: 1, Leader: 1,  LeaderCommitIdx = 3, server commit = 3 | Now server logs = 4
-2019/03/12 21:37:58 Server 0 get AppendEntries from leader 1
-2019/03/12 21:37:58 args.Term: 1, my term: 1
-2019/03/12 21:37:58 OnAppendEntriesData: prevIndex = 2
-2019/03/12 21:37:58 After Leader 1 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1
-2019/03/12 21:37:58 Update server 0 logs = [{101 1} {102 1} {103 1} {104 1}]
-2019/03/12 21:37:58 Server 0 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
-2019/03/12 21:37:58 Server: 0, Leader: 1,  LeaderCommitIdx = 3, server commit = 3 | Now server logs = 4
-2019/03/12 21:37:58 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1
-2019/03/12 21:37:58 Success: Updated Leader 1 matchIndexes: [3 3 0], nextIndexes = [4 4 1]
-2019/03/12 21:37:58 
+2019/03/12 22:08:26 leader 1 send data to server 2 , prevIndex = 0, entries = [{102 1} {103 1} {104 1}]
+2019/03/12 22:08:26 leader 1 send data to server 0 , prevIndex = 2, entries = [{104 1}]
+2019/03/12 22:08:26 Server 0 get AppendEntries from leader 1
+2019/03/12 22:08:26 args.Term: 1, my term: 1
+2019/03/12 22:08:26 OnAppendEntriesData: prevIndex = 2
+2019/03/12 22:08:26 Update server 0 logs = [{101 1} {102 1} {103 1} {104 1}]
+2019/03/12 22:08:26 Server 0 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
+2019/03/12 22:08:26 Server: 0, Leader: 1,  LeaderCommitIdx = 3, server commit = 3 | Now server logs = 4
+2019/03/12 22:08:26 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1, Empty = false
+2019/03/12 22:08:26 Success: Updated Leader 1 matchIndexes: [3 3 0], nextIndexes = [4 4 1]
+2019/03/12 22:08:26 
  Start: Server 1 (C = 4) sendApplyCh: 4 : logs = [{101 1} {102 1} {103 1} {104 1}]----
-2019/03/12 21:37:58 >>>>>> Server 2 becomes a candidate, new term: 2 <<<<<<<<
-2019/03/12 21:37:58 Server 2 current votes = 1 before requesting server 1
-2019/03/12 21:37:58 Server 2 current votes = 1 before requesting server 0
-2019/03/12 21:37:58 Server 0 get AppendEntries from leader 1
-2019/03/12 21:37:58 args.Term: 1, my term: 1
-2019/03/12 21:37:58 Server 0 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
-2019/03/12 21:37:58 Server 1 get AppendEntries from leader 1
-2019/03/12 21:37:58 args.Term: 1, my term: 1
-2019/03/12 21:37:58 Server 1 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
-2019/03/12 21:37:58 Server: 0, Leader: 1,  LeaderCommitIdx = 4, server commit = 3 | Now server logs = 4
-2019/03/12 21:37:58 Server: 1, Leader: 1,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
-2019/03/12 21:37:58 
+2019/03/12 22:08:26 Server 0 get AppendEntries from leader 1
+2019/03/12 22:08:26 args.Term: 1, my term: 1
+2019/03/12 22:08:26 Server 1 get AppendEntries from leader 1
+2019/03/12 22:08:26 args.Term: 1, my term: 1
+2019/03/12 22:08:26 Server 1 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
+2019/03/12 22:08:26 Server: 1, Leader: 1,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 4
+2019/03/12 22:08:26 Server 0 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
+2019/03/12 22:08:26 Server: 0, Leader: 1,  LeaderCommitIdx = 4, server commit = 3 | Now server logs = 4
+2019/03/12 22:08:26 
  Start: Server 0 (C = 4) sendApplyCh: 4 : logs = [{101 1} {102 1} {103 1} {104 1}]----
-2019/03/12 21:37:58 After Leader 1 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1
-2019/03/12 21:37:58 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1
-2019/03/12 21:37:58 ------ Leader 1 Start Command  105  😡😡😡: New Logs = [{101 1} {102 1} {103 1} {104 1} {105 1}] --------
+2019/03/12 22:08:26 After Leader 1 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1, Empty = true
+2019/03/12 22:08:26 Success: Updated Leader 1 matchIndexes: [3 3 0], nextIndexes = [4 4 1]
+2019/03/12 22:08:26 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1, Empty = true
+2019/03/12 22:08:26 Success: Updated Leader 1 matchIndexes: [3 3 0], nextIndexes = [4 4 1]
+2019/03/12 22:08:26 ------ Leader 1 Start Command  105  😡😡😡: New Logs = [{101 1} {102 1} {103 1} {104 1} {105 1}] --------
 One : Commit Index = 5
-2019/03/12 21:37:58 leader 1 send data to server 2 , prevIndex = 0, entries = [{102 1} {103 1} {104 1} {105 1}]
-2019/03/12 21:37:58 leader 1 send data to server 0 , prevIndex = 3, entries = [{105 1}]
-2019/03/12 21:37:58 Server 0 get AppendEntries from leader 1
-2019/03/12 21:37:58 args.Term: 1, my term: 1
-2019/03/12 21:37:58 OnAppendEntriesData: prevIndex = 3
-2019/03/12 21:37:58 Update server 0 logs = [{101 1} {102 1} {103 1} {104 1} {105 1}]
-2019/03/12 21:37:58 Server 0 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
-2019/03/12 21:37:58 Server: 0, Leader: 1,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 5
-2019/03/12 21:37:58 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1
-2019/03/12 21:37:58 Success: Updated Leader 1 matchIndexes: [4 4 0], nextIndexes = [5 5 1]
-2019/03/12 21:37:58 
+2019/03/12 22:08:26 leader 1 send data to server 2 , prevIndex = 0, entries = [{102 1} {103 1} {104 1} {105 1}]
+2019/03/12 22:08:26 leader 1 send data to server 0 , prevIndex = 3, entries = [{105 1}]
+2019/03/12 22:08:26 Server 0 get AppendEntries from leader 1
+2019/03/12 22:08:26 args.Term: 1, my term: 1
+2019/03/12 22:08:26 OnAppendEntriesData: prevIndex = 3
+2019/03/12 22:08:26 Update server 0 logs = [{101 1} {102 1} {103 1} {104 1} {105 1}]
+2019/03/12 22:08:26 Server 0 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
+2019/03/12 22:08:26 Server: 0, Leader: 1,  LeaderCommitIdx = 4, server commit = 4 | Now server logs = 5
+2019/03/12 22:08:26 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1, Empty = false
+2019/03/12 22:08:26 Success: Updated Leader 1 matchIndexes: [4 4 0], nextIndexes = [5 5 1]
+2019/03/12 22:08:26 
  Start: Server 1 (C = 5) sendApplyCh: 5 : logs = [{101 1} {102 1} {103 1} {104 1} {105 1}]----
-2019/03/12 21:37:58 After Leader 1 send to server 2:  callSuccess = false, appendEntriesReply.Success = false, appendEntriesReply.Term = 0, rf.currentTerm = 1
-2019/03/12 21:37:58 Server 1 get AppendEntries from leader 1
-2019/03/12 21:37:58 args.Term: 1, my term: 1
-2019/03/12 21:37:58 Server 1 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
-2019/03/12 21:37:58 Server 0 get AppendEntries from leader 1
-2019/03/12 21:37:58 args.Term: 1, my term: 1
-2019/03/12 21:37:58 Server 0 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
-2019/03/12 21:37:58 Server: 1, Leader: 1,  LeaderCommitIdx = 5, server commit = 5 | Now server logs = 5
-2019/03/12 21:37:58 Server: 0, Leader: 1,  LeaderCommitIdx = 5, server commit = 4 | Now server logs = 5
-2019/03/12 21:37:58 
+2019/03/12 22:08:26 >>>>>> Server 2 becomes a candidate, new term: 2 <<<<<<<<
+2019/03/12 22:08:26 Server 2 current votes = 1 before requesting server 1
+2019/03/12 22:08:26 Server 2 current votes = 1 before requesting server 0
+2019/03/12 22:08:26 Server 1 get AppendEntries from leader 1
+2019/03/12 22:08:26 args.Term: 1, my term: 1
+2019/03/12 22:08:26 Server 1 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
+2019/03/12 22:08:26 Server 0 get AppendEntries from leader 1
+2019/03/12 22:08:26 args.Term: 1, my term: 1
+2019/03/12 22:08:26 Server: 1, Leader: 1,  LeaderCommitIdx = 5, server commit = 5 | Now server logs = 5
+2019/03/12 22:08:26 Server 0 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
+2019/03/12 22:08:26 Server: 0, Leader: 1,  LeaderCommitIdx = 5, server commit = 4 | Now server logs = 5
+2019/03/12 22:08:26 
  Start: Server 0 (C = 5) sendApplyCh: 5 : logs = [{101 1} {102 1} {103 1} {104 1} {105 1}]----
-2019/03/12 21:37:58 After Leader 1 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1
-2019/03/12 21:37:58 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1
+2019/03/12 22:08:26 After Leader 1 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1, Empty = true
+2019/03/12 22:08:26 Success: Updated Leader 1 matchIndexes: [4 4 0], nextIndexes = [5 5 1]
+2019/03/12 22:08:26 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1, Empty = true
+2019/03/12 22:08:26 Success: Updated Leader 1 matchIndexes: [4 4 0], nextIndexes = [5 5 1]
 ⛽️⛽️⛽️Reconnect 2
 connect(2)
-2019/03/12 21:37:58 ------ Leader 1 Start Command  106  😡😡😡: New Logs = [{101 1} {102 1} {103 1} {104 1} {105 1} {106 1}] --------
+2019/03/12 22:08:26 ------ Leader 1 Start Command  106  😡😡😡: New Logs = [{101 1} {102 1} {103 1} {104 1} {105 1} {106 1}] --------
 One : Commit Index = 6
-2019/03/12 21:37:58 leader 1 send data to server 2 , prevIndex = 0, entries = [{102 1} {103 1} {104 1} {105 1} {106 1}]
-2019/03/12 21:37:58 leader 1 send data to server 0 , prevIndex = 4, entries = [{106 1}]
-2019/03/12 21:37:58 Server 2 get AppendEntries from leader 1
-2019/03/12 21:37:58 args.Term: 1, my term: 2
-2019/03/12 21:37:58 😡Rejects outdated append-entries ... 
-2019/03/12 21:37:58 Server 2 (Term: 2) reply AppendEntries from leader 1 (Term = 1): accepted = false
-2019/03/12 21:37:58 Server 0 get AppendEntries from leader 1
-2019/03/12 21:37:58 args.Term: 1, my term: 1
-2019/03/12 21:37:58 OnAppendEntriesData: prevIndex = 4
-2019/03/12 21:37:58 Update server 0 logs = [{101 1} {102 1} {103 1} {104 1} {105 1} {106 1}]
-2019/03/12 21:37:58 Server 0 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
-2019/03/12 21:37:58 After Leader 1 send to server 2:  callSuccess = true, appendEntriesReply.Success = false, appendEntriesReply.Term = 2, rf.currentTerm = 1
-2019/03/12 21:37:58 Leader 1 Step down ....
-2019/03/12 21:37:58 Server: 0, Leader: 1,  LeaderCommitIdx = 5, server commit = 5 | Now server logs = 6
-2019/03/12 21:37:58 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1
-2019/03/12 21:37:58 Success: Updated Leader 1 matchIndexes: [5 5 0], nextIndexes = [6 6 1]
-2019/03/12 21:37:58 
+2019/03/12 22:08:26 leader 1 send data to server 2 , prevIndex = 0, entries = [{102 1} {103 1} {104 1} {105 1} {106 1}]
+2019/03/12 22:08:26 leader 1 send data to server 0 , prevIndex = 4, entries = [{106 1}]
+2019/03/12 22:08:26 Server 2 get AppendEntries from leader 1
+2019/03/12 22:08:26 args.Term: 1, my term: 2
+2019/03/12 22:08:26 😡Rejects outdated append-entries ... 
+2019/03/12 22:08:26 Server 2 (Term: 2) reply AppendEntries from leader 1 (Term = 1): accepted = false
+2019/03/12 22:08:26 Server 0 get AppendEntries from leader 1
+2019/03/12 22:08:26 args.Term: 1, my term: 1
+2019/03/12 22:08:26 OnAppendEntriesData: prevIndex = 4
+2019/03/12 22:08:26 Update server 0 logs = [{101 1} {102 1} {103 1} {104 1} {105 1} {106 1}]
+2019/03/12 22:08:26 Server 0 (Term: 1) reply AppendEntries from leader 1 (Term = 1): accepted = true
+2019/03/12 22:08:26 After Leader 1 send to server 2:  callSuccess = true, appendEntriesReply.Success = false, appendEntriesReply.Term = 2, rf.currentTerm = 1, Empty = false
+2019/03/12 22:08:26 Leader 1 Step down ....
+2019/03/12 22:08:26 Server: 0, Leader: 1,  LeaderCommitIdx = 5, server commit = 5 | Now server logs = 6
+2019/03/12 22:08:26 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 1, rf.currentTerm = 1, Empty = false
+2019/03/12 22:08:26 Success: Updated Leader 1 matchIndexes: [5 5 0], nextIndexes = [6 6 1]
+2019/03/12 22:08:26 
  Start: Server 1 (C = 6) sendApplyCh: 6 : logs = [{101 1} {102 1} {103 1} {104 1} {105 1} {106 1}]----
-2019/03/12 21:37:58 After Leader 1 send to server 2:  callSuccess = false, appendEntriesReply.Success = false, appendEntriesReply.Term = 0, rf.currentTerm = 1
-2019/03/12 21:37:59 >>>>>> Server 2 becomes a candidate, new term: 3 <<<<<<<<
-2019/03/12 21:37:59 Server 2 current votes = 1 before requesting server 1
-2019/03/12 21:37:59 Server 2 current votes = 1 before requesting server 0
-2019/03/12 21:37:59 Server 1 (Term = 1) get request from server 2 - term 3
-2019/03/12 21:37:59 server 1 checking hasMoreRecentLogsThan: myLast.Term = 1, lastLogTerm = 1, mylogs = 6, other = 1
-2019/03/12 21:37:59 Server 0 (Term = 1) get request from server 2 - term 3
-2019/03/12 21:37:59 server 0 checking hasMoreRecentLogsThan: myLast.Term = 1, lastLogTerm = 1, mylogs = 6, other = 1
-2019/03/12 21:37:59 1 > 2 : candidateUpdated = false
-2019/03/12 21:37:59 0 > 2 : candidateUpdated = false
-2019/03/12 21:37:59 Server 2 ok = true, granted = false, before requesting server 0
-2019/03/12 21:37:59 Server 2 current votes = 1 after requesting server 0
-2019/03/12 21:37:59 Server 2 ok = true, granted = false, before requesting server 1
-2019/03/12 21:37:59 Server 2 current votes = 1 after requesting server 1
-2019/03/12 21:37:59 Server 2 get votes: 1, 1
-2019/03/12 21:37:59 >>>>>> Server 1 becomes a candidate, new term: 4 <<<<<<<<
-2019/03/12 21:37:59 Server 1 current votes = 1 before requesting server 2
-2019/03/12 21:37:59 Server 1 current votes = 1 before requesting server 0
-2019/03/12 21:37:59 Server 2 (Term = 3) get request from server 1 - term 4
-2019/03/12 21:37:59 server 2 checking hasMoreRecentLogsThan: myLast.Term = 1, lastLogTerm = 1, mylogs = 1, other = 6
-2019/03/12 21:37:59 Server 0 (Term = 3) get request from server 1 - term 4
-2019/03/12 21:37:59 server 0 checking hasMoreRecentLogsThan: myLast.Term = 1, lastLogTerm = 1, mylogs = 6, other = 6
-2019/03/12 21:37:59 2 > 1 : candidateUpdated = true
-2019/03/12 21:37:59 Server 2 granted vote for server 1
-2019/03/12 21:37:59 0 > 1 : candidateUpdated = true
-2019/03/12 21:37:59 Server 0 granted vote for server 1
-2019/03/12 21:37:59 Server 1 ok = true, granted = true, before requesting server 2
-2019/03/12 21:37:59 Server 1 get vote from server 2, current votes = 2
-2019/03/12 21:37:59 Server 1 current votes = 2 after requesting server 2
-2019/03/12 21:37:59 Server 1 ok = true, granted = true, before requesting server 0
-2019/03/12 21:37:59 Server 1 get vote from server 0, current votes = 3
-2019/03/12 21:37:59 Server 1 current votes = 3 after requesting server 0
-2019/03/12 21:37:59 Server 1 get votes: 3, 1
-2019/03/12 21:37:59 
+2019/03/12 22:08:26 Server 2 ok = false, granted = false, before requesting server 0
+2019/03/12 22:08:26 Server 2 current votes = 1 after requesting server 0
+2019/03/12 22:08:27 After Leader 1 send to server 2:  callSuccess = false, appendEntriesReply.Success = false, appendEntriesReply.Term = 0, rf.currentTerm = 1, Empty = true
+2019/03/12 22:08:27 >>>>>> Server 0 becomes a candidate, new term: 2 <<<<<<<<
+2019/03/12 22:08:27 Server 0 current votes = 1 before requesting server 2
+2019/03/12 22:08:27 Server 0 current votes = 1 before requesting server 1
+2019/03/12 22:08:27 Server 1 (Term = 1) get request from server 0 - term 2
+2019/03/12 22:08:27 Server 2 (Term = 2) get request from server 0 - term 2
+2019/03/12 22:08:27 server 2 checking hasMoreRecentLogsThan: myLast.Term = 1, lastLogTerm = 1, mylogs = 1, other = 6
+2019/03/12 22:08:27 2 > 0 : candidateUpdated = true
+2019/03/12 22:08:27 server 1 checking hasMoreRecentLogsThan: myLast.Term = 1, lastLogTerm = 1, mylogs = 6, other = 6
+2019/03/12 22:08:27 1 > 0 : candidateUpdated = true
+2019/03/12 22:08:27 Server 1 granted vote for server 0
+2019/03/12 22:08:27 Server 0 ok = true, granted = false, before requesting server 2
+2019/03/12 22:08:27 Server 0 current votes = 1 after requesting server 2
+2019/03/12 22:08:27 Server 0 ok = true, granted = true, before requesting server 1
+2019/03/12 22:08:27 Server 0 get vote from server 1, current votes = 2
+2019/03/12 22:08:27 Server 0 current votes = 2 after requesting server 1
+2019/03/12 22:08:27 Server 0 get votes: 2, 1
+2019/03/12 22:08:27 
+ ----- NEW LEADER: 0 - Term: 2 (C = 5, logs = [{101 1} {102 1} {103 1} {104 1} {105 1} {106 1}]) -----
+2019/03/12 22:08:27 >>>>>> Server 2 becomes a candidate, new term: 3 <<<<<<<<
+2019/03/12 22:08:27 Server 2 current votes = 1 before requesting server 1
+2019/03/12 22:08:27 Server 2 current votes = 1 before requesting server 0
+2019/03/12 22:08:27 Server 0 (Term = 2) get request from server 2 - term 3
+2019/03/12 22:08:27 server 0 checking hasMoreRecentLogsThan: myLast.Term = 1, lastLogTerm = 1, mylogs = 6, other = 1
+2019/03/12 22:08:27 Server 1 (Term = 2) get request from server 2 - term 3
+2019/03/12 22:08:27 server 1 checking hasMoreRecentLogsThan: myLast.Term = 1, lastLogTerm = 1, mylogs = 6, other = 1
+2019/03/12 22:08:27 0 > 2 : candidateUpdated = false
+2019/03/12 22:08:27 1 > 2 : candidateUpdated = false
+2019/03/12 22:08:27 Server 2 ok = true, granted = false, before requesting server 0
+2019/03/12 22:08:27 Server 2 current votes = 1 after requesting server 0
+2019/03/12 22:08:27 Server 2 ok = true, granted = false, before requesting server 1
+2019/03/12 22:08:27 Server 2 current votes = 1 after requesting server 1
+2019/03/12 22:08:27 Server 2 get votes: 1, 1
+2019/03/12 22:08:27 After Leader 1 send to server 2:  callSuccess = false, appendEntriesReply.Success = false, appendEntriesReply.Term = 0, rf.currentTerm = 3, Empty = true
+2019/03/12 22:08:27 After Leader 1 send to server 2:  callSuccess = false, appendEntriesReply.Success = false, appendEntriesReply.Term = 0, rf.currentTerm = 3, Empty = true
+2019/03/12 22:08:28 >>>>>> Server 1 becomes a candidate, new term: 4 <<<<<<<<
+2019/03/12 22:08:28 Server 1 current votes = 1 before requesting server 2
+2019/03/12 22:08:28 Server 1 current votes = 1 before requesting server 0
+2019/03/12 22:08:28 Server 0 (Term = 3) get request from server 1 - term 4
+2019/03/12 22:08:28 server 0 checking hasMoreRecentLogsThan: myLast.Term = 1, lastLogTerm = 1, mylogs = 6, other = 6
+2019/03/12 22:08:28 Server 2 (Term = 3) get request from server 1 - term 4
+2019/03/12 22:08:28 server 2 checking hasMoreRecentLogsThan: myLast.Term = 1, lastLogTerm = 1, mylogs = 1, other = 6
+2019/03/12 22:08:28 0 > 1 : candidateUpdated = true
+2019/03/12 22:08:28 Server 0 granted vote for server 1
+2019/03/12 22:08:28 2 > 1 : candidateUpdated = true
+2019/03/12 22:08:28 Server 2 granted vote for server 1
+2019/03/12 22:08:28 Server 1 ok = true, granted = true, before requesting server 0
+2019/03/12 22:08:28 Server 1 get vote from server 0, current votes = 2
+2019/03/12 22:08:28 Server 1 current votes = 2 after requesting server 0
+2019/03/12 22:08:28 Server 1 ok = true, granted = true, before requesting server 2
+2019/03/12 22:08:28 Server 1 get vote from server 2, current votes = 3
+2019/03/12 22:08:28 Server 1 current votes = 3 after requesting server 2
+2019/03/12 22:08:28 Server 1 get votes: 3, 1
+2019/03/12 22:08:28 
  ----- NEW LEADER: 1 - Term: 4 (C = 6, logs = [{101 1} {102 1} {103 1} {104 1} {105 1} {106 1}]) -----
-2019/03/12 21:37:59 After Leader 1 send to server 2:  callSuccess = false, appendEntriesReply.Success = false, appendEntriesReply.Term = 0, rf.currentTerm = 4
-2019/03/12 21:37:59 After Leader 1 send to server 2:  callSuccess = false, appendEntriesReply.Success = false, appendEntriesReply.Term = 0, rf.currentTerm = 4
-2019/03/12 21:37:59 Server 0 get AppendEntries from leader 1
-2019/03/12 21:37:59 args.Term: 4, my term: 4
-2019/03/12 21:37:59 Server 0 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = true
-2019/03/12 21:37:59 Server 2 get AppendEntries from leader 1
-2019/03/12 21:37:59 args.Term: 4, my term: 4
-2019/03/12 21:37:59 Server: 0, Leader: 1,  LeaderCommitIdx = 6, server commit = 5 | Now server logs = 6
-2019/03/12 21:37:59 Server 2 Rejects server 1 because of mismatch: prevIndex = 5, logs = [{101 1}], prevTerm = 1
+2019/03/12 22:08:28 Server 2 get AppendEntries from leader 1
+2019/03/12 22:08:28 args.Term: 4, my term: 4
+2019/03/12 22:08:28 Server 0 get AppendEntries from leader 1
+2019/03/12 22:08:28 args.Term: 4, my term: 4
+2019/03/12 22:08:28 Server 0 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = true
+2019/03/12 22:08:28 Server 2 Rejects server 1 because of mismatch: prevIndex = 5, logs = [{101 1}], prevTerm = 1
 
-2019/03/12 21:37:59 Server 2 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = false
-2019/03/12 21:37:59 
+2019/03/12 22:08:28 Server: 0, Leader: 1,  LeaderCommitIdx = 6, server commit = 5 | Now server logs = 6
+2019/03/12 22:08:28 
  Start: Server 0 (C = 6) sendApplyCh: 6 : logs = [{101 1} {102 1} {103 1} {104 1} {105 1} {106 1}]----
-2019/03/12 21:37:59 Server 1 get AppendEntries from leader 1
-2019/03/12 21:37:59 args.Term: 4, my term: 4
-2019/03/12 21:37:59 Server 1 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = true
-2019/03/12 21:37:59 Server: 1, Leader: 1,  LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
-2019/03/12 21:37:59 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 4, rf.currentTerm = 4
-2019/03/12 21:37:59 After Leader 1 send to server 2:  callSuccess = true, appendEntriesReply.Success = false, appendEntriesReply.Term = 4, rf.currentTerm = 4
-2019/03/12 21:37:59 After Leader 1 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 4, rf.currentTerm = 4
-2019/03/12 21:37:59 Server 0 get AppendEntries from leader 1
-2019/03/12 21:37:59 args.Term: 4, my term: 4
-2019/03/12 21:37:59 Server 2 get AppendEntries from leader 1
-2019/03/12 21:37:59 args.Term: 4, my term: 4
-2019/03/12 21:37:59 Server 1 get AppendEntries from leader 1
-2019/03/12 21:37:59 args.Term: 4, my term: 4
-2019/03/12 21:37:59 Server 1 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = true
-2019/03/12 21:37:59 Server 0 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = true
-2019/03/12 21:37:59 Server 2 Rejects server 1 because of mismatch: prevIndex = 5, logs = [{101 1}], prevTerm = 1
+2019/03/12 22:08:28 Server 2 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = false
+2019/03/12 22:08:28 Server 1 get AppendEntries from leader 1
+2019/03/12 22:08:28 args.Term: 4, my term: 4
+2019/03/12 22:08:28 Server 1 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = true
+2019/03/12 22:08:28 Server: 1, Leader: 1,  LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
+2019/03/12 22:08:28 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 4, rf.currentTerm = 4, Empty = true
+2019/03/12 22:08:28 Success: Updated Leader 1 matchIndexes: [5 -1 -1], nextIndexes = [6 6 6]
+2019/03/12 22:08:28 After Leader 1 send to server 2:  callSuccess = true, appendEntriesReply.Success = false, appendEntriesReply.Term = 4, rf.currentTerm = 4, Empty = true
+2019/03/12 22:08:28 Fail: Updated Leader 1 matchIndexes: [5 -1 -1], nextIndexes = [6 6 5]
+2019/03/12 22:08:28 After Leader 1 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 4, rf.currentTerm = 4, Empty = true
+2019/03/12 22:08:28 Success: Updated Leader 1 matchIndexes: [5 5 -1], nextIndexes = [6 6 5]
+2019/03/12 22:08:28 After Leader 1 send to server 2:  callSuccess = false, appendEntriesReply.Success = false, appendEntriesReply.Term = 0, rf.currentTerm = 4, Empty = true
+2019/03/12 22:08:28 After Leader 1 send to server 2:  callSuccess = false, appendEntriesReply.Success = false, appendEntriesReply.Term = 0, rf.currentTerm = 4, Empty = true
+2019/03/12 22:08:28 Server 2 get AppendEntries from leader 1
+2019/03/12 22:08:28 args.Term: 4, my term: 4
+2019/03/12 22:08:28 Server 0 get AppendEntries from leader 1
+2019/03/12 22:08:28 args.Term: 4, my term: 4
+2019/03/12 22:08:28 Server 0 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = true
+2019/03/12 22:08:28 Server 1 get AppendEntries from leader 1
+2019/03/12 22:08:28 args.Term: 4, my term: 4
+2019/03/12 22:08:28 Server 1 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = true
+2019/03/12 22:08:28 Server 2 Rejects server 1 because of mismatch: prevIndex = 4, logs = [{101 1}], prevTerm = 1
 
-2019/03/12 21:37:59 Server 2 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = false
-2019/03/12 21:37:59 Server: 1, Leader: 1,  LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
-2019/03/12 21:37:59 Server: 0, Leader: 1,  LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
-2019/03/12 21:37:59 After Leader 1 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 4, rf.currentTerm = 4
-2019/03/12 21:37:59 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 4, rf.currentTerm = 4
-2019/03/12 21:37:59 After Leader 1 send to server 2:  callSuccess = true, appendEntriesReply.Success = false, appendEntriesReply.Term = 4, rf.currentTerm = 4
-2019/03/12 21:37:59 Server 2 get AppendEntries from leader 1
-2019/03/12 21:37:59 args.Term: 4, my term: 4
-2019/03/12 21:37:59 Server 2 Rejects server 1 because of mismatch: prevIndex = 5, logs = [{101 1}], prevTerm = 1
+2019/03/12 22:08:28 Server 2 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = false
+2019/03/12 22:08:28 Server: 0, Leader: 1,  LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
+2019/03/12 22:08:28 Server: 1, Leader: 1,  LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
+2019/03/12 22:08:28 After Leader 1 send to server 2:  callSuccess = true, appendEntriesReply.Success = false, appendEntriesReply.Term = 4, rf.currentTerm = 4, Empty = true
+2019/03/12 22:08:28 Fail: Updated Leader 1 matchIndexes: [5 5 -1], nextIndexes = [6 6 4]
+2019/03/12 22:08:28 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 4, rf.currentTerm = 4, Empty = true
+2019/03/12 22:08:28 Success: Updated Leader 1 matchIndexes: [5 5 -1], nextIndexes = [6 6 4]
+2019/03/12 22:08:28 After Leader 1 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 4, rf.currentTerm = 4, Empty = true
+2019/03/12 22:08:28 Success: Updated Leader 1 matchIndexes: [5 5 -1], nextIndexes = [6 6 4]
+2019/03/12 22:08:28 Server 2 get AppendEntries from leader 1
+2019/03/12 22:08:28 args.Term: 4, my term: 4
+2019/03/12 22:08:28 Server 2 Rejects server 1 because of mismatch: prevIndex = 3, logs = [{101 1}], prevTerm = 1
 
-2019/03/12 21:37:59 Server 2 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = false
-2019/03/12 21:37:59 Server 0 get AppendEntries from leader 1
-2019/03/12 21:37:59 args.Term: 4, my term: 4
-2019/03/12 21:37:59 Server 0 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = true
-2019/03/12 21:37:59 Server: 0, Leader: 1,  LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
-2019/03/12 21:37:59 Server 1 get AppendEntries from leader 1
-2019/03/12 21:37:59 args.Term: 4, my term: 4
-2019/03/12 21:37:59 Server 1 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = true
-2019/03/12 21:37:59 Server: 1, Leader: 1,  LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
-2019/03/12 21:37:59 After Leader 1 send to server 2:  callSuccess = true, appendEntriesReply.Success = false, appendEntriesReply.Term = 4, rf.currentTerm = 4
-2019/03/12 21:37:59 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 4, rf.currentTerm = 4
-2019/03/12 21:37:59 After Leader 1 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 4, rf.currentTerm = 4
-2019/03/12 21:37:59 Server 2 get AppendEntries from leader 1
-2019/03/12 21:37:59 args.Term: 4, my term: 4
-2019/03/12 21:37:59 Server 0 get AppendEntries from leader 1
-2019/03/12 21:37:59 args.Term: 4, my term: 4
-2019/03/12 21:37:59 Server 0 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = true
-2019/03/12 21:37:59 Server 1 get AppendEntries from leader 1
-2019/03/12 21:37:59 args.Term: 4, my term: 4
-2019/03/12 21:37:59 Server 1 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = true
-2019/03/12 21:37:59 Server 2 Rejects server 1 because of mismatch: prevIndex = 5, logs = [{101 1}], prevTerm = 1
+2019/03/12 22:08:28 Server 2 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = false
+2019/03/12 22:08:28 Server 1 get AppendEntries from leader 1
+2019/03/12 22:08:28 args.Term: 4, my term: 4
+2019/03/12 22:08:28 Server 1 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = true
+2019/03/12 22:08:28 Server 0 get AppendEntries from leader 1
+2019/03/12 22:08:28 args.Term: 4, my term: 4
+2019/03/12 22:08:28 Server 0 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = true
+2019/03/12 22:08:28 Server: 1, Leader: 1,  LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
+2019/03/12 22:08:28 Server: 0, Leader: 1,  LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
+2019/03/12 22:08:28 After Leader 1 send to server 2:  callSuccess = true, appendEntriesReply.Success = false, appendEntriesReply.Term = 4, rf.currentTerm = 4, Empty = true
+2019/03/12 22:08:28 Fail: Updated Leader 1 matchIndexes: [5 5 -1], nextIndexes = [6 6 3]
+2019/03/12 22:08:28 After Leader 1 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 4, rf.currentTerm = 4, Empty = true
+2019/03/12 22:08:28 Success: Updated Leader 1 matchIndexes: [5 5 -1], nextIndexes = [6 6 3]
+2019/03/12 22:08:28 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 4, rf.currentTerm = 4, Empty = true
+2019/03/12 22:08:28 Success: Updated Leader 1 matchIndexes: [5 5 -1], nextIndexes = [6 6 3]
+2019/03/12 22:08:28 After Leader 1 send to server 2:  callSuccess = false, appendEntriesReply.Success = false, appendEntriesReply.Term = 0, rf.currentTerm = 4, Empty = false
+2019/03/12 22:08:28 leader 1 send data to server 2 , prevIndex = 2, entries = [{104 1} {105 1} {106 1}]
+2019/03/12 22:08:28 Server 2 get AppendEntries from leader 1
+2019/03/12 22:08:28 args.Term: 4, my term: 4
+2019/03/12 22:08:28 Server 2 Rejects server 1 because of mismatch: prevIndex = 2, logs = [{101 1}], prevTerm = 1
 
-2019/03/12 21:37:59 Server 2 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = false
-2019/03/12 21:37:59 Server: 1, Leader: 1,  LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
-2019/03/12 21:37:59 Server: 0, Leader: 1,  LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
-2019/03/12 21:37:59 After Leader 1 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 4, rf.currentTerm = 4
-2019/03/12 21:37:59 After Leader 1 send to server 2:  callSuccess = true, appendEntriesReply.Success = false, appendEntriesReply.Term = 4, rf.currentTerm = 4
-2019/03/12 21:37:59 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 4, rf.currentTerm = 4
-2019/03/12 21:37:59 After Leader 1 send to server 2:  callSuccess = false, appendEntriesReply.Success = false, appendEntriesReply.Term = 0, rf.currentTerm = 4
-2019/03/12 21:37:59 After Leader 1 send to server 2:  callSuccess = false, appendEntriesReply.Success = false, appendEntriesReply.Term = 0, rf.currentTerm = 4
-2019/03/12 21:37:59 Server 2 get AppendEntries from leader 1
-2019/03/12 21:37:59 args.Term: 4, my term: 4
-2019/03/12 21:37:59 Server 1 get AppendEntries from leader 1
-2019/03/12 21:37:59 args.Term: 4, my term: 4
-2019/03/12 21:37:59 Server 1 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = true
-2019/03/12 21:37:59 Server 0 get AppendEntries from leader 1
-2019/03/12 21:37:59 args.Term: 4, my term: 4
-2019/03/12 21:37:59 Server 0 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = true
-2019/03/12 21:37:59 Server 2 Rejects server 1 because of mismatch: prevIndex = 5, logs = [{101 1}], prevTerm = 1
+2019/03/12 22:08:28 Server 2 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = false
+2019/03/12 22:08:28 After Leader 1 send to server 2:  callSuccess = true, appendEntriesReply.Success = false, appendEntriesReply.Term = 4, rf.currentTerm = 4, Empty = false
+2019/03/12 22:08:28 Fail: Updated Leader 1 matchIndexes: [5 5 -1], nextIndexes = [6 6 2]
+2019/03/12 22:08:28 Server 0 get AppendEntries from leader 1
+2019/03/12 22:08:28 args.Term: 4, my term: 4
+2019/03/12 22:08:28 Server 0 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = true
+2019/03/12 22:08:28 Server 2 get AppendEntries from leader 1
+2019/03/12 22:08:28 args.Term: 4, my term: 4
+2019/03/12 22:08:28 Server 2 Rejects server 1 because of mismatch: prevIndex = 1, logs = [{101 1}], prevTerm = 1
 
-2019/03/12 21:37:59 Server 2 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = false
-2019/03/12 21:37:59 Server: 1, Leader: 1,  LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
-2019/03/12 21:37:59 Server: 0, Leader: 1,  LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
-2019/03/12 21:37:59 After Leader 1 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 4, rf.currentTerm = 4
-2019/03/12 21:37:59 After Leader 1 send to server 2:  callSuccess = true, appendEntriesReply.Success = false, appendEntriesReply.Term = 4, rf.currentTerm = 4
-2019/03/12 21:37:59 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 4, rf.currentTerm = 4
-2019/03/12 21:37:59 Server 0 get AppendEntries from leader 1
-2019/03/12 21:37:59 args.Term: 4, my term: 4
-2019/03/12 21:37:59 Server 0 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = true
-2019/03/12 21:37:59 Server 2 get AppendEntries from leader 1
-2019/03/12 21:37:59 args.Term: 4, my term: 4
-2019/03/12 21:37:59 Server: 0, Leader: 1,  LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
-2019/03/12 21:37:59 Server 2 Rejects server 1 because of mismatch: prevIndex = 5, logs = [{101 1}], prevTerm = 1
-
-2019/03/12 21:37:59 Server 2 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = false
-2019/03/12 21:37:59 Server 1 get AppendEntries from leader 1
-2019/03/12 21:37:59 args.Term: 4, my term: 4
-2019/03/12 21:37:59 Server 1 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = true
-2019/03/12 21:37:59 Server: 1, Leader: 1,  LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
-2019/03/12 21:37:59 After Leader 1 send to server 2:  callSuccess = true, appendEntriesReply.Success = false, appendEntriesReply.Term = 4, rf.currentTerm = 4
-2019/03/12 21:37:59 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 4, rf.currentTerm = 4
-2019/03/12 21:37:59 After Leader 1 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 4, rf.currentTerm = 4
-2019/03/12 21:38:00 After Leader 1 send to server 2:  callSuccess = false, appendEntriesReply.Success = false, appendEntriesReply.Term = 0, rf.currentTerm = 4
-2019/03/12 21:38:00 Fail: Updated Leader 1 matchIndexes: [-1 -1 -1], nextIndexes = [6 6 5]
-2019/03/12 21:38:00 leader 1 send data to server 2 , prevIndex = 4, entries = [{106 1}]
-2019/03/12 21:38:00 Server 2 get AppendEntries from leader 1
-2019/03/12 21:38:00 args.Term: 4, my term: 4
-2019/03/12 21:38:00 Server 2 Rejects server 1 because of mismatch: prevIndex = 4, logs = [{101 1}], prevTerm = 1
-
-2019/03/12 21:38:00 Server 2 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = false
-2019/03/12 21:38:00 After Leader 1 send to server 2:  callSuccess = true, appendEntriesReply.Success = false, appendEntriesReply.Term = 4, rf.currentTerm = 4
-2019/03/12 21:38:00 Fail: Updated Leader 1 matchIndexes: [-1 -1 -1], nextIndexes = [6 6 4]
-2019/03/12 21:38:00 Server 0 get AppendEntries from leader 1
-2019/03/12 21:38:00 args.Term: 4, my term: 4
-2019/03/12 21:38:00 Server 0 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = true
-2019/03/12 21:38:00 Server 1 get AppendEntries from leader 1
-2019/03/12 21:38:00 args.Term: 4, my term: 4
-2019/03/12 21:38:00 Server 1 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = true
-2019/03/12 21:38:00 Server: 0, Leader: 1,  LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
-2019/03/12 21:38:00 Server 2 get AppendEntries from leader 1
-2019/03/12 21:38:00 args.Term: 4, my term: 4
-2019/03/12 21:38:00 Server: 1, Leader: 1,  LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
-2019/03/12 21:38:00 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 4, rf.currentTerm = 4
-2019/03/12 21:38:00 Server 2 Rejects server 1 because of mismatch: prevIndex = 3, logs = [{101 1}], prevTerm = 1
-
-2019/03/12 21:38:00 Server 2 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = false
-2019/03/12 21:38:00 After Leader 1 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 4, rf.currentTerm = 4
-2019/03/12 21:38:00 After Leader 1 send to server 2:  callSuccess = true, appendEntriesReply.Success = false, appendEntriesReply.Term = 4, rf.currentTerm = 4
-2019/03/12 21:38:00 After Leader 1 send to server 2:  callSuccess = false, appendEntriesReply.Success = false, appendEntriesReply.Term = 0, rf.currentTerm = 4
-2019/03/12 21:38:00 Server 0 get AppendEntries from leader 1
-2019/03/12 21:38:00 Server 2 get AppendEntries from leader 1
-2019/03/12 21:38:00 args.Term: 4, my term: 4
-2019/03/12 21:38:00 Server 2 Rejects server 1 because of mismatch: prevIndex = 3, logs = [{101 1}], prevTerm = 1
-
-2019/03/12 21:38:00 Server 2 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = false
-2019/03/12 21:38:00 args.Term: 4, my term: 4
-2019/03/12 21:38:00 Server 0 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = true
-2019/03/12 21:38:00 Server 1 get AppendEntries from leader 1
-2019/03/12 21:38:00 Server: 0, Leader: 1,  LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
-2019/03/12 21:38:00 After Leader 1 send to server 2:  callSuccess = true, appendEntriesReply.Success = false, appendEntriesReply.Term = 4, rf.currentTerm = 4
-2019/03/12 21:38:00 args.Term: 4, my term: 4
-2019/03/12 21:38:00 Server 1 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = true
-2019/03/12 21:38:00 Server: 1, Leader: 1,  LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
-2019/03/12 21:38:00 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 4, rf.currentTerm = 4
-2019/03/12 21:38:00 After Leader 1 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 4, rf.currentTerm = 4
-2019/03/12 21:38:00 Server 2 get AppendEntries from leader 1
-2019/03/12 21:38:00 args.Term: 4, my term: 4
-2019/03/12 21:38:00 Server 2 Rejects server 1 because of mismatch: prevIndex = 3, logs = [{101 1}], prevTerm = 1
-
-2019/03/12 21:38:00 Server 2 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = false
-2019/03/12 21:38:00 Server 1 get AppendEntries from leader 1
-2019/03/12 21:38:00 args.Term: 4, my term: 4
-2019/03/12 21:38:00 Server 1 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = true
-2019/03/12 21:38:00 Server: 1, Leader: 1,  LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
-2019/03/12 21:38:00 Server 0 get AppendEntries from leader 1
-2019/03/12 21:38:00 args.Term: 4, my term: 4
-2019/03/12 21:38:00 Server 0 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = true
-2019/03/12 21:38:00 After Leader 1 send to server 2:  callSuccess = true, appendEntriesReply.Success = false, appendEntriesReply.Term = 4, rf.currentTerm = 4
-2019/03/12 21:38:00 Server: 0, Leader: 1,  LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
-2019/03/12 21:38:00 After Leader 1 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 4, rf.currentTerm = 4
-2019/03/12 21:38:00 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 4, rf.currentTerm = 4
-2019/03/12 21:38:00 Server 2 ok = false, granted = false, before requesting server 0
-2019/03/12 21:38:00 Server 2 current votes = 1 after requesting server 0
-2019/03/12 21:38:00 After Leader 1 send to server 2:  callSuccess = false, appendEntriesReply.Success = false, appendEntriesReply.Term = 0, rf.currentTerm = 4
-2019/03/12 21:38:00 Server 0 get AppendEntries from leader 1
-2019/03/12 21:38:00 args.Term: 4, my term: 4
-2019/03/12 21:38:00 Server 0 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = true
-2019/03/12 21:38:00 Server 1 get AppendEntries from leader 1
-2019/03/12 21:38:00 args.Term: 4, my term: 4
-2019/03/12 21:38:00 Server 1 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = true
-2019/03/12 21:38:00 Server 2 get AppendEntries from leader 1
-2019/03/12 21:38:00 args.Term: 4, my term: 4
-2019/03/12 21:38:00 Server 2 Rejects server 1 because of mismatch: prevIndex = 3, logs = [{101 1}], prevTerm = 1
-
-2019/03/12 21:38:00 Server 2 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = false
-2019/03/12 21:38:00 Server: 0, Leader: 1,  LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
-2019/03/12 21:38:00 Server: 1, Leader: 1,  LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
-2019/03/12 21:38:00 After Leader 1 send to server 2:  callSuccess = true, appendEntriesReply.Success = false, appendEntriesReply.Term = 4, rf.currentTerm = 4
-2019/03/12 21:38:00 After Leader 1 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 4, rf.currentTerm = 4
-2019/03/12 21:38:00 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 4, rf.currentTerm = 4
-2019/03/12 21:38:00 Server 0 get AppendEntries from leader 1
-2019/03/12 21:38:00 args.Term: 4, my term: 4
-2019/03/12 21:38:00 Server 2 get AppendEntries from leader 1
-2019/03/12 21:38:00 args.Term: 4, my term: 4
-2019/03/12 21:38:00 Server 2 Rejects server 1 because of mismatch: prevIndex = 3, logs = [{101 1}], prevTerm = 1
-
-2019/03/12 21:38:00 Server 2 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = false
-2019/03/12 21:38:00 Server 1 get AppendEntries from leader 1
-2019/03/12 21:38:00 args.Term: 4, my term: 4
-2019/03/12 21:38:00 Server 1 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = true
-2019/03/12 21:38:00 Server 0 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = true
-2019/03/12 21:38:00 Server: 1, Leader: 1,  LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
-2019/03/12 21:38:00 Server: 0, Leader: 1,  LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
-2019/03/12 21:38:00 After Leader 1 send to server 2:  callSuccess = true, appendEntriesReply.Success = false, appendEntriesReply.Term = 4, rf.currentTerm = 4
-2019/03/12 21:38:00 After Leader 1 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 4, rf.currentTerm = 4
-2019/03/12 21:38:00 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 4, rf.currentTerm = 4
-2019/03/12 21:38:00 >>>>>> Server 2 becomes a candidate, new term: 5 <<<<<<<<
-2019/03/12 21:38:00 Server 2 current votes = 1 before requesting server 1
-2019/03/12 21:38:00 Server 2 current votes = 1 before requesting server 0
-2019/03/12 21:38:00 Server 1 (Term = 4) get request from server 2 - term 5
-2019/03/12 21:38:00 server 1 checking hasMoreRecentLogsThan: myLast.Term = 1, lastLogTerm = 1, mylogs = 6, other = 1
-2019/03/12 21:38:00 Server 0 (Term = 4) get request from server 2 - term 5
-2019/03/12 21:38:00 server 0 checking hasMoreRecentLogsThan: myLast.Term = 1, lastLogTerm = 1, mylogs = 6, other = 1
-2019/03/12 21:38:00 1 > 2 : candidateUpdated = false
-2019/03/12 21:38:00 0 > 2 : candidateUpdated = false
-2019/03/12 21:38:00 Server 2 ok = true, granted = false, before requesting server 1
-2019/03/12 21:38:00 Server 2 current votes = 1 after requesting server 1
-2019/03/12 21:38:00 Server 2 ok = true, granted = false, before requesting server 0
-2019/03/12 21:38:00 Server 2 current votes = 1 after requesting server 0
-2019/03/12 21:38:00 Server 2 get votes: 1, 1
-2019/03/12 21:38:01 After Leader 1 send to server 2:  callSuccess = false, appendEntriesReply.Success = false, appendEntriesReply.Term = 0, rf.currentTerm = 5
-2019/03/12 21:38:01 Fail: Updated Leader 1 matchIndexes: [-1 -1 -1], nextIndexes = [6 6 3]
-2019/03/12 21:38:01 After Leader 1 send to server 2:  callSuccess = false, appendEntriesReply.Success = false, appendEntriesReply.Term = 0, rf.currentTerm = 5
-2019/03/12 21:38:01 >>>>>> Server 0 becomes a candidate, new term: 6 <<<<<<<<
-2019/03/12 21:38:01 Server 0 current votes = 1 before requesting server 2
-2019/03/12 21:38:01 Server 0 current votes = 1 before requesting server 1
-2019/03/12 21:38:01 Server 2 (Term = 5) get request from server 0 - term 6
-2019/03/12 21:38:01 Server 1 (Term = 5) get request from server 0 - term 6
-2019/03/12 21:38:01 server 1 checking hasMoreRecentLogsThan: myLast.Term = 1, lastLogTerm = 1, mylogs = 6, other = 6
-2019/03/12 21:38:01 server 2 checking hasMoreRecentLogsThan: myLast.Term = 1, lastLogTerm = 1, mylogs = 1, other = 6
-2019/03/12 21:38:01 2 > 0 : candidateUpdated = true
-2019/03/12 21:38:01 1 > 0 : candidateUpdated = true
-2019/03/12 21:38:01 Server 1 granted vote for server 0
-2019/03/12 21:38:01 Server 2 granted vote for server 0
-2019/03/12 21:38:01 Server 0 ok = true, granted = true, before requesting server 2
-2019/03/12 21:38:01 Server 0 get vote from server 2, current votes = 2
-2019/03/12 21:38:01 Server 0 ok = true, granted = true, before requesting server 1
-2019/03/12 21:38:01 Server 0 get vote from server 1, current votes = 3
-2019/03/12 21:38:01 Server 0 current votes = 3 after requesting server 1
-2019/03/12 21:38:01 Server 0 current votes = 2 after requesting server 2
-2019/03/12 21:38:01 Server 0 get votes: 3, 1
-2019/03/12 21:38:01 
- ----- NEW LEADER: 0 - Term: 6 (C = 6, logs = [{101 1} {102 1} {103 1} {104 1} {105 1} {106 1}]) -----
-2019/03/12 21:38:01 ------ Leader 0 Start Command  106  😡😡😡: New Logs = [{101 1} {102 1} {103 1} {104 1} {105 1} {106 1} {106 6}] --------
+2019/03/12 22:08:28 Server 2 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = false
+2019/03/12 22:08:28 Server 1 get AppendEntries from leader 1
+2019/03/12 22:08:28 args.Term: 4, my term: 4
+2019/03/12 22:08:28 Server 1 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = true
+2019/03/12 22:08:28 Server: 0, Leader: 1,  LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
+2019/03/12 22:08:28 Server: 1, Leader: 1,  LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
+2019/03/12 22:08:28 After Leader 1 send to server 2:  callSuccess = true, appendEntriesReply.Success = false, appendEntriesReply.Term = 4, rf.currentTerm = 4, Empty = true
+2019/03/12 22:08:28 Fail: Updated Leader 1 matchIndexes: [5 5 -1], nextIndexes = [6 6 1]
+2019/03/12 22:08:28 After Leader 1 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 4, rf.currentTerm = 4, Empty = true
+2019/03/12 22:08:28 Success: Updated Leader 1 matchIndexes: [5 5 -1], nextIndexes = [6 6 1]
+2019/03/12 22:08:28 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 4, rf.currentTerm = 4, Empty = true
+2019/03/12 22:08:28 Success: Updated Leader 1 matchIndexes: [5 5 -1], nextIndexes = [6 6 1]
+2019/03/12 22:08:28 After Leader 1 send to server 2:  callSuccess = false, appendEntriesReply.Success = false, appendEntriesReply.Term = 0, rf.currentTerm = 4, Empty = false
+2019/03/12 22:08:28 leader 1 send data to server 2 , prevIndex = 0, entries = [{102 1} {103 1} {104 1} {105 1} {106 1}]
+2019/03/12 22:08:28 Server 2 get AppendEntries from leader 1
+2019/03/12 22:08:28 args.Term: 4, my term: 4
+2019/03/12 22:08:28 OnAppendEntriesData: prevIndex = 0
+2019/03/12 22:08:28 Update server 2 logs = [{101 1} {102 1} {103 1} {104 1} {105 1} {106 1}]
+2019/03/12 22:08:28 Server 2 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = true
+2019/03/12 22:08:28 Server: 2, Leader: 1,  LeaderCommitIdx = 6, server commit = 1 | Now server logs = 6
+2019/03/12 22:08:28 
+ Start: Server 2 (C = 6) sendApplyCh: 2 : logs = [{101 1} {102 1} {103 1} {104 1} {105 1} {106 1}]----
+2019/03/12 22:08:28 
+ Start: Server 2 (C = 6) sendApplyCh: 3 : logs = [{101 1} {102 1} {103 1} {104 1} {105 1} {106 1}]----
+2019/03/12 22:08:28 
+ Start: Server 2 (C = 6) sendApplyCh: 4 : logs = [{101 1} {102 1} {103 1} {104 1} {105 1} {106 1}]----
+2019/03/12 22:08:28 
+ Start: Server 2 (C = 6) sendApplyCh: 5 : logs = [{101 1} {102 1} {103 1} {104 1} {105 1} {106 1}]----
+2019/03/12 22:08:28 
+ Start: Server 2 (C = 6) sendApplyCh: 6 : logs = [{101 1} {102 1} {103 1} {104 1} {105 1} {106 1}]----
+2019/03/12 22:08:28 After Leader 1 send to server 2:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 4, rf.currentTerm = 4, Empty = false
+2019/03/12 22:08:28 Success: Updated Leader 1 matchIndexes: [5 5 5], nextIndexes = [6 6 6]
+2019/03/12 22:08:28 Server 2 get AppendEntries from leader 1
+2019/03/12 22:08:28 args.Term: 4, my term: 4
+2019/03/12 22:08:28 Server 2 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = true
+2019/03/12 22:08:28 Server 0 get AppendEntries from leader 1
+2019/03/12 22:08:28 Server 1 get AppendEntries from leader 1
+2019/03/12 22:08:28 args.Term: 4, my term: 4
+2019/03/12 22:08:28 Server 1 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = true
+2019/03/12 22:08:28 Server: 1, Leader: 1,  LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
+2019/03/12 22:08:28 args.Term: 4, my term: 4
+2019/03/12 22:08:28 Server 0 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = true
+2019/03/12 22:08:28 Server: 0, Leader: 1,  LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
+2019/03/12 22:08:28 Server: 2, Leader: 1,  LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
+2019/03/12 22:08:28 After Leader 1 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 4, rf.currentTerm = 4, Empty = true
+2019/03/12 22:08:28 Success: Updated Leader 1 matchIndexes: [5 5 5], nextIndexes = [6 6 6]
+2019/03/12 22:08:28 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 4, rf.currentTerm = 4, Empty = true
+2019/03/12 22:08:28 Success: Updated Leader 1 matchIndexes: [5 5 5], nextIndexes = [6 6 6]
+2019/03/12 22:08:28 After Leader 1 send to server 2:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 4, rf.currentTerm = 4, Empty = true
+2019/03/12 22:08:28 Success: Updated Leader 1 matchIndexes: [5 5 5], nextIndexes = [6 6 6]
+2019/03/12 22:08:28 Server 0 get AppendEntries from leader 1
+2019/03/12 22:08:28 args.Term: 4, my term: 4
+2019/03/12 22:08:28 Server 0 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = true
+2019/03/12 22:08:28 Server 1 get AppendEntries from leader 1
+2019/03/12 22:08:28 args.Term: 4, my term: 4
+2019/03/12 22:08:28 Server 1 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = true
+2019/03/12 22:08:28 Server: 0, Leader: 1,  LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
+2019/03/12 22:08:28 Server 2 get AppendEntries from leader 1
+2019/03/12 22:08:28 args.Term: 4, my term: 4
+2019/03/12 22:08:28 Server: 1, Leader: 1,  LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
+2019/03/12 22:08:28 Server 2 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = true
+2019/03/12 22:08:28 Server: 2, Leader: 1,  LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
+2019/03/12 22:08:28 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 4, rf.currentTerm = 4, Empty = true
+2019/03/12 22:08:28 Success: Updated Leader 1 matchIndexes: [5 5 5], nextIndexes = [6 6 6]
+2019/03/12 22:08:28 After Leader 1 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 4, rf.currentTerm = 4, Empty = true
+2019/03/12 22:08:28 Success: Updated Leader 1 matchIndexes: [5 5 5], nextIndexes = [6 6 6]
+2019/03/12 22:08:28 After Leader 1 send to server 2:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 4, rf.currentTerm = 4, Empty = true
+2019/03/12 22:08:28 Success: Updated Leader 1 matchIndexes: [5 5 5], nextIndexes = [6 6 6]
+2019/03/12 22:08:28 Server 2 ok = false, granted = false, before requesting server 1
+2019/03/12 22:08:28 Server 2 current votes = 1 after requesting server 1
+2019/03/12 22:08:28 Server 2 get votes: 1, 1
+2019/03/12 22:08:28 After Leader 1 send to server 2:  callSuccess = false, appendEntriesReply.Success = false, appendEntriesReply.Term = 0, rf.currentTerm = 4, Empty = true
+2019/03/12 22:08:28 Server 2 get AppendEntries from leader 1
+2019/03/12 22:08:28 args.Term: 4, my term: 4
+2019/03/12 22:08:28 Server 2 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = true
+2019/03/12 22:08:28 Server: 2, Leader: 1,  LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
+2019/03/12 22:08:28 Server 1 get AppendEntries from leader 1
+2019/03/12 22:08:28 args.Term: 4, my term: 4
+2019/03/12 22:08:28 Server 1 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = true
+2019/03/12 22:08:28 Server 0 get AppendEntries from leader 1
+2019/03/12 22:08:28 args.Term: 4, my term: 4
+2019/03/12 22:08:28 Server 0 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = true
+2019/03/12 22:08:28 Server: 1, Leader: 1,  LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
+2019/03/12 22:08:28 Server: 0, Leader: 1,  LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
+2019/03/12 22:08:28 After Leader 1 send to server 2:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 4, rf.currentTerm = 4, Empty = true
+2019/03/12 22:08:28 Success: Updated Leader 1 matchIndexes: [5 5 5], nextIndexes = [6 6 6]
+2019/03/12 22:08:28 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 4, rf.currentTerm = 4, Empty = true
+2019/03/12 22:08:28 Success: Updated Leader 1 matchIndexes: [5 5 5], nextIndexes = [6 6 6]
+2019/03/12 22:08:28 After Leader 1 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 4, rf.currentTerm = 4, Empty = true
+2019/03/12 22:08:28 Success: Updated Leader 1 matchIndexes: [5 5 5], nextIndexes = [6 6 6]
+2019/03/12 22:08:29 Server 0 get AppendEntries from leader 1
+2019/03/12 22:08:29 args.Term: 4, my term: 4
+2019/03/12 22:08:29 Server 0 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = true
+2019/03/12 22:08:29 Server 2 get AppendEntries from leader 1
+2019/03/12 22:08:29 Server: 0, Leader: 1,  LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
+2019/03/12 22:08:29 args.Term: 4, my term: 4
+2019/03/12 22:08:29 Server 2 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = true
+2019/03/12 22:08:29 Server 1 get AppendEntries from leader 1
+2019/03/12 22:08:29 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 4, rf.currentTerm = 4, Empty = true
+2019/03/12 22:08:29 Success: Updated Leader 1 matchIndexes: [5 5 5], nextIndexes = [6 6 6]
+2019/03/12 22:08:29 Server: 2, Leader: 1,  LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
+2019/03/12 22:08:29 args.Term: 4, my term: 4
+2019/03/12 22:08:29 Server 1 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = true
+2019/03/12 22:08:29 Server: 1, Leader: 1,  LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
+2019/03/12 22:08:29 After Leader 1 send to server 2:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 4, rf.currentTerm = 4, Empty = true
+2019/03/12 22:08:29 Success: Updated Leader 1 matchIndexes: [5 5 5], nextIndexes = [6 6 6]
+2019/03/12 22:08:29 After Leader 1 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 4, rf.currentTerm = 4, Empty = true
+2019/03/12 22:08:29 Success: Updated Leader 1 matchIndexes: [5 5 5], nextIndexes = [6 6 6]
+2019/03/12 22:08:29 Server 2 get AppendEntries from leader 1
+2019/03/12 22:08:29 args.Term: 4, my term: 4
+2019/03/12 22:08:29 Server 0 get AppendEntries from leader 1
+2019/03/12 22:08:29 Server 1 get AppendEntries from leader 1
+2019/03/12 22:08:29 args.Term: 4, my term: 4
+2019/03/12 22:08:29 Server 1 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = true
+2019/03/12 22:08:29 Server: 1, Leader: 1,  LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
+2019/03/12 22:08:29 args.Term: 4, my term: 4
+2019/03/12 22:08:29 Server 0 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = true
+2019/03/12 22:08:29 Server 2 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = true
+2019/03/12 22:08:29 Server: 0, Leader: 1,  LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
+2019/03/12 22:08:29 After Leader 1 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 4, rf.currentTerm = 4, Empty = true
+2019/03/12 22:08:29 Success: Updated Leader 1 matchIndexes: [5 5 5], nextIndexes = [6 6 6]
+2019/03/12 22:08:29 Server: 2, Leader: 1,  LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
+2019/03/12 22:08:29 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 4, rf.currentTerm = 4, Empty = true
+2019/03/12 22:08:29 Success: Updated Leader 1 matchIndexes: [5 5 5], nextIndexes = [6 6 6]
+2019/03/12 22:08:29 After Leader 1 send to server 2:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 4, rf.currentTerm = 4, Empty = true
+2019/03/12 22:08:29 Success: Updated Leader 1 matchIndexes: [5 5 5], nextIndexes = [6 6 6]
+2019/03/12 22:08:29 Server 1 get AppendEntries from leader 1
+2019/03/12 22:08:29 args.Term: 4, my term: 4
+2019/03/12 22:08:29 Server 1 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = true
+2019/03/12 22:08:29 Server 2 get AppendEntries from leader 1
+2019/03/12 22:08:29 Server 0 get AppendEntries from leader 1
+2019/03/12 22:08:29 args.Term: 4, my term: 4
+2019/03/12 22:08:29 Server 0 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = true
+2019/03/12 22:08:29 args.Term: 4, my term: 4
+2019/03/12 22:08:29 Server 2 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = true
+2019/03/12 22:08:29 Server: 1, Leader: 1,  LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
+2019/03/12 22:08:29 Server: 0, Leader: 1,  LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
+2019/03/12 22:08:29 Server: 2, Leader: 1,  LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
+2019/03/12 22:08:29 After Leader 1 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 4, rf.currentTerm = 4, Empty = true
+2019/03/12 22:08:29 Success: Updated Leader 1 matchIndexes: [5 5 5], nextIndexes = [6 6 6]
+2019/03/12 22:08:29 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 4, rf.currentTerm = 4, Empty = true
+2019/03/12 22:08:29 Success: Updated Leader 1 matchIndexes: [5 5 5], nextIndexes = [6 6 6]
+2019/03/12 22:08:29 After Leader 1 send to server 2:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 4, rf.currentTerm = 4, Empty = true
+2019/03/12 22:08:29 Success: Updated Leader 1 matchIndexes: [5 5 5], nextIndexes = [6 6 6]
+2019/03/12 22:08:29 Server 0 get AppendEntries from leader 1
+2019/03/12 22:08:29 Server 1 get AppendEntries from leader 1
+2019/03/12 22:08:29 args.Term: 4, my term: 4
+2019/03/12 22:08:29 Server 1 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = true
+2019/03/12 22:08:29 args.Term: 4, my term: 4
+2019/03/12 22:08:29 Server 0 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = true
+2019/03/12 22:08:29 Server: 1, Leader: 1,  LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
+2019/03/12 22:08:29 Server 2 get AppendEntries from leader 1
+2019/03/12 22:08:29 args.Term: 4, my term: 4
+2019/03/12 22:08:29 Server 2 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = true
+2019/03/12 22:08:29 Server: 0, Leader: 1,  LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
+2019/03/12 22:08:29 Server: 2, Leader: 1,  LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
+2019/03/12 22:08:29 After Leader 1 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 4, rf.currentTerm = 4, Empty = true
+2019/03/12 22:08:29 Success: Updated Leader 1 matchIndexes: [5 5 5], nextIndexes = [6 6 6]
+2019/03/12 22:08:29 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 4, rf.currentTerm = 4, Empty = true
+2019/03/12 22:08:29 Success: Updated Leader 1 matchIndexes: [5 5 5], nextIndexes = [6 6 6]
+2019/03/12 22:08:29 After Leader 1 send to server 2:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 4, rf.currentTerm = 4, Empty = true
+2019/03/12 22:08:29 Success: Updated Leader 1 matchIndexes: [5 5 5], nextIndexes = [6 6 6]
+2019/03/12 22:08:29 Server 0 get AppendEntries from leader 1
+2019/03/12 22:08:29 args.Term: 4, my term: 4
+2019/03/12 22:08:29 Server 0 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = true
+2019/03/12 22:08:29 Server 2 get AppendEntries from leader 1
+2019/03/12 22:08:29 args.Term: 4, my term: 4
+2019/03/12 22:08:29 Server 2 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = true
+2019/03/12 22:08:29 Server: 0, Leader: 1,  LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
+2019/03/12 22:08:29 Server 1 get AppendEntries from leader 1
+2019/03/12 22:08:29 args.Term: 4, my term: 4
+2019/03/12 22:08:29 Server: 2, Leader: 1,  LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
+2019/03/12 22:08:29 Server 1 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = true
+2019/03/12 22:08:29 Server: 1, Leader: 1,  LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
+2019/03/12 22:08:29 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 4, rf.currentTerm = 4, Empty = true
+2019/03/12 22:08:29 Success: Updated Leader 1 matchIndexes: [5 5 5], nextIndexes = [6 6 6]
+2019/03/12 22:08:29 After Leader 1 send to server 2:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 4, rf.currentTerm = 4, Empty = true
+2019/03/12 22:08:29 Success: Updated Leader 1 matchIndexes: [5 5 5], nextIndexes = [6 6 6]
+2019/03/12 22:08:29 After Leader 1 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 4, rf.currentTerm = 4, Empty = true
+2019/03/12 22:08:29 Success: Updated Leader 1 matchIndexes: [5 5 5], nextIndexes = [6 6 6]
+2019/03/12 22:08:29 Server 1 get AppendEntries from leader 1
+2019/03/12 22:08:29 args.Term: 4, my term: 4
+2019/03/12 22:08:29 Server 1 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = true
+2019/03/12 22:08:29 Server: 1, Leader: 1,  LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
+2019/03/12 22:08:29 Server 2 get AppendEntries from leader 1
+2019/03/12 22:08:29 args.Term: 4, my term: 4
+2019/03/12 22:08:29 Server 2 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = true
+2019/03/12 22:08:29 After Leader 1 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 4, rf.currentTerm = 4, Empty = true
+2019/03/12 22:08:29 Success: Updated Leader 1 matchIndexes: [5 5 5], nextIndexes = [6 6 6]
+2019/03/12 22:08:29 Server 0 get AppendEntries from leader 1
+2019/03/12 22:08:29 args.Term: 4, my term: 4
+2019/03/12 22:08:29 Server 0 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = true
+2019/03/12 22:08:29 Server: 2, Leader: 1,  LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
+2019/03/12 22:08:29 Server: 0, Leader: 1,  LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
+2019/03/12 22:08:29 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 4, rf.currentTerm = 4, Empty = true
+2019/03/12 22:08:29 Success: Updated Leader 1 matchIndexes: [5 5 5], nextIndexes = [6 6 6]
+2019/03/12 22:08:29 After Leader 1 send to server 2:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 4, rf.currentTerm = 4, Empty = true
+2019/03/12 22:08:29 Success: Updated Leader 1 matchIndexes: [5 5 5], nextIndexes = [6 6 6]
+2019/03/12 22:08:29 Server 0 get AppendEntries from leader 1
+2019/03/12 22:08:29 args.Term: 4, my term: 4
+2019/03/12 22:08:29 Server 0 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = true
+2019/03/12 22:08:29 Server: 0, Leader: 1,  LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
+2019/03/12 22:08:29 Server 2 get AppendEntries from leader 1
+2019/03/12 22:08:29 args.Term: 4, my term: 4
+2019/03/12 22:08:29 Server 2 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = true
+2019/03/12 22:08:29 Server 1 get AppendEntries from leader 1
+2019/03/12 22:08:29 args.Term: 4, my term: 4
+2019/03/12 22:08:29 Server: 2, Leader: 1,  LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
+2019/03/12 22:08:29 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 4, rf.currentTerm = 4, Empty = true
+2019/03/12 22:08:29 Success: Updated Leader 1 matchIndexes: [5 5 5], nextIndexes = [6 6 6]
+2019/03/12 22:08:29 Server 1 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = true
+2019/03/12 22:08:29 Server: 1, Leader: 1,  LeaderCommitIdx = 6, server commit = 6 | Now server logs = 6
+2019/03/12 22:08:29 After Leader 1 send to server 2:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 4, rf.currentTerm = 4, Empty = true
+2019/03/12 22:08:29 Success: Updated Leader 1 matchIndexes: [5 5 5], nextIndexes = [6 6 6]
+2019/03/12 22:08:29 After Leader 1 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 4, rf.currentTerm = 4, Empty = true
+2019/03/12 22:08:29 Success: Updated Leader 1 matchIndexes: [5 5 5], nextIndexes = [6 6 6]
+2019/03/12 22:08:29 ------ Leader 1 Start Command  107  😡😡😡: New Logs = [{101 1} {102 1} {103 1} {104 1} {105 1} {106 1} {107 4}] --------
 One : Commit Index = 7
-2019/03/12 21:38:01 leader 0 send data to server 2 , prevIndex = 5, entries = [{106 6}]
-2019/03/12 21:38:01 leader 0 send data to server 1 , prevIndex = 5, entries = [{106 6}]
-2019/03/12 21:38:01 Server 2 get AppendEntries from leader 0
-2019/03/12 21:38:01 args.Term: 6, my term: 6
-2019/03/12 21:38:01 Server 2 Rejects server 0 because of mismatch: prevIndex = 5, logs = [{101 1}], prevTerm = 1
-
-2019/03/12 21:38:01 Server 2 (Term: 6) reply AppendEntries from leader 0 (Term = 6): accepted = false
-2019/03/12 21:38:01 After Leader 0 send to server 2:  callSuccess = true, appendEntriesReply.Success = false, appendEntriesReply.Term = 6, rf.currentTerm = 6
-2019/03/12 21:38:01 Fail: Updated Leader 0 matchIndexes: [6 -1 -1], nextIndexes = [7 6 5]
-2019/03/12 21:38:01 Server 1 get AppendEntries from leader 0
-2019/03/12 21:38:01 args.Term: 6, my term: 6
-2019/03/12 21:38:01 OnAppendEntriesData: prevIndex = 5
-2019/03/12 21:38:01 Update server 1 logs = [{101 1} {102 1} {103 1} {104 1} {105 1} {106 1} {106 6}]
-2019/03/12 21:38:01 Server 1 (Term: 6) reply AppendEntries from leader 0 (Term = 6): accepted = true
-2019/03/12 21:38:01 Server: 1, Leader: 0,  LeaderCommitIdx = 6, server commit = 6 | Now server logs = 7
-2019/03/12 21:38:01 After Leader 0 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 6, rf.currentTerm = 6
-2019/03/12 21:38:01 Success: Updated Leader 0 matchIndexes: [6 6 -1], nextIndexes = [7 7 5]
-2019/03/12 21:38:01 
- Start: Server 0 (C = 7) sendApplyCh: 7 : logs = [{101 1} {102 1} {103 1} {104 1} {105 1} {106 1} {106 6}]----
-2019/03/12 21:38:01 Server 2 get AppendEntries from leader 0
-2019/03/12 21:38:01 args.Term: 6, my term: 6
-2019/03/12 21:38:01 Server 2 Rejects server 0 because of mismatch: prevIndex = 4, logs = [{101 1}], prevTerm = 1
-
-2019/03/12 21:38:01 Server 2 (Term: 6) reply AppendEntries from leader 0 (Term = 6): accepted = false
-2019/03/12 21:38:01 Server 0 get AppendEntries from leader 0
-2019/03/12 21:38:01 args.Term: 6, my term: 6
-2019/03/12 21:38:01 Server 0 (Term: 6) reply AppendEntries from leader 0 (Term = 6): accepted = true
-2019/03/12 21:38:01 Server 1 get AppendEntries from leader 0
-2019/03/12 21:38:01 Server: 0, Leader: 0,  LeaderCommitIdx = 7, server commit = 7 | Now server logs = 7
-2019/03/12 21:38:01 args.Term: 6, my term: 6
-2019/03/12 21:38:01 Server 1 (Term: 6) reply AppendEntries from leader 0 (Term = 6): accepted = true
-2019/03/12 21:38:01 Server: 1, Leader: 0,  LeaderCommitIdx = 7, server commit = 6 | Now server logs = 7
-2019/03/12 21:38:01 After Leader 0 send to server 2:  callSuccess = true, appendEntriesReply.Success = false, appendEntriesReply.Term = 6, rf.currentTerm = 6
-2019/03/12 21:38:01 
- Start: Server 1 (C = 7) sendApplyCh: 7 : logs = [{101 1} {102 1} {103 1} {104 1} {105 1} {106 1} {106 6}]----
-2019/03/12 21:38:01 After Leader 0 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 6, rf.currentTerm = 6
-2019/03/12 21:38:01 After Leader 0 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 6, rf.currentTerm = 6
-2019/03/12 21:38:01 Server 0 get AppendEntries from leader 0
-2019/03/12 21:38:01 args.Term: 6, my term: 6
-2019/03/12 21:38:01 Server 0 (Term: 6) reply AppendEntries from leader 0 (Term = 6): accepted = true
-2019/03/12 21:38:01 Server: 0, Leader: 0,  LeaderCommitIdx = 7, server commit = 7 | Now server logs = 7
-2019/03/12 21:38:01 Server 1 get AppendEntries from leader 0
-2019/03/12 21:38:01 args.Term: 6, my term: 6
-2019/03/12 21:38:01 Server 1 (Term: 6) reply AppendEntries from leader 0 (Term = 6): accepted = true
-2019/03/12 21:38:01 Server 2 get AppendEntries from leader 0
-2019/03/12 21:38:01 args.Term: 6, my term: 6
-2019/03/12 21:38:01 Server: 1, Leader: 0,  LeaderCommitIdx = 7, server commit = 7 | Now server logs = 7
-2019/03/12 21:38:01 Server 2 Rejects server 0 because of mismatch: prevIndex = 4, logs = [{101 1}], prevTerm = 1
-
-2019/03/12 21:38:01 Server 2 (Term: 6) reply AppendEntries from leader 0 (Term = 6): accepted = false
-2019/03/12 21:38:01 After Leader 0 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 6, rf.currentTerm = 6
-2019/03/12 21:38:01 After Leader 0 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 6, rf.currentTerm = 6
-2019/03/12 21:38:01 After Leader 0 send to server 2:  callSuccess = true, appendEntriesReply.Success = false, appendEntriesReply.Term = 6, rf.currentTerm = 6
-2019/03/12 21:38:01 Server 0 get AppendEntries from leader 0
-2019/03/12 21:38:01 args.Term: 6, my term: 6
-2019/03/12 21:38:01 Server 1 get AppendEntries from leader 0
-2019/03/12 21:38:01 args.Term: 6, my term: 6
-2019/03/12 21:38:01 Server 1 (Term: 6) reply AppendEntries from leader 0 (Term = 6): accepted = true
-2019/03/12 21:38:01 Server 2 get AppendEntries from leader 0
-2019/03/12 21:38:01 args.Term: 6, my term: 6
-2019/03/12 21:38:01 Server: 1, Leader: 0,  LeaderCommitIdx = 7, server commit = 7 | Now server logs = 7
-2019/03/12 21:38:01 Server 2 Rejects server 0 because of mismatch: prevIndex = 4, logs = [{101 1}], prevTerm = 1
-
-2019/03/12 21:38:01 Server 2 (Term: 6) reply AppendEntries from leader 0 (Term = 6): accepted = false
-2019/03/12 21:38:01 Server 0 (Term: 6) reply AppendEntries from leader 0 (Term = 6): accepted = true
-2019/03/12 21:38:01 Server: 0, Leader: 0,  LeaderCommitIdx = 7, server commit = 7 | Now server logs = 7
-2019/03/12 21:38:01 After Leader 0 send to server 2:  callSuccess = true, appendEntriesReply.Success = false, appendEntriesReply.Term = 6, rf.currentTerm = 6
-2019/03/12 21:38:01 After Leader 0 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 6, rf.currentTerm = 6
-2019/03/12 21:38:01 After Leader 0 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 6, rf.currentTerm = 6
-2019/03/12 21:38:01 >>>>>> Server 2 becomes a candidate, new term: 7 <<<<<<<<
-2019/03/12 21:38:01 Server 2 current votes = 1 before requesting server 1
-2019/03/12 21:38:01 Server 2 current votes = 1 before requesting server 0
-2019/03/12 21:38:01 Server 1 (Term = 6) get request from server 2 - term 7
-2019/03/12 21:38:01 server 1 checking hasMoreRecentLogsThan: myLast.Term = 6, lastLogTerm = 1, mylogs = 7, other = 1
-2019/03/12 21:38:01 Server 0 (Term = 6) get request from server 2 - term 7
-2019/03/12 21:38:01 server 0 checking hasMoreRecentLogsThan: myLast.Term = 6, lastLogTerm = 1, mylogs = 7, other = 1
-2019/03/12 21:38:01 1 > 2 : candidateUpdated = false
-2019/03/12 21:38:01 0 > 2 : candidateUpdated = false
-2019/03/12 21:38:01 Server 2 ok = true, granted = false, before requesting server 0
-2019/03/12 21:38:01 Server 2 current votes = 1 after requesting server 0
-2019/03/12 21:38:01 Server 2 ok = true, granted = false, before requesting server 1
-2019/03/12 21:38:01 Server 2 current votes = 1 after requesting server 1
-2019/03/12 21:38:01 Server 2 get votes: 1, 1
-2019/03/12 21:38:02 >>>>>> Server 1 becomes a candidate, new term: 8 <<<<<<<<
-2019/03/12 21:38:02 Server 1 current votes = 1 before requesting server 2
-2019/03/12 21:38:02 Server 1 current votes = 1 before requesting server 0
-2019/03/12 21:38:02 Server 2 (Term = 7) get request from server 1 - term 8
-2019/03/12 21:38:02 server 2 checking hasMoreRecentLogsThan: myLast.Term = 1, lastLogTerm = 6, mylogs = 1, other = 7
-2019/03/12 21:38:02 Server 0 (Term = 7) get request from server 1 - term 8
-2019/03/12 21:38:02 server 0 checking hasMoreRecentLogsThan: myLast.Term = 6, lastLogTerm = 6, mylogs = 7, other = 7
-2019/03/12 21:38:02 2 > 1 : candidateUpdated = true
-2019/03/12 21:38:02 Server 2 granted vote for server 1
-2019/03/12 21:38:02 0 > 1 : candidateUpdated = true
-2019/03/12 21:38:02 Server 0 granted vote for server 1
-2019/03/12 21:38:02 Server 1 ok = true, granted = true, before requesting server 2
-2019/03/12 21:38:02 Server 1 ok = true, granted = true, before requesting server 0
-2019/03/12 21:38:02 Server 1 get vote from server 0, current votes = 3
-2019/03/12 21:38:02 Server 1 get vote from server 2, current votes = 2
-2019/03/12 21:38:02 Server 1 current votes = 3 after requesting server 2
-2019/03/12 21:38:02 Server 1 current votes = 3 after requesting server 0
-2019/03/12 21:38:02 Server 1 get votes: 3, 1
-2019/03/12 21:38:02 
- ----- NEW LEADER: 1 - Term: 8 (C = 7, logs = [{101 1} {102 1} {103 1} {104 1} {105 1} {106 1} {106 6}]) -----
-2019/03/12 21:38:02 Server 2 get AppendEntries from leader 1
-2019/03/12 21:38:02 args.Term: 8, my term: 8
-2019/03/12 21:38:02 Server 1 get AppendEntries from leader 1
-2019/03/12 21:38:02 args.Term: 8, my term: 8
-2019/03/12 21:38:02 Server 1 (Term: 8) reply AppendEntries from leader 1 (Term = 8): accepted = true
-2019/03/12 21:38:02 Server 0 get AppendEntries from leader 1
-2019/03/12 21:38:02 args.Term: 8, my term: 8
-2019/03/12 21:38:02 Server 0 (Term: 8) reply AppendEntries from leader 1 (Term = 8): accepted = true
-2019/03/12 21:38:02 Server: 1, Leader: 1,  LeaderCommitIdx = 7, server commit = 7 | Now server logs = 7
-2019/03/12 21:38:02 Server 2 Rejects server 1 because of mismatch: prevIndex = 6, logs = [{101 1}], prevTerm = 6
-
-2019/03/12 21:38:02 Server 2 (Term: 8) reply AppendEntries from leader 1 (Term = 8): accepted = false
-2019/03/12 21:38:02 Server: 0, Leader: 1,  LeaderCommitIdx = 7, server commit = 7 | Now server logs = 7
-2019/03/12 21:38:02 After Leader 1 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 8, rf.currentTerm = 8
-2019/03/12 21:38:02 After Leader 1 send to server 2:  callSuccess = true, appendEntriesReply.Success = false, appendEntriesReply.Term = 8, rf.currentTerm = 8
-2019/03/12 21:38:02 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 8, rf.currentTerm = 8
-2019/03/12 21:38:02 Server 0 get AppendEntries from leader 1
-2019/03/12 21:38:02 args.Term: 8, my term: 8
-2019/03/12 21:38:02 Server 0 (Term: 8) reply AppendEntries from leader 1 (Term = 8): accepted = true
-2019/03/12 21:38:02 Server 1 get AppendEntries from leader 1
-2019/03/12 21:38:02 Server: 0, Leader: 1,  LeaderCommitIdx = 7, server commit = 7 | Now server logs = 7
-2019/03/12 21:38:02 Server 2 get AppendEntries from leader 1
-2019/03/12 21:38:02 args.Term: 8, my term: 8
-2019/03/12 21:38:02 Server 2 Rejects server 1 because of mismatch: prevIndex = 6, logs = [{101 1}], prevTerm = 6
-
-2019/03/12 21:38:02 Server 2 (Term: 8) reply AppendEntries from leader 1 (Term = 8): accepted = false
-2019/03/12 21:38:02 args.Term: 8, my term: 8
-2019/03/12 21:38:02 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 8, rf.currentTerm = 8
-2019/03/12 21:38:02 Server 1 (Term: 8) reply AppendEntries from leader 1 (Term = 8): accepted = true
-2019/03/12 21:38:02 Server: 1, Leader: 1,  LeaderCommitIdx = 7, server commit = 7 | Now server logs = 7
-2019/03/12 21:38:02 After Leader 1 send to server 2:  callSuccess = true, appendEntriesReply.Success = false, appendEntriesReply.Term = 8, rf.currentTerm = 8
-2019/03/12 21:38:02 After Leader 1 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 8, rf.currentTerm = 8
-2019/03/12 21:38:02 Server 2 get AppendEntries from leader 1
-2019/03/12 21:38:02 args.Term: 8, my term: 8
-2019/03/12 21:38:02 Server 2 Rejects server 1 because of mismatch: prevIndex = 6, logs = [{101 1}], prevTerm = 6
-
-2019/03/12 21:38:02 Server 2 (Term: 8) reply AppendEntries from leader 1 (Term = 8): accepted = false
-2019/03/12 21:38:02 Server 0 get AppendEntries from leader 1
-2019/03/12 21:38:02 args.Term: 8, my term: 8
-2019/03/12 21:38:02 Server 0 (Term: 8) reply AppendEntries from leader 1 (Term = 8): accepted = true
-2019/03/12 21:38:02 Server 1 get AppendEntries from leader 1
-2019/03/12 21:38:02 args.Term: 8, my term: 8
-2019/03/12 21:38:02 After Leader 1 send to server 2:  callSuccess = true, appendEntriesReply.Success = false, appendEntriesReply.Term = 8, rf.currentTerm = 8
-2019/03/12 21:38:02 Server 1 (Term: 8) reply AppendEntries from leader 1 (Term = 8): accepted = true
-2019/03/12 21:38:02 Server: 0, Leader: 1,  LeaderCommitIdx = 7, server commit = 7 | Now server logs = 7
-2019/03/12 21:38:02 Server: 1, Leader: 1,  LeaderCommitIdx = 7, server commit = 7 | Now server logs = 7
-2019/03/12 21:38:02 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 8, rf.currentTerm = 8
-2019/03/12 21:38:02 After Leader 1 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 8, rf.currentTerm = 8
-2019/03/12 21:38:02 >>>>>> Server 2 becomes a candidate, new term: 9 <<<<<<<<
-2019/03/12 21:38:02 Server 2 current votes = 1 before requesting server 1
-2019/03/12 21:38:02 Server 2 current votes = 1 before requesting server 0
-2019/03/12 21:38:02 Server 1 (Term = 8) get request from server 2 - term 9
-2019/03/12 21:38:02 server 1 checking hasMoreRecentLogsThan: myLast.Term = 6, lastLogTerm = 1, mylogs = 7, other = 1
-2019/03/12 21:38:02 Server 0 (Term = 8) get request from server 2 - term 9
-2019/03/12 21:38:02 server 0 checking hasMoreRecentLogsThan: myLast.Term = 6, lastLogTerm = 1, mylogs = 7, other = 1
-2019/03/12 21:38:02 0 > 2 : candidateUpdated = false
-2019/03/12 21:38:02 1 > 2 : candidateUpdated = false
-2019/03/12 21:38:02 Server 2 ok = true, granted = false, before requesting server 0
-2019/03/12 21:38:02 Server 2 ok = true, granted = false, before requesting server 1
-2019/03/12 21:38:02 Server 2 current votes = 1 after requesting server 1
-2019/03/12 21:38:02 Server 2 current votes = 1 after requesting server 0
-2019/03/12 21:38:02 Server 2 get votes: 1, 1
-2019/03/12 21:38:03 After Leader 1 send to server 2:  callSuccess = false, appendEntriesReply.Success = false, appendEntriesReply.Term = 0, rf.currentTerm = 9
-2019/03/12 21:38:03 Server 2 ok = false, granted = false, before requesting server 1
-2019/03/12 21:38:03 Server 2 current votes = 1 after requesting server 1
-2019/03/12 21:38:03 Server 2 get votes: 1, 1
-2019/03/12 21:38:03 After Leader 1 send to server 2:  callSuccess = false, appendEntriesReply.Success = false, appendEntriesReply.Term = 0, rf.currentTerm = 9
-2019/03/12 21:38:03 After Leader 1 send to server 2:  callSuccess = false, appendEntriesReply.Success = false, appendEntriesReply.Term = 0, rf.currentTerm = 9
-2019/03/12 21:38:03 Fail: Updated Leader 1 matchIndexes: [-1 -1 -1], nextIndexes = [7 7 6]
-2019/03/12 21:38:03 >>>>>> Server 0 becomes a candidate, new term: 10 <<<<<<<<
-2019/03/12 21:38:03 Server 0 current votes = 1 before requesting server 2
-2019/03/12 21:38:03 Server 0 current votes = 1 before requesting server 1
-2019/03/12 21:38:03 Server 2 (Term = 9) get request from server 0 - term 10
-2019/03/12 21:38:03 server 2 checking hasMoreRecentLogsThan: myLast.Term = 1, lastLogTerm = 6, mylogs = 1, other = 7
-2019/03/12 21:38:03 Server 1 (Term = 9) get request from server 0 - term 10
-2019/03/12 21:38:03 server 1 checking hasMoreRecentLogsThan: myLast.Term = 6, lastLogTerm = 6, mylogs = 7, other = 7
-2019/03/12 21:38:03 2 > 0 : candidateUpdated = true
-2019/03/12 21:38:03 Server 2 granted vote for server 0
-2019/03/12 21:38:03 1 > 0 : candidateUpdated = true
-2019/03/12 21:38:03 Server 1 granted vote for server 0
-2019/03/12 21:38:03 Server 0 ok = true, granted = true, before requesting server 2
-2019/03/12 21:38:03 Server 0 get vote from server 2, current votes = 2
-2019/03/12 21:38:03 Server 0 current votes = 2 after requesting server 2
-2019/03/12 21:38:03 Server 0 ok = true, granted = true, before requesting server 1
-2019/03/12 21:38:03 Server 0 get vote from server 1, current votes = 3
-2019/03/12 21:38:03 Server 0 current votes = 3 after requesting server 1
-2019/03/12 21:38:03 Server 0 get votes: 3, 1
-2019/03/12 21:38:03 
- ----- NEW LEADER: 0 - Term: 10 (C = 7, logs = [{101 1} {102 1} {103 1} {104 1} {105 1} {106 1} {106 6}]) -----
-2019/03/12 21:38:03 ------ Leader 0 Start Command  106  😡😡😡: New Logs = [{101 1} {102 1} {103 1} {104 1} {105 1} {106 1} {106 6} {106 10}] --------
-One : Commit Index = 8
-2019/03/12 21:38:03 leader 0 send data to server 2 , prevIndex = 6, entries = [{106 10}]
-2019/03/12 21:38:03 leader 0 send data to server 1 , prevIndex = 6, entries = [{106 10}]
-2019/03/12 21:38:03 Server 1 get AppendEntries from leader 0
-2019/03/12 21:38:03 args.Term: 10, my term: 10
-2019/03/12 21:38:03 OnAppendEntriesData: prevIndex = 6
-2019/03/12 21:38:03 Server 2 get AppendEntries from leader 0
-2019/03/12 21:38:03 args.Term: 10, my term: 10
-2019/03/12 21:38:03 Server 2 Rejects server 0 because of mismatch: prevIndex = 6, logs = [{101 1}], prevTerm = 6
-
-2019/03/12 21:38:03 Server 2 (Term: 10) reply AppendEntries from leader 0 (Term = 10): accepted = false
-2019/03/12 21:38:03 Update server 1 logs = [{101 1} {102 1} {103 1} {104 1} {105 1} {106 1} {106 6} {106 10}]
-2019/03/12 21:38:03 Server 1 (Term: 10) reply AppendEntries from leader 0 (Term = 10): accepted = true
-2019/03/12 21:38:03 Server: 1, Leader: 0,  LeaderCommitIdx = 7, server commit = 7 | Now server logs = 8
-2019/03/12 21:38:03 After Leader 0 send to server 2:  callSuccess = true, appendEntriesReply.Success = false, appendEntriesReply.Term = 10, rf.currentTerm = 10
-2019/03/12 21:38:03 Fail: Updated Leader 0 matchIndexes: [7 -1 -1], nextIndexes = [8 7 6]
-2019/03/12 21:38:03 After Leader 0 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 10, rf.currentTerm = 10
-2019/03/12 21:38:03 Success: Updated Leader 0 matchIndexes: [7 7 -1], nextIndexes = [8 8 6]
-2019/03/12 21:38:03 
- Start: Server 0 (C = 8) sendApplyCh: 8 : logs = [{101 1} {102 1} {103 1} {104 1} {105 1} {106 1} {106 6} {106 10}]----
-2019/03/12 21:38:03 Server 2 get AppendEntries from leader 0
-2019/03/12 21:38:03 args.Term: 10, my term: 10
-2019/03/12 21:38:03 Server 0 get AppendEntries from leader 0
-2019/03/12 21:38:03 args.Term: 10, my term: 10
-2019/03/12 21:38:03 Server 0 (Term: 10) reply AppendEntries from leader 0 (Term = 10): accepted = true
-2019/03/12 21:38:03 Server 1 get AppendEntries from leader 0
-2019/03/12 21:38:03 args.Term: 10, my term: 10
-2019/03/12 21:38:03 Server 1 (Term: 10) reply AppendEntries from leader 0 (Term = 10): accepted = true
-2019/03/12 21:38:03 Server 2 Rejects server 0 because of mismatch: prevIndex = 5, logs = [{101 1}], prevTerm = 1
-
-2019/03/12 21:38:03 Server 2 (Term: 10) reply AppendEntries from leader 0 (Term = 10): accepted = false
-2019/03/12 21:38:03 Server: 1, Leader: 0,  LeaderCommitIdx = 8, server commit = 7 | Now server logs = 8
-2019/03/12 21:38:03 
- Start: Server 1 (C = 8) sendApplyCh: 8 : logs = [{101 1} {102 1} {103 1} {104 1} {105 1} {106 1} {106 6} {106 10}]----
-2019/03/12 21:38:03 Server: 0, Leader: 0,  LeaderCommitIdx = 8, server commit = 8 | Now server logs = 8
-2019/03/12 21:38:03 After Leader 0 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 10, rf.currentTerm = 10
-2019/03/12 21:38:03 After Leader 0 send to server 2:  callSuccess = true, appendEntriesReply.Success = false, appendEntriesReply.Term = 10, rf.currentTerm = 10
-2019/03/12 21:38:03 After Leader 0 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 10, rf.currentTerm = 10
-2019/03/12 21:38:03 >>>>>> Server 2 becomes a candidate, new term: 11 <<<<<<<<
-2019/03/12 21:38:03 Server 2 current votes = 1 before requesting server 1
-2019/03/12 21:38:03 Server 2 current votes = 1 before requesting server 0
-2019/03/12 21:38:03 Server 0 (Term = 10) get request from server 2 - term 11
-2019/03/12 21:38:03 server 0 checking hasMoreRecentLogsThan: myLast.Term = 10, lastLogTerm = 1, mylogs = 8, other = 1
-2019/03/12 21:38:03 Server 1 (Term = 10) get request from server 2 - term 11
-2019/03/12 21:38:03 server 1 checking hasMoreRecentLogsThan: myLast.Term = 10, lastLogTerm = 1, mylogs = 8, other = 1
-2019/03/12 21:38:03 0 > 2 : candidateUpdated = false
-2019/03/12 21:38:03 1 > 2 : candidateUpdated = false
-2019/03/12 21:38:03 Server 2 ok = true, granted = false, before requesting server 0
-2019/03/12 21:38:03 Server 2 current votes = 1 after requesting server 0
-2019/03/12 21:38:03 Server 2 ok = true, granted = false, before requesting server 1
-2019/03/12 21:38:03 Server 2 current votes = 1 after requesting server 1
-2019/03/12 21:38:03 Server 2 get votes: 1, 1
-2019/03/12 21:38:03 After Leader 1 send to server 2:  callSuccess = false, appendEntriesReply.Success = false, appendEntriesReply.Term = 0, rf.currentTerm = 11
-2019/03/12 21:38:03 Fail: Updated Leader 1 matchIndexes: [-1 -1 -1], nextIndexes = [7 7 5]
-2019/03/12 21:38:04 After Leader 1 send to server 2:  callSuccess = false, appendEntriesReply.Success = false, appendEntriesReply.Term = 0, rf.currentTerm = 11
-2019/03/12 21:38:04 >>>>>> Server 1 becomes a candidate, new term: 12 <<<<<<<<
-2019/03/12 21:38:04 Server 1 current votes = 1 before requesting server 2
-2019/03/12 21:38:04 Server 1 current votes = 1 before requesting server 0
-2019/03/12 21:38:04 Server 0 (Term = 11) get request from server 1 - term 12
-2019/03/12 21:38:04 server 0 checking hasMoreRecentLogsThan: myLast.Term = 10, lastLogTerm = 10, mylogs = 8, other = 8
-2019/03/12 21:38:04 Server 2 (Term = 11) get request from server 1 - term 12
-2019/03/12 21:38:04 server 2 checking hasMoreRecentLogsThan: myLast.Term = 1, lastLogTerm = 10, mylogs = 1, other = 8
-2019/03/12 21:38:04 0 > 1 : candidateUpdated = true
-2019/03/12 21:38:04 Server 0 granted vote for server 1
-2019/03/12 21:38:04 2 > 1 : candidateUpdated = true
-2019/03/12 21:38:04 Server 2 granted vote for server 1
-2019/03/12 21:38:04 Server 1 ok = true, granted = true, before requesting server 0
-2019/03/12 21:38:04 Server 1 get vote from server 0, current votes = 2
-2019/03/12 21:38:04 Server 1 current votes = 2 after requesting server 0
-2019/03/12 21:38:04 Server 1 ok = true, granted = true, before requesting server 2
-2019/03/12 21:38:04 Server 1 get vote from server 2, current votes = 3
-2019/03/12 21:38:04 Server 1 current votes = 3 after requesting server 2
-2019/03/12 21:38:04 Server 1 get votes: 3, 1
-2019/03/12 21:38:04 
- ----- NEW LEADER: 1 - Term: 12 (C = 8, logs = [{101 1} {102 1} {103 1} {104 1} {105 1} {106 1} {106 6} {106 10}]) -----
-2019/03/12 21:38:04 >>>>>> Server 2 becomes a candidate, new term: 13 <<<<<<<<
-2019/03/12 21:38:04 Server 2 current votes = 1 before requesting server 1
-2019/03/12 21:38:04 Server 2 current votes = 1 before requesting server 0
-2019/03/12 21:38:04 Server 0 (Term = 12) get request from server 2 - term 13
-2019/03/12 21:38:04 server 0 checking hasMoreRecentLogsThan: myLast.Term = 10, lastLogTerm = 1, mylogs = 8, other = 1
-2019/03/12 21:38:04 Server 1 (Term = 12) get request from server 2 - term 13
-2019/03/12 21:38:04 server 1 checking hasMoreRecentLogsThan: myLast.Term = 10, lastLogTerm = 1, mylogs = 8, other = 1
-2019/03/12 21:38:04 0 > 2 : candidateUpdated = false
-2019/03/12 21:38:04 1 > 2 : candidateUpdated = false
-2019/03/12 21:38:04 Server 2 ok = true, granted = false, before requesting server 0
-2019/03/12 21:38:04 Server 2 current votes = 1 after requesting server 0
-2019/03/12 21:38:04 Server 2 ok = true, granted = false, before requesting server 1
-2019/03/12 21:38:04 Server 2 current votes = 1 after requesting server 1
-2019/03/12 21:38:04 Server 2 get votes: 1, 1
-2019/03/12 21:38:04 After Leader 1 send to server 2:  callSuccess = false, appendEntriesReply.Success = false, appendEntriesReply.Term = 0, rf.currentTerm = 13
-2019/03/12 21:38:05 >>>>>> Server 0 becomes a candidate, new term: 14 <<<<<<<<
-2019/03/12 21:38:05 Server 0 current votes = 1 before requesting server 2
-2019/03/12 21:38:05 Server 0 current votes = 1 before requesting server 1
-2019/03/12 21:38:05 Server 2 (Term = 13) get request from server 0 - term 14
-2019/03/12 21:38:05 server 2 checking hasMoreRecentLogsThan: myLast.Term = 1, lastLogTerm = 10, mylogs = 1, other = 8
-2019/03/12 21:38:05 2 > 0 : candidateUpdated = true
-2019/03/12 21:38:05 Server 2 granted vote for server 0
-2019/03/12 21:38:05 Server 1 (Term = 13) get request from server 0 - term 14
-2019/03/12 21:38:05 server 1 checking hasMoreRecentLogsThan: myLast.Term = 10, lastLogTerm = 10, mylogs = 8, other = 8
-2019/03/12 21:38:05 1 > 0 : candidateUpdated = true
-2019/03/12 21:38:05 Server 1 granted vote for server 0
-2019/03/12 21:38:05 Server 0 ok = true, granted = true, before requesting server 2
-2019/03/12 21:38:05 Server 0 get vote from server 2, current votes = 2
-2019/03/12 21:38:05 Server 0 current votes = 2 after requesting server 2
-2019/03/12 21:38:05 Server 0 ok = true, granted = true, before requesting server 1
-2019/03/12 21:38:05 Server 0 get vote from server 1, current votes = 3
-2019/03/12 21:38:05 Server 0 current votes = 3 after requesting server 1
-2019/03/12 21:38:05 Server 0 get votes: 3, 1
-2019/03/12 21:38:05 
- ----- NEW LEADER: 0 - Term: 14 (C = 8, logs = [{101 1} {102 1} {103 1} {104 1} {105 1} {106 1} {106 6} {106 10}]) -----
-2019/03/12 21:38:05 Server 1 get AppendEntries from leader 0
-2019/03/12 21:38:05 args.Term: 14, my term: 14
-2019/03/12 21:38:05 Server 1 (Term: 14) reply AppendEntries from leader 0 (Term = 14): accepted = true
-2019/03/12 21:38:05 Server 2 get AppendEntries from leader 0
-2019/03/12 21:38:05 args.Term: 14, my term: 14
-2019/03/12 21:38:05 Server 2 Rejects server 0 because of mismatch: prevIndex = 7, logs = [{101 1}], prevTerm = 10
-
-2019/03/12 21:38:05 Server 2 (Term: 14) reply AppendEntries from leader 0 (Term = 14): accepted = false
-2019/03/12 21:38:05 Server: 1, Leader: 0,  LeaderCommitIdx = 8, server commit = 8 | Now server logs = 8
-2019/03/12 21:38:05 After Leader 0 send to server 2:  callSuccess = true, appendEntriesReply.Success = false, appendEntriesReply.Term = 14, rf.currentTerm = 14
-2019/03/12 21:38:05 Server 0 get AppendEntries from leader 0
-2019/03/12 21:38:05 args.Term: 14, my term: 14
-2019/03/12 21:38:05 Server 0 (Term: 14) reply AppendEntries from leader 0 (Term = 14): accepted = true
-2019/03/12 21:38:05 Server: 0, Leader: 0,  LeaderCommitIdx = 8, server commit = 8 | Now server logs = 8
-2019/03/12 21:38:05 After Leader 0 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 14, rf.currentTerm = 14
-2019/03/12 21:38:05 After Leader 0 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 14, rf.currentTerm = 14
-2019/03/12 21:38:05 Server 0 get AppendEntries from leader 0
-2019/03/12 21:38:05 args.Term: 14, my term: 14
-2019/03/12 21:38:05 Server 2 get AppendEntries from leader 0
-2019/03/12 21:38:05 args.Term: 14, my term: 14
-2019/03/12 21:38:05 Server 2 Rejects server 0 because of mismatch: prevIndex = 7, logs = [{101 1}], prevTerm = 10
-
-2019/03/12 21:38:05 Server 2 (Term: 14) reply AppendEntries from leader 0 (Term = 14): accepted = false
-2019/03/12 21:38:05 Server 1 get AppendEntries from leader 0
-2019/03/12 21:38:05 args.Term: 14, my term: 14
-2019/03/12 21:38:05 Server 1 (Term: 14) reply AppendEntries from leader 0 (Term = 14): accepted = true
-2019/03/12 21:38:05 Server 0 (Term: 14) reply AppendEntries from leader 0 (Term = 14): accepted = true
-2019/03/12 21:38:05 Server: 1, Leader: 0,  LeaderCommitIdx = 8, server commit = 8 | Now server logs = 8
-2019/03/12 21:38:05 Server: 0, Leader: 0,  LeaderCommitIdx = 8, server commit = 8 | Now server logs = 8
-2019/03/12 21:38:05 After Leader 0 send to server 2:  callSuccess = true, appendEntriesReply.Success = false, appendEntriesReply.Term = 14, rf.currentTerm = 14
-2019/03/12 21:38:05 After Leader 0 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 14, rf.currentTerm = 14
-2019/03/12 21:38:05 After Leader 0 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 14, rf.currentTerm = 14
-2019/03/12 21:38:05 Server 0 get AppendEntries from leader 0
-2019/03/12 21:38:05 args.Term: 14, my term: 14
-2019/03/12 21:38:05 Server 0 (Term: 14) reply AppendEntries from leader 0 (Term = 14): accepted = true
-2019/03/12 21:38:05 Server 1 get AppendEntries from leader 0
-2019/03/12 21:38:05 args.Term: 14, my term: 14
-2019/03/12 21:38:05 Server 1 (Term: 14) reply AppendEntries from leader 0 (Term = 14): accepted = true
-2019/03/12 21:38:05 Server: 0, Leader: 0,  LeaderCommitIdx = 8, server commit = 8 | Now server logs = 8
-2019/03/12 21:38:05 Server 2 get AppendEntries from leader 0
-2019/03/12 21:38:05 args.Term: 14, my term: 14
-2019/03/12 21:38:05 Server 2 Rejects server 0 because of mismatch: prevIndex = 7, logs = [{101 1}], prevTerm = 10
-
-2019/03/12 21:38:05 Server 2 (Term: 14) reply AppendEntries from leader 0 (Term = 14): accepted = false
-2019/03/12 21:38:05 Server: 1, Leader: 0,  LeaderCommitIdx = 8, server commit = 8 | Now server logs = 8
-2019/03/12 21:38:05 After Leader 0 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 14, rf.currentTerm = 14
-2019/03/12 21:38:05 After Leader 0 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 14, rf.currentTerm = 14
-2019/03/12 21:38:05 After Leader 0 send to server 2:  callSuccess = true, appendEntriesReply.Success = false, appendEntriesReply.Term = 14, rf.currentTerm = 14
-2019/03/12 21:38:05 Server 0 get AppendEntries from leader 0
-2019/03/12 21:38:05 Server 2 get AppendEntries from leader 0
-2019/03/12 21:38:05 args.Term: 14, my term: 14
-2019/03/12 21:38:05 Server 2 Rejects server 0 because of mismatch: prevIndex = 7, logs = [{101 1}], prevTerm = 10
-
-2019/03/12 21:38:05 Server 2 (Term: 14) reply AppendEntries from leader 0 (Term = 14): accepted = false
-2019/03/12 21:38:05 args.Term: 14, my term: 14
-2019/03/12 21:38:05 Server 0 (Term: 14) reply AppendEntries from leader 0 (Term = 14): accepted = true
-2019/03/12 21:38:05 Server 1 get AppendEntries from leader 0
-2019/03/12 21:38:05 args.Term: 14, my term: 14
-2019/03/12 21:38:05 Server 1 (Term: 14) reply AppendEntries from leader 0 (Term = 14): accepted = true
-2019/03/12 21:38:05 Server: 0, Leader: 0,  LeaderCommitIdx = 8, server commit = 8 | Now server logs = 8
-2019/03/12 21:38:05 Server: 1, Leader: 0,  LeaderCommitIdx = 8, server commit = 8 | Now server logs = 8
-2019/03/12 21:38:05 After Leader 0 send to server 2:  callSuccess = true, appendEntriesReply.Success = false, appendEntriesReply.Term = 14, rf.currentTerm = 14
-2019/03/12 21:38:05 After Leader 0 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 14, rf.currentTerm = 14
-2019/03/12 21:38:05 After Leader 0 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 14, rf.currentTerm = 14
-2019/03/12 21:38:05 Server 0 get AppendEntries from leader 0
-2019/03/12 21:38:05 args.Term: 14, my term: 14
-2019/03/12 21:38:05 Server 0 (Term: 14) reply AppendEntries from leader 0 (Term = 14): accepted = true
-2019/03/12 21:38:05 Server 2 get AppendEntries from leader 0
-2019/03/12 21:38:05 args.Term: 14, my term: 14
-2019/03/12 21:38:05 Server 2 Rejects server 0 because of mismatch: prevIndex = 7, logs = [{101 1}], prevTerm = 10
-
-2019/03/12 21:38:05 Server 2 (Term: 14) reply AppendEntries from leader 0 (Term = 14): accepted = false
-2019/03/12 21:38:05 Server: 0, Leader: 0,  LeaderCommitIdx = 8, server commit = 8 | Now server logs = 8
-2019/03/12 21:38:05 Server 1 get AppendEntries from leader 0
-2019/03/12 21:38:05 args.Term: 14, my term: 14
-2019/03/12 21:38:05 Server 1 (Term: 14) reply AppendEntries from leader 0 (Term = 14): accepted = true
-2019/03/12 21:38:05 After Leader 0 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 14, rf.currentTerm = 14
-2019/03/12 21:38:05 Server: 1, Leader: 0,  LeaderCommitIdx = 8, server commit = 8 | Now server logs = 8
-2019/03/12 21:38:05 After Leader 0 send to server 2:  callSuccess = true, appendEntriesReply.Success = false, appendEntriesReply.Term = 14, rf.currentTerm = 14
-2019/03/12 21:38:05 After Leader 0 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 14, rf.currentTerm = 14
-2019/03/12 21:38:05 Server 0 get AppendEntries from leader 0
-2019/03/12 21:38:05 Server 2 get AppendEntries from leader 0
-2019/03/12 21:38:05 args.Term: 14, my term: 14
-2019/03/12 21:38:05 Server 2 Rejects server 0 because of mismatch: prevIndex = 7, logs = [{101 1}], prevTerm = 10
-
-2019/03/12 21:38:05 Server 2 (Term: 14) reply AppendEntries from leader 0 (Term = 14): accepted = false
-2019/03/12 21:38:05 args.Term: 14, my term: 14
-2019/03/12 21:38:05 Server 0 (Term: 14) reply AppendEntries from leader 0 (Term = 14): accepted = true
-2019/03/12 21:38:05 Server 1 get AppendEntries from leader 0
-2019/03/12 21:38:05 args.Term: 14, my term: 14
-2019/03/12 21:38:05 Server 1 (Term: 14) reply AppendEntries from leader 0 (Term = 14): accepted = true
-2019/03/12 21:38:05 Server: 0, Leader: 0,  LeaderCommitIdx = 8, server commit = 8 | Now server logs = 8
-2019/03/12 21:38:05 Server: 1, Leader: 0,  LeaderCommitIdx = 8, server commit = 8 | Now server logs = 8
-2019/03/12 21:38:05 After Leader 0 send to server 2:  callSuccess = true, appendEntriesReply.Success = false, appendEntriesReply.Term = 14, rf.currentTerm = 14
-2019/03/12 21:38:05 After Leader 0 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 14, rf.currentTerm = 14
-2019/03/12 21:38:05 After Leader 0 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 14, rf.currentTerm = 14
-2019/03/12 21:38:05 >>>>>> Server 2 becomes a candidate, new term: 15 <<<<<<<<
-2019/03/12 21:38:05 Server 2 current votes = 1 before requesting server 1
-2019/03/12 21:38:05 Server 2 current votes = 1 before requesting server 0
-2019/03/12 21:38:05 Server 1 (Term = 14) get request from server 2 - term 15
-2019/03/12 21:38:05 server 1 checking hasMoreRecentLogsThan: myLast.Term = 10, lastLogTerm = 1, mylogs = 8, other = 1
-2019/03/12 21:38:05 1 > 2 : candidateUpdated = false
-2019/03/12 21:38:05 Server 0 (Term = 14) get request from server 2 - term 15
-2019/03/12 21:38:05 server 0 checking hasMoreRecentLogsThan: myLast.Term = 10, lastLogTerm = 1, mylogs = 8, other = 1
-2019/03/12 21:38:05 0 > 2 : candidateUpdated = false
-2019/03/12 21:38:05 Server 2 ok = true, granted = false, before requesting server 1
-2019/03/12 21:38:05 Server 2 current votes = 1 after requesting server 1
-2019/03/12 21:38:05 Server 2 ok = true, granted = false, before requesting server 0
-2019/03/12 21:38:05 Server 2 current votes = 1 after requesting server 0
-2019/03/12 21:38:05 Server 2 get votes: 1, 1
-2019/03/12 21:38:06 >>>>>> Server 1 becomes a candidate, new term: 16 <<<<<<<<
-2019/03/12 21:38:06 Server 1 current votes = 1 before requesting server 2
-2019/03/12 21:38:06 Server 1 current votes = 1 before requesting server 0
-2019/03/12 21:38:06 Server 2 (Term = 15) get request from server 1 - term 16
-2019/03/12 21:38:06 server 2 checking hasMoreRecentLogsThan: myLast.Term = 1, lastLogTerm = 10, mylogs = 1, other = 8
-2019/03/12 21:38:06 Server 0 (Term = 15) get request from server 1 - term 16
-2019/03/12 21:38:06 server 0 checking hasMoreRecentLogsThan: myLast.Term = 10, lastLogTerm = 10, mylogs = 8, other = 8
-2019/03/12 21:38:06 2 > 1 : candidateUpdated = true
-2019/03/12 21:38:06 Server 2 granted vote for server 1
-2019/03/12 21:38:06 0 > 1 : candidateUpdated = true
-2019/03/12 21:38:06 Server 0 granted vote for server 1
-2019/03/12 21:38:06 Server 1 ok = true, granted = true, before requesting server 2
-2019/03/12 21:38:06 Server 1 get vote from server 2, current votes = 2
-2019/03/12 21:38:06 Server 1 current votes = 2 after requesting server 2
-2019/03/12 21:38:06 Server 1 ok = true, granted = true, before requesting server 0
-2019/03/12 21:38:06 Server 1 get vote from server 0, current votes = 3
-2019/03/12 21:38:06 Server 1 current votes = 3 after requesting server 0
-2019/03/12 21:38:06 Server 1 get votes: 3, 1
-2019/03/12 21:38:06 
- ----- NEW LEADER: 1 - Term: 16 (C = 8, logs = [{101 1} {102 1} {103 1} {104 1} {105 1} {106 1} {106 6} {106 10}]) -----
-2019/03/12 21:38:06 ------ Leader 1 Start Command  106  😡😡😡: New Logs = [{101 1} {102 1} {103 1} {104 1} {105 1} {106 1} {106 6} {106 10} {106 16}] --------
-One : Commit Index = 9
-2019/03/12 21:38:06 leader 1 send data to server 2 , prevIndex = 7, entries = [{106 16}]
-2019/03/12 21:38:06 leader 1 send data to server 0 , prevIndex = 7, entries = [{106 16}]
-2019/03/12 21:38:06 Server 2 get AppendEntries from leader 1
-2019/03/12 21:38:06 args.Term: 16, my term: 16
-2019/03/12 21:38:06 Server 2 Rejects server 1 because of mismatch: prevIndex = 7, logs = [{101 1}], prevTerm = 10
-
-2019/03/12 21:38:06 Server 2 (Term: 16) reply AppendEntries from leader 1 (Term = 16): accepted = false
-2019/03/12 21:38:06 Server 0 get AppendEntries from leader 1
-2019/03/12 21:38:06 args.Term: 16, my term: 16
-2019/03/12 21:38:06 OnAppendEntriesData: prevIndex = 7
-2019/03/12 21:38:06 Update server 0 logs = [{101 1} {102 1} {103 1} {104 1} {105 1} {106 1} {106 6} {106 10} {106 16}]
-2019/03/12 21:38:06 Server 0 (Term: 16) reply AppendEntries from leader 1 (Term = 16): accepted = true
-2019/03/12 21:38:06 After Leader 1 send to server 2:  callSuccess = true, appendEntriesReply.Success = false, appendEntriesReply.Term = 16, rf.currentTerm = 16
-2019/03/12 21:38:06 Fail: Updated Leader 1 matchIndexes: [-1 8 -1], nextIndexes = [8 9 7]
-2019/03/12 21:38:06 Server: 0, Leader: 1,  LeaderCommitIdx = 8, server commit = 8 | Now server logs = 9
-2019/03/12 21:38:06 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 16, rf.currentTerm = 16
-2019/03/12 21:38:06 Success: Updated Leader 1 matchIndexes: [8 8 -1], nextIndexes = [9 9 7]
-2019/03/12 21:38:06 
- Start: Server 1 (C = 9) sendApplyCh: 9 : logs = [{101 1} {102 1} {103 1} {104 1} {105 1} {106 1} {106 6} {106 10} {106 16}]----
-2019/03/12 21:38:06 >>>>>> Server 2 becomes a candidate, new term: 17 <<<<<<<<
-2019/03/12 21:38:06 Server 2 current votes = 1 before requesting server 1
-2019/03/12 21:38:06 Server 2 current votes = 1 before requesting server 0
-2019/03/12 21:38:06 Server 1 (Term = 16) get request from server 2 - term 17
-2019/03/12 21:38:06 server 1 checking hasMoreRecentLogsThan: myLast.Term = 16, lastLogTerm = 1, mylogs = 9, other = 1
-2019/03/12 21:38:06 Server 0 (Term = 16) get request from server 2 - term 17
-2019/03/12 21:38:06 server 0 checking hasMoreRecentLogsThan: myLast.Term = 16, lastLogTerm = 1, mylogs = 9, other = 1
-2019/03/12 21:38:06 1 > 2 : candidateUpdated = false
-2019/03/12 21:38:06 0 > 2 : candidateUpdated = false
-2019/03/12 21:38:06 Server 2 ok = true, granted = false, before requesting server 1
-2019/03/12 21:38:06 Server 2 current votes = 1 after requesting server 1
-2019/03/12 21:38:06 Server 2 ok = true, granted = false, before requesting server 0
-2019/03/12 21:38:06 Server 2 current votes = 1 after requesting server 0
-2019/03/12 21:38:06 Server 2 get votes: 1, 1
-2019/03/12 21:38:07 >>>>>> Server 0 becomes a candidate, new term: 18 <<<<<<<<
-2019/03/12 21:38:07 Server 0 current votes = 1 before requesting server 2
-2019/03/12 21:38:07 Server 0 current votes = 1 before requesting server 1
-2019/03/12 21:38:07 Server 2 (Term = 17) get request from server 0 - term 18
-2019/03/12 21:38:07 server 2 checking hasMoreRecentLogsThan: myLast.Term = 1, lastLogTerm = 16, mylogs = 1, other = 9
-2019/03/12 21:38:07 Server 1 (Term = 17) get request from server 0 - term 18
-2019/03/12 21:38:07 server 1 checking hasMoreRecentLogsThan: myLast.Term = 16, lastLogTerm = 16, mylogs = 9, other = 9
-2019/03/12 21:38:07 2 > 0 : candidateUpdated = true
-2019/03/12 21:38:07 Server 2 granted vote for server 0
-2019/03/12 21:38:07 1 > 0 : candidateUpdated = true
-2019/03/12 21:38:07 Server 1 granted vote for server 0
-2019/03/12 21:38:07 Server 0 ok = true, granted = true, before requesting server 2
-2019/03/12 21:38:07 Server 0 get vote from server 2, current votes = 2
-2019/03/12 21:38:07 Server 0 ok = true, granted = true, before requesting server 1
-2019/03/12 21:38:07 Server 0 get vote from server 1, current votes = 3
-2019/03/12 21:38:07 Server 0 current votes = 2 after requesting server 2
-2019/03/12 21:38:07 Server 0 current votes = 3 after requesting server 1
-2019/03/12 21:38:07 Server 0 get votes: 3, 1
-2019/03/12 21:38:07 
- ----- NEW LEADER: 0 - Term: 18 (C = 8, logs = [{101 1} {102 1} {103 1} {104 1} {105 1} {106 1} {106 6} {106 10} {106 16}]) -----
-2019/03/12 21:38:07 Server 2 get AppendEntries from leader 0
-2019/03/12 21:38:07 args.Term: 18, my term: 18
-2019/03/12 21:38:07 Server 2 Rejects server 0 because of mismatch: prevIndex = 8, logs = [{101 1}], prevTerm = 16
-
-2019/03/12 21:38:07 Server 2 (Term: 18) reply AppendEntries from leader 0 (Term = 18): accepted = false
-2019/03/12 21:38:07 Server 1 get AppendEntries from leader 0
-2019/03/12 21:38:07 args.Term: 18, my term: 18
-2019/03/12 21:38:07 Server 1 (Term: 18) reply AppendEntries from leader 0 (Term = 18): accepted = true
-2019/03/12 21:38:07 Server 0 get AppendEntries from leader 0
-2019/03/12 21:38:07 args.Term: 18, my term: 18
-2019/03/12 21:38:07 Server 0 (Term: 18) reply AppendEntries from leader 0 (Term = 18): accepted = true
-2019/03/12 21:38:07 Server: 1, Leader: 0,  LeaderCommitIdx = 8, server commit = 9 | Now server logs = 9
-2019/03/12 21:38:07 Server: 0, Leader: 0,  LeaderCommitIdx = 8, server commit = 8 | Now server logs = 9
-2019/03/12 21:38:07 After Leader 0 send to server 2:  callSuccess = true, appendEntriesReply.Success = false, appendEntriesReply.Term = 18, rf.currentTerm = 18
-2019/03/12 21:38:07 After Leader 0 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 18, rf.currentTerm = 18
-2019/03/12 21:38:07 After Leader 0 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 18, rf.currentTerm = 18
-2019/03/12 21:38:07 Server 2 get AppendEntries from leader 0
-2019/03/12 21:38:07 args.Term: 18, my term: 18
-2019/03/12 21:38:07 Server 2 Rejects server 0 because of mismatch: prevIndex = 8, logs = [{101 1}], prevTerm = 16
-
-2019/03/12 21:38:07 Server 2 (Term: 18) reply AppendEntries from leader 0 (Term = 18): accepted = false
-2019/03/12 21:38:07 Server 1 get AppendEntries from leader 0
-2019/03/12 21:38:07 args.Term: 18, my term: 18
-2019/03/12 21:38:07 Server 1 (Term: 18) reply AppendEntries from leader 0 (Term = 18): accepted = true
-2019/03/12 21:38:07 Server 0 get AppendEntries from leader 0
-2019/03/12 21:38:07 args.Term: 18, my term: 18
-2019/03/12 21:38:07 Server: 1, Leader: 0,  LeaderCommitIdx = 8, server commit = 9 | Now server logs = 9
-2019/03/12 21:38:07 After Leader 0 send to server 2:  callSuccess = true, appendEntriesReply.Success = false, appendEntriesReply.Term = 18, rf.currentTerm = 18
-2019/03/12 21:38:07 Server 0 (Term: 18) reply AppendEntries from leader 0 (Term = 18): accepted = true
-2019/03/12 21:38:07 Server: 0, Leader: 0,  LeaderCommitIdx = 8, server commit = 8 | Now server logs = 9
-2019/03/12 21:38:07 After Leader 0 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 18, rf.currentTerm = 18
-2019/03/12 21:38:07 After Leader 0 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 18, rf.currentTerm = 18
-2019/03/12 21:38:07 >>>>>> Server 2 becomes a candidate, new term: 19 <<<<<<<<
-2019/03/12 21:38:07 Server 2 current votes = 1 before requesting server 1
-2019/03/12 21:38:07 Server 2 current votes = 1 before requesting server 0
-2019/03/12 21:38:07 Server 1 (Term = 18) get request from server 2 - term 19
-2019/03/12 21:38:07 server 1 checking hasMoreRecentLogsThan: myLast.Term = 16, lastLogTerm = 1, mylogs = 9, other = 1
-2019/03/12 21:38:07 1 > 2 : candidateUpdated = false
-2019/03/12 21:38:07 Server 0 (Term = 18) get request from server 2 - term 19
-2019/03/12 21:38:07 server 0 checking hasMoreRecentLogsThan: myLast.Term = 16, lastLogTerm = 1, mylogs = 9, other = 1
-2019/03/12 21:38:07 0 > 2 : candidateUpdated = false
-2019/03/12 21:38:07 Server 2 ok = true, granted = false, before requesting server 1
-2019/03/12 21:38:07 Server 2 current votes = 1 after requesting server 1
-2019/03/12 21:38:07 Server 2 ok = true, granted = false, before requesting server 0
-2019/03/12 21:38:07 Server 2 current votes = 1 after requesting server 0
-2019/03/12 21:38:07 Server 2 get votes: 1, 1
-2019/03/12 21:38:08 >>>>>> Server 0 becomes a candidate, new term: 20 <<<<<<<<
-2019/03/12 21:38:08 Server 0 current votes = 1 before requesting server 2
-2019/03/12 21:38:08 Server 0 current votes = 1 before requesting server 1
-2019/03/12 21:38:08 Server 2 (Term = 19) get request from server 0 - term 20
-2019/03/12 21:38:08 server 2 checking hasMoreRecentLogsThan: myLast.Term = 1, lastLogTerm = 16, mylogs = 1, other = 9
-2019/03/12 21:38:08 Server 1 (Term = 19) get request from server 0 - term 20
-2019/03/12 21:38:08 server 1 checking hasMoreRecentLogsThan: myLast.Term = 16, lastLogTerm = 16, mylogs = 9, other = 9
-2019/03/12 21:38:08 2 > 0 : candidateUpdated = true
-2019/03/12 21:38:08 Server 2 granted vote for server 0
-2019/03/12 21:38:08 1 > 0 : candidateUpdated = true
-2019/03/12 21:38:08 Server 1 granted vote for server 0
-2019/03/12 21:38:08 Server 0 ok = true, granted = true, before requesting server 2
-2019/03/12 21:38:08 Server 0 get vote from server 2, current votes = 2
-2019/03/12 21:38:08 Server 0 current votes = 2 after requesting server 2
-2019/03/12 21:38:08 Server 0 ok = true, granted = true, before requesting server 1
-2019/03/12 21:38:08 Server 0 get vote from server 1, current votes = 3
-2019/03/12 21:38:08 Server 0 current votes = 3 after requesting server 1
-2019/03/12 21:38:08 Server 0 get votes: 3, 1
-2019/03/12 21:38:08 
- ----- NEW LEADER: 0 - Term: 20 (C = 8, logs = [{101 1} {102 1} {103 1} {104 1} {105 1} {106 1} {106 6} {106 10} {106 16}]) -----
-2019/03/12 21:38:08 ------ Leader 0 Start Command  106  😡😡😡: New Logs = [{101 1} {102 1} {103 1} {104 1} {105 1} {106 1} {106 6} {106 10} {106 16} {106 20}] --------
-One : Commit Index = 10
-2019/03/12 21:38:08 leader 0 send data to server 2 , prevIndex = 8, entries = [{106 20}]
-2019/03/12 21:38:08 leader 0 send data to server 1 , prevIndex = 8, entries = [{106 20}]
-2019/03/12 21:38:08 Server 2 get AppendEntries from leader 0
-2019/03/12 21:38:08 args.Term: 20, my term: 20
-2019/03/12 21:38:08 Server 2 Rejects server 0 because of mismatch: prevIndex = 8, logs = [{101 1}], prevTerm = 16
-
-2019/03/12 21:38:08 Server 2 (Term: 20) reply AppendEntries from leader 0 (Term = 20): accepted = false
-2019/03/12 21:38:08 Server 1 get AppendEntries from leader 0
-2019/03/12 21:38:08 args.Term: 20, my term: 20
-2019/03/12 21:38:08 OnAppendEntriesData: prevIndex = 8
-2019/03/12 21:38:08 After Leader 0 send to server 2:  callSuccess = true, appendEntriesReply.Success = false, appendEntriesReply.Term = 20, rf.currentTerm = 20
-2019/03/12 21:38:08 Fail: Updated Leader 0 matchIndexes: [9 -1 -1], nextIndexes = [10 9 8]
-2019/03/12 21:38:08 Update server 1 logs = [{101 1} {102 1} {103 1} {104 1} {105 1} {106 1} {106 6} {106 10} {106 16} {106 20}]
-2019/03/12 21:38:08 Server 1 (Term: 20) reply AppendEntries from leader 0 (Term = 20): accepted = true
-2019/03/12 21:38:08 Server: 1, Leader: 0,  LeaderCommitIdx = 8, server commit = 9 | Now server logs = 10
-2019/03/12 21:38:08 After Leader 0 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 20, rf.currentTerm = 20
-2019/03/12 21:38:08 Success: Updated Leader 0 matchIndexes: [9 9 -1], nextIndexes = [10 10 8]
-2019/03/12 21:38:08 
- Start: Server 0 (C = 10) sendApplyCh: 9 : logs = [{101 1} {102 1} {103 1} {104 1} {105 1} {106 1} {106 6} {106 10} {106 16} {106 20}]----
-2019/03/12 21:38:08 
- Start: Server 0 (C = 10) sendApplyCh: 10 : logs = [{101 1} {102 1} {103 1} {104 1} {105 1} {106 1} {106 6} {106 10} {106 16} {106 20}]----
-2019/03/12 21:38:08 Server 2 get AppendEntries from leader 0
-2019/03/12 21:38:08 args.Term: 20, my term: 20
-2019/03/12 21:38:08 Server 2 Rejects server 0 because of mismatch: prevIndex = 7, logs = [{101 1}], prevTerm = 10
-
-2019/03/12 21:38:08 Server 2 (Term: 20) reply AppendEntries from leader 0 (Term = 20): accepted = false
-2019/03/12 21:38:08 Server 0 get AppendEntries from leader 0
-2019/03/12 21:38:08 Server 1 get AppendEntries from leader 0
-2019/03/12 21:38:08 args.Term: 20, my term: 20
-2019/03/12 21:38:08 Server 1 (Term: 20) reply AppendEntries from leader 0 (Term = 20): accepted = true
-2019/03/12 21:38:08 After Leader 0 send to server 2:  callSuccess = true, appendEntriesReply.Success = false, appendEntriesReply.Term = 20, rf.currentTerm = 20
-2019/03/12 21:38:08 args.Term: 20, my term: 20
-2019/03/12 21:38:08 Server 0 (Term: 20) reply AppendEntries from leader 0 (Term = 20): accepted = true
-2019/03/12 21:38:08 Server: 1, Leader: 0,  LeaderCommitIdx = 10, server commit = 9 | Now server logs = 10
-2019/03/12 21:38:08 Server: 0, Leader: 0,  LeaderCommitIdx = 10, server commit = 10 | Now server logs = 10
-2019/03/12 21:38:08 
- Start: Server 1 (C = 10) sendApplyCh: 10 : logs = [{101 1} {102 1} {103 1} {104 1} {105 1} {106 1} {106 6} {106 10} {106 16} {106 20}]----
-2019/03/12 21:38:08 After Leader 0 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 20, rf.currentTerm = 20
-2019/03/12 21:38:08 After Leader 0 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 20, rf.currentTerm = 20
-2019/03/12 21:38:08 Server 1 get AppendEntries from leader 0
-2019/03/12 21:38:08 args.Term: 20, my term: 20
-2019/03/12 21:38:08 Server 1 (Term: 20) reply AppendEntries from leader 0 (Term = 20): accepted = true
-2019/03/12 21:38:08 Server 0 get AppendEntries from leader 0
-2019/03/12 21:38:08 args.Term: 20, my term: 20
-2019/03/12 21:38:08 Server 0 (Term: 20) reply AppendEntries from leader 0 (Term = 20): accepted = true
-2019/03/12 21:38:08 Server 2 get AppendEntries from leader 0
-2019/03/12 21:38:08 args.Term: 20, my term: 20
-2019/03/12 21:38:08 Server 2 Rejects server 0 because of mismatch: prevIndex = 7, logs = [{101 1}], prevTerm = 10
-
-2019/03/12 21:38:08 Server 2 (Term: 20) reply AppendEntries from leader 0 (Term = 20): accepted = false
-2019/03/12 21:38:08 Server: 0, Leader: 0,  LeaderCommitIdx = 10, server commit = 10 | Now server logs = 10
-2019/03/12 21:38:08 Server: 1, Leader: 0,  LeaderCommitIdx = 10, server commit = 10 | Now server logs = 10
-2019/03/12 21:38:08 After Leader 0 send to server 2:  callSuccess = true, appendEntriesReply.Success = false, appendEntriesReply.Term = 20, rf.currentTerm = 20
-2019/03/12 21:38:08 After Leader 0 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 20, rf.currentTerm = 20
-2019/03/12 21:38:08 After Leader 0 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 20, rf.currentTerm = 20
-2019/03/12 21:38:08 Server 2 get AppendEntries from leader 0
-2019/03/12 21:38:08 args.Term: 20, my term: 20
-2019/03/12 21:38:08 Server 2 Rejects server 0 because of mismatch: prevIndex = 7, logs = [{101 1}], prevTerm = 10
-
-2019/03/12 21:38:08 Server 2 (Term: 20) reply AppendEntries from leader 0 (Term = 20): accepted = false
-2019/03/12 21:38:08 Server 1 get AppendEntries from leader 0
-2019/03/12 21:38:08 args.Term: 20, my term: 20
-2019/03/12 21:38:08 Server 1 (Term: 20) reply AppendEntries from leader 0 (Term = 20): accepted = true
-2019/03/12 21:38:08 Server 0 get AppendEntries from leader 0
-2019/03/12 21:38:08 Server: 1, Leader: 0,  LeaderCommitIdx = 10, server commit = 10 | Now server logs = 10
-2019/03/12 21:38:08 After Leader 0 send to server 2:  callSuccess = true, appendEntriesReply.Success = false, appendEntriesReply.Term = 20, rf.currentTerm = 20
-2019/03/12 21:38:08 args.Term: 20, my term: 20
-2019/03/12 21:38:08 Server 0 (Term: 20) reply AppendEntries from leader 0 (Term = 20): accepted = true
-2019/03/12 21:38:08 Server: 0, Leader: 0,  LeaderCommitIdx = 10, server commit = 10 | Now server logs = 10
-2019/03/12 21:38:08 After Leader 0 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 20, rf.currentTerm = 20
-2019/03/12 21:38:08 After Leader 0 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 20, rf.currentTerm = 20
-2019/03/12 21:38:08 >>>>>> Server 2 becomes a candidate, new term: 21 <<<<<<<<
-2019/03/12 21:38:08 Server 2 current votes = 1 before requesting server 1
-2019/03/12 21:38:08 Server 2 current votes = 1 before requesting server 0
-2019/03/12 21:38:08 Server 1 (Term = 20) get request from server 2 - term 21
-2019/03/12 21:38:08 server 1 checking hasMoreRecentLogsThan: myLast.Term = 20, lastLogTerm = 1, mylogs = 10, other = 1
-2019/03/12 21:38:08 1 > 2 : candidateUpdated = false
-2019/03/12 21:38:08 Server 0 (Term = 20) get request from server 2 - term 21
-2019/03/12 21:38:08 server 0 checking hasMoreRecentLogsThan: myLast.Term = 20, lastLogTerm = 1, mylogs = 10, other = 1
-2019/03/12 21:38:08 0 > 2 : candidateUpdated = false
-2019/03/12 21:38:08 Server 2 ok = true, granted = false, before requesting server 1
-2019/03/12 21:38:08 Server 2 current votes = 1 after requesting server 1
-2019/03/12 21:38:08 Server 2 ok = true, granted = false, before requesting server 0
-2019/03/12 21:38:08 Server 2 current votes = 1 after requesting server 0
-2019/03/12 21:38:08 Server 2 get votes: 1, 1
-2019/03/12 21:38:09 >>>>>> Server 1 becomes a candidate, new term: 22 <<<<<<<<
-2019/03/12 21:38:09 Server 1 current votes = 1 before requesting server 2
-2019/03/12 21:38:09 Server 1 current votes = 1 before requesting server 0
-2019/03/12 21:38:09 Server 2 (Term = 21) get request from server 1 - term 22
-2019/03/12 21:38:09 server 2 checking hasMoreRecentLogsThan: myLast.Term = 1, lastLogTerm = 20, mylogs = 1, other = 10
-2019/03/12 21:38:09 Server 0 (Term = 21) get request from server 1 - term 22
-2019/03/12 21:38:09 server 0 checking hasMoreRecentLogsThan: myLast.Term = 20, lastLogTerm = 20, mylogs = 10, other = 10
-2019/03/12 21:38:09 2 > 1 : candidateUpdated = true
-2019/03/12 21:38:09 Server 2 granted vote for server 1
-2019/03/12 21:38:09 0 > 1 : candidateUpdated = true
-2019/03/12 21:38:09 Server 0 granted vote for server 1
-2019/03/12 21:38:09 Server 1 ok = true, granted = true, before requesting server 0
-2019/03/12 21:38:09 Server 1 get vote from server 0, current votes = 2
-2019/03/12 21:38:09 Server 1 current votes = 2 after requesting server 0
-2019/03/12 21:38:09 Server 1 ok = true, granted = true, before requesting server 2
-2019/03/12 21:38:09 Server 1 get vote from server 2, current votes = 3
-2019/03/12 21:38:09 Server 1 current votes = 3 after requesting server 2
-2019/03/12 21:38:09 Server 1 get votes: 3, 1
-2019/03/12 21:38:09 
- ----- NEW LEADER: 1 - Term: 22 (C = 10, logs = [{101 1} {102 1} {103 1} {104 1} {105 1} {106 1} {106 6} {106 10} {106 16} {106 20}]) -----
-2019/03/12 21:38:09 >>>>>> Server 0 becomes a candidate, new term: 23 <<<<<<<<
-2019/03/12 21:38:09 Server 0 current votes = 1 before requesting server 2
-2019/03/12 21:38:09 Server 0 current votes = 1 before requesting server 1
-2019/03/12 21:38:09 Server 2 (Term = 22) get request from server 0 - term 23
-2019/03/12 21:38:09 server 2 checking hasMoreRecentLogsThan: myLast.Term = 1, lastLogTerm = 20, mylogs = 1, other = 10
-2019/03/12 21:38:09 2 > 0 : candidateUpdated = true
-2019/03/12 21:38:09 Server 2 granted vote for server 0
-2019/03/12 21:38:09 Server 1 (Term = 22) get request from server 0 - term 23
-2019/03/12 21:38:09 server 1 checking hasMoreRecentLogsThan: myLast.Term = 20, lastLogTerm = 20, mylogs = 10, other = 10
-2019/03/12 21:38:09 1 > 0 : candidateUpdated = true
-2019/03/12 21:38:09 Server 1 granted vote for server 0
-2019/03/12 21:38:09 Server 0 ok = true, granted = true, before requesting server 2
-2019/03/12 21:38:09 Server 0 get vote from server 2, current votes = 2
-2019/03/12 21:38:09 Server 0 current votes = 2 after requesting server 2
-2019/03/12 21:38:09 Server 0 ok = true, granted = true, before requesting server 1
-2019/03/12 21:38:09 Server 0 get vote from server 1, current votes = 3
-2019/03/12 21:38:09 Server 0 current votes = 3 after requesting server 1
-2019/03/12 21:38:09 Server 0 get votes: 3, 1
-2019/03/12 21:38:09 
- ----- NEW LEADER: 0 - Term: 23 (C = 10, logs = [{101 1} {102 1} {103 1} {104 1} {105 1} {106 1} {106 6} {106 10} {106 16} {106 20}]) -----
-2019/03/12 21:38:09 Server 2 get AppendEntries from leader 0
-2019/03/12 21:38:09 Server 1 get AppendEntries from leader 0
-2019/03/12 21:38:09 args.Term: 23, my term: 23
-2019/03/12 21:38:09 Server 1 (Term: 23) reply AppendEntries from leader 0 (Term = 23): accepted = true
-2019/03/12 21:38:09 args.Term: 23, my term: 23
-2019/03/12 21:38:09 Server: 1, Leader: 0,  LeaderCommitIdx = 10, server commit = 10 | Now server logs = 10
-2019/03/12 21:38:09 Server 0 get AppendEntries from leader 0
-2019/03/12 21:38:09 args.Term: 23, my term: 23
-2019/03/12 21:38:09 Server 0 (Term: 23) reply AppendEntries from leader 0 (Term = 23): accepted = true
-2019/03/12 21:38:09 Server 2 Rejects server 0 because of mismatch: prevIndex = 9, logs = [{101 1}], prevTerm = 20
-
-2019/03/12 21:38:09 Server 2 (Term: 23) reply AppendEntries from leader 0 (Term = 23): accepted = false
-2019/03/12 21:38:09 Server: 0, Leader: 0,  LeaderCommitIdx = 10, server commit = 10 | Now server logs = 10
-2019/03/12 21:38:09 After Leader 0 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 23, rf.currentTerm = 23
-2019/03/12 21:38:09 After Leader 0 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 23, rf.currentTerm = 23
-2019/03/12 21:38:09 After Leader 0 send to server 2:  callSuccess = true, appendEntriesReply.Success = false, appendEntriesReply.Term = 23, rf.currentTerm = 23
-2019/03/12 21:38:09 Server 0 get AppendEntries from leader 0
-2019/03/12 21:38:09 args.Term: 23, my term: 23
-2019/03/12 21:38:09 Server 0 (Term: 23) reply AppendEntries from leader 0 (Term = 23): accepted = true
-2019/03/12 21:38:09 Server 2 get AppendEntries from leader 0
-2019/03/12 21:38:09 args.Term: 23, my term: 23
-2019/03/12 21:38:09 Server 2 Rejects server 0 because of mismatch: prevIndex = 9, logs = [{101 1}], prevTerm = 20
-
-2019/03/12 21:38:09 Server 2 (Term: 23) reply AppendEntries from leader 0 (Term = 23): accepted = false
-2019/03/12 21:38:09 Server: 0, Leader: 0,  LeaderCommitIdx = 10, server commit = 10 | Now server logs = 10
-2019/03/12 21:38:09 Server 1 get AppendEntries from leader 0
-2019/03/12 21:38:09 args.Term: 23, my term: 23
-2019/03/12 21:38:09 Server 1 (Term: 23) reply AppendEntries from leader 0 (Term = 23): accepted = true
-2019/03/12 21:38:09 After Leader 0 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 23, rf.currentTerm = 23
-2019/03/12 21:38:09 Server: 1, Leader: 0,  LeaderCommitIdx = 10, server commit = 10 | Now server logs = 10
-2019/03/12 21:38:09 After Leader 0 send to server 2:  callSuccess = true, appendEntriesReply.Success = false, appendEntriesReply.Term = 23, rf.currentTerm = 23
-2019/03/12 21:38:09 After Leader 0 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 23, rf.currentTerm = 23
-2019/03/12 21:38:09 >>>>>> Server 2 becomes a candidate, new term: 24 <<<<<<<<
-2019/03/12 21:38:09 Server 2 current votes = 1 before requesting server 0
-2019/03/12 21:38:09 Server 2 current votes = 1 before requesting server 1
-2019/03/12 21:38:09 Server 0 (Term = 23) get request from server 2 - term 24
-2019/03/12 21:38:09 server 0 checking hasMoreRecentLogsThan: myLast.Term = 20, lastLogTerm = 1, mylogs = 10, other = 1
-2019/03/12 21:38:09 Server 1 (Term = 23) get request from server 2 - term 24
-2019/03/12 21:38:09 server 1 checking hasMoreRecentLogsThan: myLast.Term = 20, lastLogTerm = 1, mylogs = 10, other = 1
-2019/03/12 21:38:09 0 > 2 : candidateUpdated = false
-2019/03/12 21:38:09 1 > 2 : candidateUpdated = false
-2019/03/12 21:38:09 Server 2 ok = true, granted = false, before requesting server 0
-2019/03/12 21:38:09 Server 2 current votes = 1 after requesting server 0
-2019/03/12 21:38:09 Server 2 ok = true, granted = false, before requesting server 1
-2019/03/12 21:38:09 Server 2 current votes = 1 after requesting server 1
-2019/03/12 21:38:09 Server 2 get votes: 1, 1
---- FAIL: TestFailAgree2B (14.88s)
-	config.go:438: one(106) failed to reach agreement
-FAIL
-exit status 1
-FAIL	_/home/dengl11/src/StudyNotes-MIT-6.824/2-Labs/2-FaultTolerance/src/raft	14.886s
-Makefile:21: recipe for target '2B2' failed
+2019/03/12 22:08:29 leader 1 send data to server 2 , prevIndex = 5, entries = [{107 4}]
+2019/03/12 22:08:29 leader 1 send data to server 0 , prevIndex = 5, entries = [{107 4}]
+2019/03/12 22:08:29 Server 2 get AppendEntries from leader 1
+2019/03/12 22:08:29 args.Term: 4, my term: 4
+2019/03/12 22:08:29 OnAppendEntriesData: prevIndex = 5
+2019/03/12 22:08:29 Server 0 get AppendEntries from leader 1
+2019/03/12 22:08:29 args.Term: 4, my term: 4
+2019/03/12 22:08:29 OnAppendEntriesData: prevIndex = 5
+2019/03/12 22:08:29 Update server 2 logs = [{101 1} {102 1} {103 1} {104 1} {105 1} {106 1} {107 4}]
+2019/03/12 22:08:29 Server 2 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = true
+2019/03/12 22:08:29 Server: 2, Leader: 1,  LeaderCommitIdx = 6, server commit = 6 | Now server logs = 7
+2019/03/12 22:08:29 Update server 0 logs = [{101 1} {102 1} {103 1} {104 1} {105 1} {106 1} {107 4}]
+2019/03/12 22:08:29 Server 0 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = true
+2019/03/12 22:08:29 Server: 0, Leader: 1,  LeaderCommitIdx = 6, server commit = 6 | Now server logs = 7
+2019/03/12 22:08:29 After Leader 1 send to server 2:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 4, rf.currentTerm = 4, Empty = false
+2019/03/12 22:08:29 Success: Updated Leader 1 matchIndexes: [5 6 6], nextIndexes = [6 7 7]
+2019/03/12 22:08:29 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 4, rf.currentTerm = 4, Empty = false
+2019/03/12 22:08:29 Success: Updated Leader 1 matchIndexes: [6 6 6], nextIndexes = [7 7 7]
+2019/03/12 22:08:29 
+ Start: Server 1 (C = 7) sendApplyCh: 7 : logs = [{101 1} {102 1} {103 1} {104 1} {105 1} {106 1} {107 4}]----
+2019/03/12 22:08:29 Server 0 get AppendEntries from leader 1
+2019/03/12 22:08:29 args.Term: 4, my term: 4
+2019/03/12 22:08:29 Server 0 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = true
+2019/03/12 22:08:29 Server 1 get AppendEntries from leader 1
+2019/03/12 22:08:29 Server 2 get AppendEntries from leader 1
+2019/03/12 22:08:29 args.Term: 4, my term: 4
+2019/03/12 22:08:29 Server 2 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = true
+2019/03/12 22:08:29 args.Term: 4, my term: 4
+2019/03/12 22:08:29 Server 1 (Term: 4) reply AppendEntries from leader 1 (Term = 4): accepted = true
+2019/03/12 22:08:29 Server: 2, Leader: 1,  LeaderCommitIdx = 7, server commit = 6 | Now server logs = 7
+2019/03/12 22:08:29 
+ Start: Server 2 (C = 7) sendApplyCh: 7 : logs = [{101 1} {102 1} {103 1} {104 1} {105 1} {106 1} {107 4}]----
+2019/03/12 22:08:29 Server: 0, Leader: 1,  LeaderCommitIdx = 7, server commit = 6 | Now server logs = 7
+2019/03/12 22:08:29 
+ Start: Server 0 (C = 7) sendApplyCh: 7 : logs = [{101 1} {102 1} {103 1} {104 1} {105 1} {106 1} {107 4}]----
+2019/03/12 22:08:29 Server: 1, Leader: 1,  LeaderCommitIdx = 7, server commit = 7 | Now server logs = 7
+2019/03/12 22:08:29 After Leader 1 send to server 2:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 4, rf.currentTerm = 4, Empty = true
+2019/03/12 22:08:29 Success: Updated Leader 1 matchIndexes: [6 6 6], nextIndexes = [7 7 7]
+2019/03/12 22:08:29 After Leader 1 send to server 0:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 4, rf.currentTerm = 4, Empty = true
+2019/03/12 22:08:29 Success: Updated Leader 1 matchIndexes: [6 6 6], nextIndexes = [7 7 7]
+2019/03/12 22:08:29 After Leader 1 send to server 1:  callSuccess = true, appendEntriesReply.Success = true, appendEntriesReply.Term = 4, rf.currentTerm = 4, Empty = true
+2019/03/12 22:08:29 Success: Updated Leader 1 matchIndexes: [6 6 6], nextIndexes = [7 7 7]
+2019/03/12 22:08:29 After Leader 1 send to server 2:  callSuccess = false, appendEntriesReply.Success = false, appendEntriesReply.Term = 0, rf.currentTerm = 4, Empty = true
+  ... Passed
+PASS
+ok  	_/home/dengl11/src/StudyNotes-MIT-6.824/2-Labs/2-FaultTolerance/src/raft	5.608s
