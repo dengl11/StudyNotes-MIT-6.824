@@ -226,9 +226,26 @@ func (rf *Raft) keepSendAppendEntriesToServer(idx int, empty bool) bool {
 	}
 }
 
+func (rf *Raft) sendAppendEntriesEmpty() bool {
+	//DPrintf("nextIndexes: %v", rf.nextIndexes)
+
+	//var wg sync.WaitGroup
+
+	for i := 0; i < len(rf.peers); i++ {
+		//wg.Add(1)
+		go func(idx int) {
+			rf.sendAppendEntriesToServer(idx, true)
+			//rf.keepSendAppendEntriesToServer(idx, true)
+			//wg.Done()
+		}(i)
+	}
+	//wg.Wait()
+	return true
+}
+
 // Leader send heartbeats
 // return true if get success from majority
-func (rf *Raft) sendAppendEntries(empty bool) bool {
+func (rf *Raft) sendAppendEntries() bool {
 	//DPrintf("nextIndexes: %v", rf.nextIndexes)
 
 	waitForMajoritySuccess := make(chan bool)
@@ -236,7 +253,7 @@ func (rf *Raft) sendAppendEntries(empty bool) bool {
     nDone := 0
 
 	for i := 0; i < len(rf.peers); i++ {
-		if !empty && i == rf.getMe() {
+		if i == rf.getMe() {
 			nSuccess++
 			nDone++
 			if (!empty && nDone > len(rf.peers)/2) || nDone >= len(rf.peers) {
@@ -246,7 +263,7 @@ func (rf *Raft) sendAppendEntries(empty bool) bool {
 		}
 		//DPrintf("Server %d send heartbeat to server %d", rf.me, i)
 		go func(idx int) {
-			if rf.keepSendAppendEntriesToServer(idx, empty) {
+			if rf.keepSendAppendEntriesToServer(idx, false) {
 				nSuccess++
 			}
             nDone ++
@@ -574,7 +591,7 @@ func (rf *Raft) Start(command interface{}) (int, int, bool) {
 func (rf *Raft) tryCommitNewCommand(command interface{}) {
 
 	// 2) send AppendEntries to all other servers in parallel
-	majoritySuccess := rf.sendAppendEntries(false)
+	majoritySuccess := rf.sendAppendEntries()
 	if !majoritySuccess {
 		//DPrintf("😂Leader %v did not get majoritySuccess", rf.me)
 		return
@@ -751,11 +768,11 @@ func convertToCandidate(rf *Raft) {
 		}
 		wg.Add(1)
 		go func(i int) {
-			//DPrintf("Server %d current votes = %v before requesting server %v", rf.me, votes, i)
+			DPrintf("Server %d current votes = %v before requesting server %v", rf.me, votes, i)
 			defer wg.Done()
 			var requestReply RequestVoteReply
 			ok := rf.sendRequestVote(i, &requestArgs, &requestReply)
-			DPrintf("Server %d ok = %v, granted = %v, before requesting server %v", i, ok, requestReply.VoteGranted, i)
+			DPrintf("Server %d ok = %v, granted = %v, after requesting server %v", i, ok, requestReply.VoteGranted, i)
 			if ok && requestReply.VoteGranted {
 				votes++
 				DPrintf("Server %d get vote from server %v, current votes = %v", rf.me, i, votes)
@@ -808,8 +825,8 @@ func (rf *Raft) periodicallySendHeartbeats() {
 			return
 		}
 		//DPrintf("Leader %d sending heartbeats to server %v", rf.me)
-
-		rf.sendAppendEntries(true)
+		rf.sendAppendEntriesEmpty()
+		//rf.sendAppendEntries(true)
 	}
 }
 
