@@ -233,10 +233,15 @@ func (rf *Raft) sendAppendEntries(empty bool) bool {
 
 	waitForMajoritySuccess := make(chan bool)
 	nSuccess := 0 // number of successes for AppendEntries
+    nDone := 0
 
 	for i := 0; i < len(rf.peers); i++ {
 		if !empty && i == rf.getMe() {
 			nSuccess++
+			nDone++
+			if (!empty && nDone > len(rf.peers)/2) || nDone >= len(rf.peers) {
+				waitForMajoritySuccess <- true
+			}
 			continue // if not heartbeat, skip leader itself
 		}
 		//DPrintf("Server %d send heartbeat to server %d", rf.me, i)
@@ -244,17 +249,19 @@ func (rf *Raft) sendAppendEntries(empty bool) bool {
 			if rf.keepSendAppendEntriesToServer(idx, empty) {
 				nSuccess++
 			}
-			if nSuccess > len(rf.peers)/2 {
+            nDone ++
+            DPrintf("Server %v sendAppendEntries to server %v: nSuccess = %v, nDone = %v ", rf.me, idx, nSuccess, nDone)
+			if (nSuccess > len(rf.peers)/2) || (!empty && nDone > len(rf.peers)/2) || nDone >= len(rf.peers) {
 				waitForMajoritySuccess <- true
 			}
 		}(i)
 	}
 	<-waitForMajoritySuccess
 
-	//DPrintf("send AppendEntries: 🧡Success = %v", nSuccess)
-	if empty {
-		return true
-	}
+    DPrintf("Server %v sendAppendEntries : nSuccess = %v, nDone = %v ", rf.me, nSuccess, nDone)
+    //if empty {
+		//return true
+	//}
 	return nSuccess > len(rf.peers)/2
 }
 
