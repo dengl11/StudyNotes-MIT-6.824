@@ -208,7 +208,7 @@ func (cfg *config) cleanup() {
 
 // attach server i to the net.
 func (cfg *config) connect(i int) {
-	fmt.Printf("connect(%d)\n", i)
+	//fmt.Printf("connect(%d)\n", i)
 
 	cfg.connected[i] = true
 
@@ -302,7 +302,7 @@ func (cfg *config) checkTerms() int {
 	for i := 0; i < cfg.n; i++ {
 		if cfg.connected[i] {
 			xterm, _ := cfg.rafts[i].GetState()
-			fmt.Printf("server %d term %d", i, xterm)
+			//fmt.Printf("server %d term %d", i, xterm)
 			if term == -1 {
 				term = xterm
 			} else if term != xterm {
@@ -415,13 +415,13 @@ func (cfg *config) one(cmd int, expectedServers int) int {
 		}
 
 		if index != -1 {
-			fmt.Printf("One : Commit Index = %v\n", index)
+			//fmt.Printf("One : Commit Index = %v\n", index)
 			// somebody claimed to be the leader and to have
 			// submitted our command; wait a while for agreement.
 			t1 := time.Now()
 			for time.Since(t1).Seconds() < 2 {
 				nd, cmd1 := cfg.nCommitted(index)
-                fmt.Printf("Checking commit index = %d, nd = %v, expectedServers = %v\n", index, nd, expectedServers)
+				//fmt.Printf("Checking commit index = %d, nd = %v, expectedServers = %v\n", index, nd, expectedServers)
 				if nd > 0 && nd >= expectedServers {
 					// committed
 					if cmd2, ok := cmd1.(int); ok && cmd2 == cmd {

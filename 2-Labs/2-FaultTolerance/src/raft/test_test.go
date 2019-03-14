@@ -29,14 +29,14 @@ func TestInitialElection2A(t *testing.T) {
 
 	// is a leader elected?
 	cfg.checkOneLeader()
-	fmt.Printf("🉐Check one Leader pass \n")
+	//fmt.Printf("🉐Check one Leader pass \n")
 
 	// does the leader+term stay the same if there is no network failure?
 	term1 := cfg.checkTerms()
-	fmt.Printf("term1 = %v\n", term1)
+	//fmt.Printf("term1 = %v\n", term1)
 	time.Sleep(2 * RaftElectionTimeout)
 	term2 := cfg.checkTerms()
-	fmt.Printf("term2 = %v\n", term2)
+	//fmt.Printf("term2 = %v\n", term2)
 	if term1 != term2 {
 		fmt.Printf("warning: term changed even though there were no failures")
 	}
@@ -53,22 +53,22 @@ func TestReElection2A(t *testing.T) {
 
 	leader1 := cfg.checkOneLeader()
 
-	fmt.Printf("")
-	fmt.Printf("------------ disconnect leader1: %d\n", leader1)
-	fmt.Printf("")
+	//fmt.Printf("")
+	//fmt.Printf("------------ disconnect leader1: %d\n", leader1)
+	//fmt.Printf("")
 
 	// if the leader disconnects, a new one should be elected.
 	cfg.disconnect(leader1)
-	fmt.Printf("")
-	fmt.Printf("------------ checking one leader\n")
-	fmt.Printf("")
+	//fmt.Printf("")
+	//fmt.Printf("------------ checking one leader\n")
+	//fmt.Printf("")
 	cfg.checkOneLeader()
 
 	// if the old leader rejoins, that shouldn't
 	// disturb the old leader.
-	fmt.Printf("")
-	fmt.Printf("------------ rejoin leader1: %d\n", leader1)
-	fmt.Printf("")
+	//fmt.Printf("")
+	//fmt.Printf("------------ rejoin leader1: %d\n", leader1)
+	//fmt.Printf("")
 
 	cfg.connect(leader1)
 	leader2 := cfg.checkOneLeader()
@@ -77,10 +77,10 @@ func TestReElection2A(t *testing.T) {
 	// be elected.
 	cfg.disconnect(leader2)
 	cfg.disconnect((leader2 + 1) % servers)
-	fmt.Printf("")
-	fmt.Printf("------------ disconnect: %d\n", leader2)
-	fmt.Printf("------------ disconnect: %d\n", (leader2+1)%servers)
-	fmt.Printf("")
+	//fmt.Printf("")
+	//fmt.Printf("------------ disconnect: %d\n", leader2)
+	//fmt.Printf("------------ disconnect: %d\n", (leader2+1)%servers)
+	//fmt.Printf("")
 	time.Sleep(2 * RaftElectionTimeout)
 	cfg.checkNoLeader()
 
@@ -89,9 +89,9 @@ func TestReElection2A(t *testing.T) {
 	cfg.checkOneLeader()
 
 	// re-join of last node shouldn't prevent leader from existing.
-	fmt.Printf("")
-	fmt.Printf("------------ rejoin leader2: %d\n", leader2)
-	fmt.Printf("")
+	//fmt.Printf("")
+	//fmt.Printf("------------ rejoin leader2: %d\n", leader2)
+	//fmt.Printf("")
 	cfg.connect(leader2)
 	cfg.checkOneLeader()
 
@@ -107,9 +107,9 @@ func TestBasicAgree2B(t *testing.T) {
 
 	iters := 3
 	for index := 1; index < iters+1; index++ {
-		fmt.Printf("----- iter = %v -----\n", index)
+		//fmt.Printf("----- iter = %v -----\n", index)
 		nd, _ := cfg.nCommitted(index)
-		fmt.Printf("----- nCommitted = %v -----\n", nd)
+		//fmt.Printf("----- nCommitted = %v -----\n", nd)
 		if nd > 0 {
 			t.Fatalf("some have committed before Start()")
 		}
@@ -136,7 +136,7 @@ func TestFailAgree2B(t *testing.T) {
 	leader := cfg.checkOneLeader()
 	cfg.disconnect((leader + 1) % servers)
 
-	fmt.Printf("⛽️⛽️⛽️Disconnect %v\n", (leader+1)%servers)
+	//fmt.Printf("⛽️⛽️⛽️Disconnect %v\n", (leader+1)%servers)
 	// agree despite one disconnected server?
 	cfg.one(102, servers-1)
 	cfg.one(103, servers-1)
@@ -145,7 +145,7 @@ func TestFailAgree2B(t *testing.T) {
 	cfg.one(105, servers-1)
 
 	// re-connect
-	fmt.Printf("⛽️⛽️⛽️Reconnect %v\n", (leader+1)%servers)
+	//fmt.Printf("⛽️⛽️⛽️Reconnect %v\n", (leader+1)%servers)
 	cfg.connect((leader + 1) % servers)
 
 	// agree with full set of servers?
@@ -218,7 +218,7 @@ func TestConcurrentStarts2B(t *testing.T) {
 	var success bool
 loop:
 	for try := 0; try < 5; try++ {
-		fmt.Printf("try = %v\n", try)
+		//fmt.Printf("try = %v\n", try)
 		if try > 0 {
 			// give solution some time to settle
 			time.Sleep(3 * time.Second)
@@ -322,7 +322,7 @@ func TestRejoin2B(t *testing.T) {
 	// leader network failure
 	leader1 := cfg.checkOneLeader()
 	cfg.disconnect(leader1)
-    fmt.Printf("Disconnect %v", leader1)
+	fmt.Printf("Disconnect %v\n", leader1)
 
 	// make old leader try to agree on some entries
 	cfg.rafts[leader1].Start(102)
@@ -335,17 +335,17 @@ func TestRejoin2B(t *testing.T) {
 	// new leader network failure
 	leader2 := cfg.checkOneLeader()
 	cfg.disconnect(leader2)
-    fmt.Printf("Disconnect %v", leader2)
+	fmt.Printf("Disconnect %v\n", leader2)
 
 	// old leader connected again
 	cfg.connect(leader1)
-    fmt.Printf("Reconnect %v", leader1)
+	fmt.Printf("Reconnect %v\n", leader1)
 
 	cfg.one(104, 2)
 
 	// all together now
 	cfg.connect(leader2)
-    fmt.Printf("Reconnect %v", leader2)
+	fmt.Printf("Reconnect %v\n", leader2)
 
 	cfg.one(105, servers)
 
@@ -364,8 +364,11 @@ func TestBackup2B(t *testing.T) {
 	// put leader and one follower in a partition
 	leader1 := cfg.checkOneLeader()
 	cfg.disconnect((leader1 + 2) % servers)
+	fmt.Printf("Disconnect %v\n", (leader1+2)%servers)
 	cfg.disconnect((leader1 + 3) % servers)
+	fmt.Printf("Disconnect %v\n", (leader1+3)%servers)
 	cfg.disconnect((leader1 + 4) % servers)
+	fmt.Printf("Disconnect %v\n", (leader1+4)%servers)
 
 	// submit lots of commands that won't commit
 	for i := 0; i < 50; i++ {
@@ -375,12 +378,17 @@ func TestBackup2B(t *testing.T) {
 	time.Sleep(RaftElectionTimeout / 2)
 
 	cfg.disconnect((leader1 + 0) % servers)
+	fmt.Printf("Disconnect %v\n", (leader1+0)%servers)
 	cfg.disconnect((leader1 + 1) % servers)
+	fmt.Printf("Disconnect %v\n", (leader1+1)%servers)
 
 	// allow other partition to recover
 	cfg.connect((leader1 + 2) % servers)
+	fmt.Printf("Reconnect %v\n", (leader1+2)%servers)
 	cfg.connect((leader1 + 3) % servers)
+	fmt.Printf("Reconnect %v\n", (leader1+3)%servers)
 	cfg.connect((leader1 + 4) % servers)
+	fmt.Printf("Reconnect %v\n", (leader1+4)%servers)
 
 	// lots of successful commands to new group.
 	for i := 0; i < 50; i++ {
@@ -394,6 +402,7 @@ func TestBackup2B(t *testing.T) {
 		other = (leader2 + 1) % servers
 	}
 	cfg.disconnect(other)
+	fmt.Printf("Disconnect %v\n", other)
 
 	// lots more commands that won't commit
 	for i := 0; i < 50; i++ {
@@ -405,20 +414,28 @@ func TestBackup2B(t *testing.T) {
 	// bring original leader back to life,
 	for i := 0; i < servers; i++ {
 		cfg.disconnect(i)
+		fmt.Printf("Disconnect %v\n", i)
 	}
 	cfg.connect((leader1 + 0) % servers)
+	fmt.Printf("Reconnect %v\n", (leader1+0)%servers)
 	cfg.connect((leader1 + 1) % servers)
+	fmt.Printf("Reconnect %v\n", (leader1+1)%servers)
 	cfg.connect(other)
+	fmt.Printf("Reconnect %v\n", other)
 
 	// lots of successful commands to new group.
 	for i := 0; i < 50; i++ {
+		fmt.Printf("Testing One: %v\n\n", i)
 		cfg.one(rand.Int(), 3)
 	}
 
 	// now everyone
 	for i := 0; i < servers; i++ {
 		cfg.connect(i)
+		fmt.Printf("Reconnect %v\n", i)
 	}
+
+	fmt.Printf("Testing final pass\n\n")
 	cfg.one(rand.Int(), servers)
 
 	fmt.Printf("  ... Passed\n")

@@ -62,14 +62,15 @@ type AppendEntriesReply struct {
 // A Go object implementing a single Raft peer.
 //
 type Raft struct {
-	mu        sync.Mutex          // Lock to protect shared access to this peer's state
-	peers     []*labrpc.ClientEnd // RPC end points of all peers
-	persister *Persister          // Object to hold this peer's persisted state
-	me        int                 // this peer's index into peers[]
-	heartbeat chan bool           // Channel for receiving heartbeat
-	isLeader  bool
-	synched  bool
-	applyCh   chan ApplyMsg
+	mu                  sync.Mutex          // Lock to protect shared access to this peer's state
+	requestingVoteMutex sync.Mutex          // Lock to protect shared access to this peer's state
+	peers               []*labrpc.ClientEnd // RPC end points of all peers
+	persister           *Persister          // Object to hold this peer's persisted state
+	me                  int                 // this peer's index into peers[]
+	heartbeat           chan bool           // Channel for receiving heartbeat
+	isLeader            bool
+	synched             bool
+	applyCh             chan ApplyMsg
 
 	// Your data here (2A, 2B, 2C).
 	// Look at the paper's Figure 2 for a description of what
@@ -129,7 +130,7 @@ func (rf *Raft) setLeader(isLeader bool) {
 	defer rf.mu.Unlock()
 	rf.isLeader = isLeader
 	if isLeader {
-		DPrintf("\n ----- NEW LEADER: %d - Term: %v (C = %v, logs = %v) -----\n", rf.me, rf.currentTerm, rf.commitIndex, rf.logs)
+		DPrintf("\n ----- NEW LEADER: %d - Term: %v (C = %v, logs = %v, nextIdx = %v) -----\n", rf.me, rf.currentTerm, rf.commitIndex, rf.logs, rf.nextIndexes)
 	}
 }
 
@@ -148,6 +149,7 @@ func (rf *Raft) sendAppendEntriesToServer(server int, empty bool) (bool, bool) {
 	rf.mu.Lock()
 	// ----------------------------------------
 
+	//sendToMyself := server == rf.me
 	appendEntriesArgs.Leader = rf.me
 	appendEntriesArgs.Term = rf.currentTerm
 	prevIndex := rf.nextIndexes[server] - 1
@@ -175,15 +177,15 @@ func (rf *Raft) sendAppendEntriesToServer(server int, empty bool) (bool, bool) {
 
 	rf.mu.Lock()
 	defer rf.mu.Unlock()
-    DPrintf("After Leader %v send to server %v:  callSuccess = %v, appendEntriesReply.Success = %v, appendEntriesReply.Term = %v, rf.currentTerm = %v, Empty = %v", rf.me, server, callSuccess, appendEntriesReply.Success, appendEntriesReply.Term, rf.currentTerm, empty)
+	DPrintf("After Leader %v send to server %v:  callSuccess = %v, appendEntriesReply.Success = %v, appendEntriesReply.Term = %v, rf.currentTerm = %v, Empty = %v", rf.me, server, callSuccess, appendEntriesReply.Success, appendEntriesReply.Term, rf.currentTerm, empty)
 	if callSuccess && !appendEntriesReply.Success && appendEntriesReply.Term > rf.currentTerm {
 		rf.isLeader = false
-        DPrintf("Leader %v Step down ....", rf.me)
+		DPrintf("Leader %v Step down ....", rf.me)
 		return callSuccess, appendEntriesReply.Success
 	}
-    if callSuccess {
-        rf.updateWithAppendEntriesReply(server, &appendEntriesReply, nLogs, empty)
-    }
+	if callSuccess {
+		rf.updateWithAppendEntriesReply(server, &appendEntriesReply, nLogs, empty)
+	}
 	return callSuccess, appendEntriesReply.Success
 }
 
@@ -191,21 +193,21 @@ func (rf *Raft) updateWithAppendEntriesReply(idx int, appendEntriesReply *Append
 	if !appendEntriesReply.Success {
 		if rf.nextIndexes[idx] > rf.matchIndexes[idx]+1 {
 			rf.nextIndexes[idx]--
-            DPrintf("Fail: Updated Leader %v matchIndexes: %v, nextIndexes = %v", rf.me, rf.matchIndexes, rf.nextIndexes)
+			DPrintf("Fail: Updated Leader %v matchIndexes: %v, nextIndexes = %v", rf.me, rf.matchIndexes, rf.nextIndexes)
 		}
-	} else if !empty{
+	} else if !empty {
 		rf.nextIndexes[idx] = newNextIdx
 		rf.matchIndexes[idx] = newNextIdx - 1
-        DPrintf("Success: Updated Leader %v matchIndexes: %v, nextIndexes = %v", rf.me, rf.matchIndexes, rf.nextIndexes)
+		DPrintf("Success: Updated Leader %v matchIndexes: %v, nextIndexes = %v", rf.me, rf.matchIndexes, rf.nextIndexes)
 	}
 }
 
 func (rf *Raft) keepSendAppendEntriesToServer(idx int, empty bool) bool {
 	for { // Keep sendAppendEntriesToServer until accepted or lost connection
 		//DPrintf("sendAppendEntriesToServer: leader %v send data to server %v, empty: %v |", rf.me, idx, empty)
-        if (!rf.getIsLeader()) {
-            return false;
-        }
+		if !rf.getIsLeader() {
+			return false
+		}
 		var ok, accepted bool
 		ok, accepted = rf.sendAppendEntriesToServer(idx, empty)
 		//DPrintf("---> sendAppendEntriesToServer: leader %v send data to server %v, empty: %v | accepted = %v", rf.me, idx, empty, accepted)
@@ -216,9 +218,9 @@ func (rf *Raft) keepSendAppendEntriesToServer(idx int, empty bool) bool {
 		if ok {
 			return accepted
 		}
-        if (empty) {
-            return false
-        }
+		if empty {
+			return false
+		}
 
 		// Keep looping if try to send data but got rejected
 	}
@@ -258,8 +260,8 @@ func (rf *Raft) sendAppendEntries(empty bool) bool {
 
 // AppendEntries handler
 func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply) {
-    DPrintf("Server %d get AppendEntries from leader %d", rf.me, args.Leader)
-    DPrintf("args.Term: %v, my term: %d", args.Term, rf.currentTerm)
+	DPrintf("Server %d get AppendEntries from leader %d", rf.me, args.Leader)
+	DPrintf("args.Term: %v, my term: %d", args.Term, rf.currentTerm)
 
 	commitIndexUpdated := false
 	prevIndex := args.PrevLogIndex
@@ -270,22 +272,25 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 	reply.Term = rf.currentTerm
 
 	accepted := false
-    empty := args.Entries == nil
+	sendHeartBeat := true
+	empty := args.Entries == nil
 
 	// 1) Check term is updated enough?
 	if args.Term < rf.currentTerm {
-        DPrintf("😡Rejects outdated append-entries ... ")
+		DPrintf("😡Rejects outdated append-entries ... ")
+		sendHeartBeat = false
 		goto done
 	}
 
 	if args.Term > rf.currentTerm {
 		rf.isLeader = false
+		rf.synched = false
 	}
 
 	// 2) Check log mismatch
 	if prevIndex >= 0 && (len(rf.logs) <= prevIndex || rf.logs[prevIndex].Term != prevTerm) {
-        DPrintf("Server %v Rejects server %v because of mismatch: prevIndex = %v, logs = %v, prevTerm = %v\n\n", rf.me, args.Leader, prevIndex, rf.logs, prevTerm)
-        rf.synched = false
+		DPrintf("Server %v Rejects server %v because of mismatch: prevIndex = %v, logs = %v, prevTerm = %v\n\n", rf.me, args.Leader, prevIndex, rf.logs, prevTerm)
+		rf.synched = false
 		if len(rf.logs) > prevIndex {
 			//fmt.Printf("rf.logs[prevIndex].Term = %v\n\n", rf.logs[prevIndex].Term)
 		}
@@ -301,16 +306,18 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 
 done:
 	reply.Success = accepted
-    DPrintf("Server %d (Term: %v) reply AppendEntries from leader %d (Term = %v): accepted = %v, empty = %v\n", rf.me, rf.currentTerm, args.Leader, args.Term, accepted, empty)
-	if accepted {
+	DPrintf("Server %d (Term: %v) reply AppendEntries from leader %d (Term = %v): accepted = %v, empty = %v\n", rf.me, rf.currentTerm, args.Leader, args.Term, accepted, empty)
+	if sendHeartBeat {
 		rf.heartbeat <- true
+	}
+	if accepted {
 		rf.isLeader = (args.Leader == rf.me)
 
 		rf.setCurrentTerm(args.Term)
 		rf.votedFor = -1
 		rf.persist()
 
-		DPrintf("Server: %v, Leader: %v,  LeaderCommitIdx = %v, server commit = %v | Now server logs = %v", rf.me, args.Leader, args.LeaderCommitIdx, rf.commitIndex, len(rf.logs))
+		DPrintf("Server: %v, Leader: %v,  LeaderCommitIdx = %v, server commit = %v | Now server logs = %v, synched = %v", rf.me, args.Leader, args.LeaderCommitIdx, rf.commitIndex, len(rf.logs), rf.synched)
 		if rf.synched && args.LeaderCommitIdx > rf.commitIndex {
 			commitIndexUpdated = rf.updateCommitIndex(min(args.LeaderCommitIdx, len(rf.logs)))
 			if commitIndexUpdated {
@@ -331,7 +338,7 @@ func (rf *Raft) OnAppendEntriesData(args *AppendEntriesArgs, reply *AppendEntrie
 
 	prevIndex := args.PrevLogIndex
 	curr := prevIndex + 1
-    DPrintf("OnAppendEntriesData: prevIndex = %v", prevIndex)
+	DPrintf("OnAppendEntriesData: prevIndex = %v", prevIndex)
 	firstMismatch := -1
 	for i := curr; i < len(rf.logs) && (i-curr) < len(args.Entries); i++ {
 		if rf.logs[i].Command != args.Entries[i-curr].Command {
@@ -350,7 +357,7 @@ func (rf *Raft) OnAppendEntriesData(args *AppendEntriesArgs, reply *AppendEntrie
 		}
 	}
 	rf.persist()
-    rf.synched = true
+	rf.synched = true
 	DPrintf("Update server %v logs = %v", rf.me, rf.logs)
 
 	return true
@@ -415,7 +422,7 @@ func (rf *Raft) readPersist(data []byte) {
 //
 type RequestVoteArgs struct {
 	// Your data here (2A, 2B).
-	Term       int // candidate's term
+	Term         int // candidate's term
 	MyId         int // candidate Id
 	LastLogIndex int // Index of the candidate's last log entry
 	LastLogTerm  int // term of the candidate's last log entry
@@ -441,7 +448,7 @@ func (rf *Raft) reportState() {
 //
 func (rf *Raft) RequestVote(args *RequestVoteArgs, reply *RequestVoteReply) {
 	// Your code here (2A, 2B).
-    DPrintf("Server %d (Term = %v) get request from server %d - term %d", rf.me, rf.currentTerm, args.MyId, args.Term)
+	DPrintf("Server %d (Term = %v) get request from server %d - term %d", rf.me, rf.currentTerm, args.MyId, args.Term)
 	//rf.reportState()
 
 	rf.mu.Lock()
@@ -549,7 +556,7 @@ func (rf *Raft) Start(command interface{}) (int, int, bool) {
 	rf.matchIndexes[rf.me] = len(rf.logs) - 1
 	rf.nextIndexes[rf.me] = len(rf.logs)
 
-	DPrintf("------ Leader %v Start Command  %v  😡😡😡: New Logs = %v --------", rf.me, command, rf.logs)
+	DPrintf("------ Leader %v (Term = %v) Start Command  %v  😡😡😡: New Logs = %v --------", rf.me, rf.currentTerm, command, rf.logs)
 	go func() {
 		rf.tryCommitNewCommand(command)
 	}()
@@ -617,14 +624,14 @@ func (rf *Raft) sendApplyChWithCommmitIndex(idx int) {
 	applyMsg := ApplyMsg{idx + 1, rf.logs[idx].Command, false, nil}
 	rf.mu.Unlock()
 
-    DPrintf("\n Waiting on applyCh Server %v sendApplyCh: %v ----\n\n", rf.me, rf.commitIndex)
+	DPrintf("\n Waiting on applyCh Server %v sendApplyCh: %v ----\n\n", rf.me, rf.commitIndex)
 	rf.applyCh <- applyMsg
 
 	rf.mu.Lock()
 	rf.lastApplied = idx
 	rf.mu.Unlock()
 
-    DPrintf("\n Done: Server %v sendApplyCh: %v ----\n\n", rf.me, rf.commitIndex)
+	DPrintf("\n Done: Server %v sendApplyCh: %v ----\n\n", rf.me, rf.commitIndex)
 }
 
 //
@@ -691,7 +698,7 @@ func periodicallyElect(rf *Raft) {
 			//DPrintf("server %d get heartbeat 🧡 , continue", rf.me)
 			continue // Reset the timeout
 		case <-time.After(nSleep * time.Millisecond): // Random timeout between 500 and 1000 ms
-			//fmt.Printf("Timeout: Server %v\n\n", rf.me)
+			DPrintf("Timeout: Server %v (Term = %v)\n\n", rf.me, rf.currentTerm)
 			go func() {
 				convertToCandidate(rf)
 			}()
@@ -700,6 +707,12 @@ func periodicallyElect(rf *Raft) {
 }
 
 func convertToCandidate(rf *Raft) {
+	if rf.getIsLeader() {
+		return
+	}
+	//rf.requestingVoteMutex.Lock()
+	//defer rf.requestingVoteMutex.Unlock()
+
 	var requestArgs RequestVoteArgs
 	//DPrintf("Loking on converting to candidate")
 
@@ -712,7 +725,7 @@ func convertToCandidate(rf *Raft) {
 		requestArgs.LastLogTerm = rf.logs[len(rf.logs)-1].Term
 	}
 
-	DPrintf(">>>>>> Server %d becomes a candidate, new term: %v <<<<<<<<", rf.me, rf.currentTerm+1)
+	DPrintf(">>>>>> Server %d becomes a candidate, new term: %v, nextIdx = %v <<<<<<<<", rf.me, rf.currentTerm+1, rf.nextIndexes)
 	// convert to candidate
 	rf.currentTerm++
 	requestArgs.Term = rf.currentTerm
@@ -731,11 +744,11 @@ func convertToCandidate(rf *Raft) {
 		}
 		wg.Add(1)
 		go func(i int) {
-			DPrintf("Server %d current votes = %v before requesting server %v", rf.me, votes, i)
+			//DPrintf("Server %d current votes = %v before requesting server %v", rf.me, votes, i)
 			defer wg.Done()
 			var requestReply RequestVoteReply
 			ok := rf.sendRequestVote(i, &requestArgs, &requestReply)
-			DPrintf("Server %d ok = %v, granted = %v, before requesting server %v", rf.me, ok, requestReply.VoteGranted, i)
+			DPrintf("Server %d ok = %v, granted = %v, before requesting server %v", i, ok, requestReply.VoteGranted, i)
 			if ok && requestReply.VoteGranted {
 				votes++
 				DPrintf("Server %d get vote from server %v, current votes = %v", rf.me, i, votes)
@@ -744,8 +757,9 @@ func convertToCandidate(rf *Raft) {
 		}(i)
 	}
 	wg.Wait()
-	DPrintf("Server %d get votes: %v, %v", rf.me, votes, len(rf.peers)/2)
-	if votes > len(rf.peers)/2 { // Wins the majority
+	DPrintf("Server %d get votes: %v, %v, isLeader: %v", rf.me, votes, len(rf.peers)/2, rf.isLeader)
+	if votes > len(rf.peers)/2 && !rf.getIsLeader() { // Wins the majority
+		DPrintf("%v Become a leader: nextIndexes = %v", rf.me, rf.nextIndexes)
 		rf.becomeALeader()
 	}
 }
