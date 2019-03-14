@@ -59,16 +59,16 @@ func TestReElection2A(t *testing.T) {
 
 	// if the leader disconnects, a new one should be elected.
 	cfg.disconnect(leader1)
-	//fmt.Printf("")
-	//fmt.Printf("------------ checking one leader\n")
-	//fmt.Printf("")
+	fmt.Printf("")
+	fmt.Printf("------------ checking one leader\n")
+	fmt.Printf("")
 	cfg.checkOneLeader()
 
 	// if the old leader rejoins, that shouldn't
 	// disturb the old leader.
-	//fmt.Printf("")
-	//fmt.Printf("------------ rejoin leader1: %d\n", leader1)
-	//fmt.Printf("")
+	fmt.Printf("")
+	fmt.Printf("------------ rejoin leader1: %d\n", leader1)
+	fmt.Printf("")
 
 	cfg.connect(leader1)
 	leader2 := cfg.checkOneLeader()
@@ -77,10 +77,10 @@ func TestReElection2A(t *testing.T) {
 	// be elected.
 	cfg.disconnect(leader2)
 	cfg.disconnect((leader2 + 1) % servers)
-	//fmt.Printf("")
-	//fmt.Printf("------------ disconnect: %d\n", leader2)
-	//fmt.Printf("------------ disconnect: %d\n", (leader2+1)%servers)
-	//fmt.Printf("")
+	fmt.Printf("")
+	fmt.Printf("------------ disconnect: %d\n", leader2)
+	fmt.Printf("------------ disconnect: %d\n", (leader2+1)%servers)
+	fmt.Printf("")
 	time.Sleep(2 * RaftElectionTimeout)
 	cfg.checkNoLeader()
 
@@ -89,9 +89,9 @@ func TestReElection2A(t *testing.T) {
 	cfg.checkOneLeader()
 
 	// re-join of last node shouldn't prevent leader from existing.
-	//fmt.Printf("")
-	//fmt.Printf("------------ rejoin leader2: %d\n", leader2)
-	//fmt.Printf("")
+	fmt.Printf("")
+	fmt.Printf("------------ rejoin leader2: %d\n", leader2)
+	fmt.Printf("")
 	cfg.connect(leader2)
 	cfg.checkOneLeader()
 
