@@ -54,8 +54,9 @@ type LogEntry struct {
 }
 
 type AppendEntriesReply struct {
-	Term    int  // Server's currentTerm
-	Success bool // true if appendEntries succeeds
+	Term             int  // Server's currentTerm
+	Success          bool // true if appendEntries succeeds
+	conflictingIndex int
 }
 
 //
@@ -191,10 +192,8 @@ func (rf *Raft) sendAppendEntriesToServer(server int, empty bool) (bool, bool) {
 
 func (rf *Raft) updateWithAppendEntriesReply(idx int, appendEntriesReply *AppendEntriesReply, newNextIdx int, empty bool) {
 	if !appendEntriesReply.Success {
-		if rf.nextIndexes[idx] > rf.matchIndexes[idx]+1 {
-			rf.nextIndexes[idx]--
-			DPrintf("Fail: Updated Leader %v matchIndexes: %v, nextIndexes = %v", rf.me, rf.matchIndexes, rf.nextIndexes)
-		}
+		rf.nextIndexes[idx] = max(rf.matchIndexes[idx]+1, appendEntriesReply.conflictingIndex-1)
+		DPrintf("Fail: Updated Leader %v matchIndexes: %v, nextIndexes = %v", rf.me, rf.matchIndexes, rf.nextIndexes)
 	} else if !empty {
 		rf.nextIndexes[idx] = newNextIdx
 		rf.matchIndexes[idx] = newNextIdx - 1
@@ -299,9 +298,13 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 	if prevIndex >= 0 && (len(rf.logs) <= prevIndex || rf.logs[prevIndex].Term != prevTerm) {
 		DPrintf("Server %v Rejects server %v because of mismatch: prevIndex = %v, logs = %v, prevTerm = %v\n\n", rf.me, args.Leader, prevIndex, rf.logs, prevTerm)
 		rf.synched = false
+		firstConflicting := len(rf.logs) - 1
 		if len(rf.logs) > prevIndex {
-			//fmt.Printf("rf.logs[prevIndex].Term = %v\n\n", rf.logs[prevIndex].Term)
+			badTerm := rf.logs[prevIndex].Term
+			for firstConflicting = prevIndex; firstConflicting >= 0 && rf.logs[firstConflicting].Term == badTerm; firstConflicting-- {
+			}
 		}
+		reply.conflictingIndex = firstConflicting
 		goto done
 	}
 	if empty { // heartbeat
@@ -825,4 +828,11 @@ func min(x int, y int) int {
 		return x
 	}
 	return y
+}
+
+func max(x int, y int) int {
+	if x < y {
+		return y
+	}
+	return x
 }
