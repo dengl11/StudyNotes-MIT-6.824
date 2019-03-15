@@ -1,26 +1,4 @@
 go test -run TestBackup2B
 Test (2B): leader backs up quickly over incorrect follower logs ...
-Disconnect 0
-Disconnect 1
-Disconnect 2
-Disconnect 3
-Disconnect 4
-Reconnect 0
-Reconnect 1
-Reconnect 2
-Disconnect 0
-Disconnect 0
-Disconnect 1
-Disconnect 2
-Disconnect 3
-Disconnect 4
-Reconnect 3
-Reconnect 4
-Reconnect 0
-Testing One: 0
-
---- FAIL: TestBackup2B (19.69s)
-    config.go:438: one(6841874949579692963) failed to reach agreement
-FAIL
-exit status 1
-FAIL	raft	19.699s
+signal: interrupt
+FAIL	raft	0.673s
